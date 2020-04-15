@@ -1,8 +1,16 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import {AppInitService} from './app-init.service';
+import {HttpClientModule} from '@angular/common/http';
+
+export function initializeApp(appInitService: AppInitService) {
+  return (): Promise<any> => {
+    return appInitService.Init();
+  };
+}
 
 @NgModule({
   declarations: [
@@ -10,9 +18,15 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    AppInitService,
+    {
+      provide: APP_INITIALIZER, useFactory: initializeApp, deps: [AppInitService], multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
