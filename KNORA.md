@@ -337,11 +337,102 @@ export class SparqlPrep {
 
 
 ng generate service services/gravsearch-templates
---> Makes gravsearch template
-
+Add:
 ```typescript
+import { Injectable } from '@angular/core';
+import { SparqlPrep} from '../classes/sparql-prep';
+
+@Injectable({
+  providedIn: 'root'
+})
+
+export class GravsearchTemplatesService {
+
+  constructor(private sparqlPrep: SparqlPrep) { }
+
+  book_query(params: {[index: string]: string}): string {
+    const result = this.sparqlPrep.compile(`
+    PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
+    PREFIX incunabula: <{{ ontology }}/ontology/0803/incunabula/simple/v2#>
+    CONSTRUCT {
+      ?book knora-api:isMainResource true .
+      ?book incunabula:title ?title .
+      ?book incunabula:pubdate ?pubdate .
+    } WHERE {
+      ?book a knora-api:Resource .
+      ?book a incunabula:book .
+      ?book incunabula:title ?title .
+      FILTER regex(?title, "{{ book_title }}", "i") .
+      OPTIONAL { ?book incunabula:pubdate ?pubdate . }
+    }
+    `, params);
+    return result;
+  }
+}
 
 ```
 
+in app.module.ts add `SparqlPrep,` to the providers:
+```typescript
+import {SparqlPrep} from './classes/sparql-prep';
+```
+and
+```typescript
+providers: [
+    AppInitService,
+    {
+      provide: APP_INITIALIZER, useFactory: initializeApp, deps: [AppInitService], multi: true
+    }
+    },
+    SparqlPrep,
+  ],
+```
+and
 
 
+```typescript
+providers: [
+    AppInitService,
+    {
+      provide: APP_INITIALIZER, useFactory: initializeApp, deps: [AppInitService], multi: true
+    },
+    SparqlPrep,
+  ],
+```
+
+add to app.components.ts:
+```typescript
+export class AppComponent implements OnInit  {
+  @ViewChild('searchTerm', {static: false})
+  private searchTerm: ElementRef;
+```
+and:
+
+```typescript
+searchres: Array<ReadResource> = [];
+```
+
+```typescript
+  searchEvent(): void {
+    console.log("searchEvent:", this.searchTerm.nativeElement.value);
+    const params = {
+      book_title: this.searchTerm.nativeElement.value
+    };
+    this.knoraService.gravsearchQuery('book_query', params).subscribe((searchres: Array<ReadResource>) => {
+      console.log('RESDATA:: ', searchres);
+      this.searchres = searchres;
+    });
+  }
+```
+add to app.component.html:
+```angular2html
+<input #searchTerm
+       class="form-control"
+/>
+<button (click)="searchEvent($event)">Search</button>
+<table>
+  <tr *ngFor="let sr of searchres">
+    <td>{{sr.label}}</td>
+  </tr>
+</table>
+```
