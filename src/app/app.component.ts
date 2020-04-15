@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {KnoraService} from './services/knora.service';
 import {ReadResource, ReadValue} from '@knora/api';
 
@@ -8,7 +8,11 @@ import {ReadResource, ReadValue} from '@knora/api';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit  {
+  @ViewChild('searchField', {static: false})
   title = 'test-app';
+
+  private searchField: ElementRef;
+  searchterm: string = '';
 
   resdata: ReadResource = new ReadResource();
   properties: Array<[string, string]> = [];
@@ -23,6 +27,15 @@ export class AppComponent implements OnInit  {
           this.properties.push([name, resdata.properties[name][0].strval]);
         }
       }
+    });
+  }
+
+  searchEvent(event): void {
+    const params = {
+      book_title: this.searchField.nativeElement.value
+    };
+    this.knoraService.gravsearchQuery('book_query', params).subscribe((resdata: Array<ReadResource>) => {
+      console.log(resdata);
     });
   }
 

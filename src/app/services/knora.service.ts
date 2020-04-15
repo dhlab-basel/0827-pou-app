@@ -8,6 +8,7 @@ import {
 } from '@knora/api';
 import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
+import {GravsearchTemplatesService} from './gravsearch-templates.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,9 @@ import {Observable} from 'rxjs';
 export class KnoraService {
   knoraApiConnection: KnoraApiConnection;
 
-  constructor(private appInitService: AppInitService) {
+  constructor(private appInitService: AppInitService,
+              private queryTemplates: GravsearchTemplatesService
+) {
     const protocol = this.appInitService.getSettings().protocol;
     const servername = this.appInitService.getSettings().servername;
     const port = this.appInitService.getSettings().port;
@@ -30,5 +33,16 @@ export class KnoraService {
       })
     );
   }
+
+  gravsearchQuery(queryname: string, params: {[index: string]: string}): Observable<Array<ReadResource>> {
+    params.ontology = this.appInitService.getSettings().ontologyPrefix;
+    const query = this.queryTemplates[queryname](params);
+    return this.knoraApiConnection.v2.search.doExtendedSearch(query).pipe(
+      map((res: Array<ReadResource>) => {
+        console.log('gravsearchQuery result:', res);
+        return res as Array<ReadResource>;
+      }));
+  }
+
 
 }

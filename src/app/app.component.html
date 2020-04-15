@@ -1,4 +1,11 @@
 <h1>Portraits of Unbelonging</h1>
+<form (submit)="searchEvent($event)" (keyup.enter)="searchEvent($event)">
+  <input #searchField
+         name="searchterm"
+         [value]="searchterm" />
+  <button type="submit" value="SEARCH"></button>
+</form>
+
 <table>
   <thead>
   <tr>
