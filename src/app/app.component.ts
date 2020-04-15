@@ -7,12 +7,15 @@ import {ReadResource, ReadValue} from '@knora/api';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
+
 export class AppComponent implements OnInit  {
-  @ViewChild('searchField', {static: false})
+  @ViewChild('searchTerm', {static: false})
+  private searchTerm: ElementRef;
   title = 'test-app';
 
   private searchField: ElementRef;
   searchterm: string = '';
+  searchres: Array<ReadResource> = [];
 
   resdata: ReadResource = new ReadResource();
   properties: Array<[string, string]> = [];
@@ -30,12 +33,14 @@ export class AppComponent implements OnInit  {
     });
   }
 
-  searchEvent(event): void {
+  searchEvent(): void {
+    console.log("searchEvent:", this.searchTerm.nativeElement.value);
     const params = {
-      book_title: this.searchField.nativeElement.value
+      book_title: this.searchTerm.nativeElement.value
     };
-    this.knoraService.gravsearchQuery('book_query', params).subscribe((resdata: Array<ReadResource>) => {
-      console.log(resdata);
+    this.knoraService.gravsearchQuery('book_query', params).subscribe((searchres: Array<ReadResource>) => {
+      console.log('RESDATA:: ', searchres);
+      this.searchres = searchres;
     });
   }
 

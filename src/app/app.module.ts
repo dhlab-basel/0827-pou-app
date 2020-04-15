@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {AppInitService} from './app-init.service';
 import {HttpClientModule} from '@angular/common/http';
+import {SparqlPrep} from './classes/sparql-prep';
 
 export function initializeApp(appInitService: AppInitService) {
   return (): Promise<any> => {
@@ -25,7 +26,8 @@ export function initializeApp(appInitService: AppInitService) {
     AppInitService,
     {
       provide: APP_INITIALIZER, useFactory: initializeApp, deps: [AppInitService], multi: true
-    }
+    },
+    SparqlPrep,
   ],
   bootstrap: [AppComponent]
 })

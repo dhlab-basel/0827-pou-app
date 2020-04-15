@@ -20,7 +20,7 @@ export class AppInitService {
   Init(): Promise<any> {
     return new Promise<void>((resolve, reject) => {
       const data = window['tempConfigStorage'] as IAppConfig;
-      console.log ('Init():', data)
+      console.log ('Init():', data);
       AppInitService.settings = data;
       resolve();
     });

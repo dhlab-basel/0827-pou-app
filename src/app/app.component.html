@@ -1,10 +1,13 @@
 <h1>Portraits of Unbelonging</h1>
-<form (submit)="searchEvent($event)" (keyup.enter)="searchEvent($event)">
-  <input #searchField
-         name="searchterm"
-         [value]="searchterm" />
-  <button type="submit" value="SEARCH"></button>
-</form>
+<input #searchTerm
+       class="form-control"
+/>
+<button (click)="searchEvent($event)">Search</button>
+<table>
+  <tr *ngFor="let sr of searchres">
+    <td>{{sr.label}}</td>
+  </tr>
+</table>
 
 <table>
   <thead>
