@@ -22,7 +22,6 @@ export class KnoraService {
     const protocol = this.appInitService.getSettings().protocol;
     const servername = this.appInitService.getSettings().servername;
     const port = this.appInitService.getSettings().port;
-    console.log("==========> protocol=", protocol, " servrname=", servername, " port=", port);
     const config = new KnoraApiConfig(protocol, servername, port, undefined, undefined, true);
     this.knoraApiConnection = new KnoraApiConnection(config);
   }

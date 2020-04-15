@@ -13,8 +13,6 @@ export class AppComponent implements OnInit  {
   private searchTerm: ElementRef;
   title = 'test-app';
 
-  private searchField: ElementRef;
-  searchterm: string = '';
   searchres: Array<ReadResource> = [];
 
   resdata: ReadResource = new ReadResource();
@@ -34,7 +32,6 @@ export class AppComponent implements OnInit  {
   }
 
   searchEvent(): void {
-    console.log("searchEvent:", this.searchTerm.nativeElement.value);
     const params = {
       book_title: this.searchTerm.nativeElement.value
     };
