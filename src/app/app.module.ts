@@ -33,6 +33,7 @@ import {
 import {SparqlPrep} from './classes/sparql-prep';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
+import {Helpers} from './classes/helpers';
 
 export function initializeApp(appInitService: AppInitService) {
   return (): Promise<any> => {
@@ -84,6 +85,7 @@ export function initializeApp(appInitService: AppInitService) {
       provide: APP_INITIALIZER, useFactory: initializeApp, deps: [AppInitService], multi: true
     },
     SparqlPrep,
+    Helpers,
   ],
   bootstrap: [AppComponent]
 })
