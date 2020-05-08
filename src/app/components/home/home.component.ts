@@ -1,39 +1,61 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import {catchError, finalize, map, take, tap} from 'rxjs/operators';
 
 import {KnoraService} from '../../services/knora.service';
-import {ReadResource, ReadValue, ReadLinkValue, ReadStillImageFileValue} from '@knora/api';
-import {Constants} from "@knora/api/src/models/v2/Constants";
+import {ReadResource, ReadValue, ReadLinkValue, ReadStillImageFileValue, ReadDateValue, ReadTextValueAsString} from '@knora/api';
+import {Constants} from '@knora/api/src/models/v2/Constants';
+import {Helpers} from '../../classes/helpers';
 
 class PhotoData {
   constructor(public label: string,
               public baseurl: string,
-              public filename: string) {}
+              public filename: string,
+              public destination: Array<string>,
+              public dateofphoto: string,
+              public anchorpersons: Array<Array<string>>,
+              public peoplepersons: Array<Array<string>>) {}
 }
 
 
 @Component({
   selector: 'app-home',
   template: `
+    <mat-progress-bar mode="indeterminate" *ngIf="showProgbar"></mat-progress-bar>
     <p>
       Number of Photos: {{ nPhotos }}
     </p>
-    <mat-grid-list cols="5" rowHeight="1:1.5">
+    <mat-grid-list cols="5" rowHeight="1:1.8">
       <mat-grid-tile *ngFor="let x of photos">
         <mat-card>
           <mat-card-title>
-            {{ x.label }}
+            <h3>{{ x.label }}</h3>
           </mat-card-title>
           <mat-card-content>
-            <img src="{{x.baseurl}}/{{x.filename}}/full/200,/0/default.jpg">
+            <p>
+            <img class="newimg" mat-card-image src="{{x.baseurl}}/{{x.filename}}/full/200,/0/default.jpg"/>
+            </p>
+            <p *ngIf="x.destination.length > 0">Destination: {{ x.destination[0] }}</p>
+            <p *ngFor="let ap of x.anchorpersons">Anchor person: {{ ap[0] }}</p>
+            <p *ngFor="let ap of x.peoplepersons">People on photo: {{ ap[0] }}</p>
           </mat-card-content>
         </mat-card>
       </mat-grid-tile>
     </mat-grid-list>
+    <mat-paginator *ngIf="nPhotos > 25" [length]="nPhotos"
+                   [pageIndex]="page"
+                   [pageSize]="25"
+                   [pageSizeOptions]="[25]"
+                   (page)="pageChanged($event)" showFirstLastButtons>
+    </mat-paginator>
 
   `,
-  styles: []
+  styles: [
+    '.mat-grid-list {margin-left: 10px; margin-right: 10px;}',
+    '.mat-card-title {font-size: 12pt;}',
+    '.newimg {max-width: 200px;}'
+  ]
 })
 
 export class HomeComponent implements OnInit {
@@ -41,13 +63,18 @@ export class HomeComponent implements OnInit {
   nPhotos: number;
   photos: Array<PhotoData> = [];
 
+  showProgbar: boolean = false;
+
 
   constructor(private router: Router,
-              private knoraService: KnoraService) {
-    this.number = 0;
+              private activatedRoute: ActivatedRoute,
+              private knoraService: KnoraService,
+              private helpers: Helpers) {
+    this.page = 0;
   }
 
   getPhotos(): void {
+    this.showProgbar = true;
     const paramsCnt = {
       page: '0',
     };
@@ -59,13 +86,23 @@ export class HomeComponent implements OnInit {
     const params = {
       page: String(this.page),
     };
-    this.knoraService.gravsearchQuery('photos_query', paramsCnt).subscribe(
+    this.knoraService.gravsearchQuery('photos_query', params).subscribe(
       (photos: ReadResource[]) => {
-        console.log('PHOTOS: ', this.photos);
         this.photos = photos.map((onephoto: ReadResource) => {
-          let label: string = onephoto.label;
+          const label: string = onephoto.label;
           let baseurl: string = '-';
           let filename: string = '';
+          let dateOfPhoto: string = '';
+          let destination: Array<string> = [];
+
+          const destinationProp = this.knoraService.pouOntology + 'destination';
+          if (onephoto.properties.hasOwnProperty(destinationProp)) {
+            const destinationVals: ReadTextValueAsString[] = onephoto.getValuesAs(destinationProp, ReadTextValueAsString);
+            for (const gaga of destinationVals) {
+              destination.push(gaga.strval);
+            }
+          }
+
           const prop = this.knoraService.pouOntology + 'physicalCopyValue';
           if (onephoto.properties.hasOwnProperty(prop)) {
             const linkval: ReadLinkValue[] = onephoto.getValuesAs(prop, ReadLinkValue);
@@ -74,18 +111,43 @@ export class HomeComponent implements OnInit {
               const prop2 = Constants.KnoraApiV2 + Constants.Delimiter + 'hasStillImageFileValue';
               if (stillimgres.properties.hasOwnProperty(prop2)) {
                 const gaga: Array<ReadStillImageFileValue> = stillimgres.getValuesAs(prop2, ReadStillImageFileValue);
-                console.log('GAGA:', gaga[0])
                 baseurl = gaga[0].iiifBaseUrl;
                 filename = gaga[0].filename;
               }
             }
           }
-          return new PhotoData(label, baseurl, filename);
+
+          const anchorpersProp = this.knoraService.pouOntology + 'anchorPersonValue';
+          const turkishNameProp = this.knoraService.pouOntology + 'turkishName';
+          const anchorpersons = this.helpers.getLinkedTextValueAsString(onephoto, anchorpersProp, turkishNameProp);
+
+          const peopleProp = this.knoraService.pouOntology + 'peopleOnPicValue';
+          const peoplepersons = this.helpers.getLinkedTextValueAsString(onephoto, peopleProp, turkishNameProp);
+
+          const dateofphoto_prop = this.knoraService.pouOntology + 'dateOfPhotograph';
+          if (onephoto.properties.hasOwnProperty(dateofphoto_prop)) {
+            const dateofphoto_val: ReadDateValue = onephoto.getValuesAs(prop, ReadDateValue);
+            dateOfPhoto = dateofphoto_val.strval;
+          }
+          return new PhotoData(label, baseurl, filename, destination, dateOfPhoto, anchorpersons, peoplepersons);
         });
+        this.showProgbar = false;
       }
     );
-
   }
+
+  pageChanged(event): void {
+    this.page = event.pageIndex;
+    this.router.navigate(
+      [],
+      {
+        relativeTo: this.activatedRoute,
+        queryParams: {page: this.page},
+        queryParamsHandling: "merge", // remove to replace all query params by provided
+      });
+    this.getPhotos();
+  }
+
 
   ngOnInit() {
     this.getPhotos();
