@@ -1,4 +1,4 @@
-<h1>Portraits of Unbelonging</h1>
+<!---<h1>Portraits of Unbelonging</h1>
 <input #searchTerm
        class="form-control"
 />
@@ -57,5 +57,21 @@
     <td>{{items[1]}}</td>
   </tr>
   </tbody>
-</table>
-<router-outlet></router-outlet>
+</table>-->
+<mat-toolbar>
+  <button mat-button routerLink="home">
+    <img src="../assets/PoU.png" style="max-height: 64px;" matTooltip="Portraits of Unbelonging">
+  </button>
+  <a mat-button *ngIf="knoraService.loggedin" (click)="logout()">{{ knoraService.useremail }}</a>
+  <span class="fill-remaining-space"></span>
+  <mat-icon appBackButton matTooltip="zurück" class="clickable">arrow_back</mat-icon>
+  <a mat-button routerLink="lexica">Persons</a>
+  <a mat-button routerLink="lemmata">Photographs</a>
+  <a mat-button routerLink="theproject">The Project</a>
+  <a mat-button routerLink="about">About</a>
+  <button mat-icon-button matTooltip="Benutzer an- und abmelden" (click)="account()"><mat-icon >account_box</mat-icon></button>
+  <button mat-icon-button matTooltip="Zurück zum Startbildschirm" routerLink="home"><mat-icon>home</mat-icon></button>
+</mat-toolbar>
+<router-outlet>
+
+</router-outlet>

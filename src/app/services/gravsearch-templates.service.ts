@@ -9,21 +9,46 @@ export class GravsearchTemplatesService {
 
   constructor(private sparqlPrep: SparqlPrep) { }
 
-  book_query(params: {[index: string]: string}): string {
+  person_query(params: {[index: string]: string}): string {
     const result = this.sparqlPrep.compile(`
     PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
-    PREFIX incunabula: <{{ ontology }}/ontology/0803/incunabula/simple/v2#>
+    PREFIX pou: <{{ ontology }}/ontology/0827/pou/simple/v2#>
     CONSTRUCT {
-      ?book knora-api:isMainResource true .
-      ?book incunabula:title ?title .
-      ?book incunabula:pubdate ?pubdate .
+      ?person knora-api:isMainResource true .
+      ?person pou:LastName ?lastname .
+      ?person pou:Photograph ?photograph .
     } WHERE {
-      ?book a knora-api:Resource .
-      ?book a incunabula:book .
-      ?book incunabula:title ?title .
-      FILTER regex(?title, "{{ book_title }}", "i") .
-      OPTIONAL { ?book incunabula:pubdate ?pubdate . }
+      ?person a knora-api:Resource .
+      ?person a pou:Person .
+      ?person pou:LastName ?lastname .
+      FILTER regex(?lastname, "{{ lastname }}", "i") .
+      OPTIONAL { ?person pou:Photograph ?photograph . }
     }
+    `, params);
+    return result;
+  }
+
+  photos_query(params: {[index: string]: string}): string {
+    const result = this.sparqlPrep.compile(`
+    PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
+    PREFIX pou: <{{ ontology }}/ontology/0827/pou/simple/v2#>
+    CONSTRUCT {
+        ?photograph knora-api:isMainResource true .
+        ?photograph pou:physicalCopy ?physcop .
+        ?photograph pou:anchorPerson ?anchpers .
+        ?photograph pou:peopleOnPic ?peopleonpic .
+        ?physcop knora-api:hasStillImageFileValue ?imgfile .
+        ?physcop pou:dateOfPhotograph ?photodate .
+    } WHERE {
+        ?photograph a knora-api:Resource .
+        ?photograph a pou:Photograph .
+        ?photograph pou:physicalCopy ?physcop .
+        ?physcop knora-api:hasStillImageFileValue ?imgfile .
+        OPTIONAL { ?photograph pou:anchorPerson ?anchpers . }
+        OPTIONAL { ?photograph pou:peopleOnPic ?peopleonpic . }
+        OPTIONAL { ?physcop pou:dateOfPhotograph ?photodate . }
+    }
+    OFFSET {{ page }}
     `, params);
     return result;
   }

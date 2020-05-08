@@ -1,5 +1,9 @@
 # Integration of Knora json lib
 
+## Addming materials
+
+```ng add @angular/material```
+
 ## Making knora-api-js-lib available
 **IMPORTANT NOTE:** The version of _rxjs_ used in _knora-api-js-lib_ must correspond to the version used in angular!
 At the moment it's best to install _knora-api-js-lib_ locally using yalc.
@@ -436,3 +440,5 @@ add to app.component.html:
   </tr>
 </table>
 ```
+
+```ng generate component -ts components/home```
