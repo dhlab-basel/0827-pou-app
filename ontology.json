@@ -1,0 +1,6048 @@
+{
+  "@graph": [
+    {
+      "@id": "pou:BackOfImage",
+      "@type": "owl:Class",
+      "knora-api:canBeInstantiated": true,
+      "knora-api:isResourceClass": true,
+      "rdfs:comment": "none",
+      "rdfs:label": "Backside of Imagee",
+      "rdfs:subClassOf": [
+        {
+          "@id": "knora-api:StillImageRepresentation"
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:arkUrl"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:attachedToProject"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:attachedToUser"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:creationDate"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:deleteComment"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:deleteDate"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:deletedBy"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "knora-api:hasIncomingLinkValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:hasPermissions"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "knora-api:hasStandoffLinkTo"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "knora-api:hasStandoffLinkToValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:hasStillImageFileValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:isDeleted"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:lastModificationDate"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:userHasPermission"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:versionArkUrl"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:versionDate"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:nullProperty"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "rdfs:label"
+          }
+        }
+      ]
+    },
+    {
+      "@id": "pou:CoverLetter",
+      "@type": "owl:Class",
+      "knora-api:canBeInstantiated": true,
+      "knora-api:isResourceClass": true,
+      "rdfs:comment": "none",
+      "rdfs:label": "Cover Letter",
+      "rdfs:subClassOf": [
+        {
+          "@id": "knora-api:Resource"
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:arkUrl"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:attachedToProject"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:attachedToUser"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:creationDate"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:deleteComment"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:deleteDate"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:deletedBy"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "knora-api:hasIncomingLinkValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:hasPermissions"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "knora-api:hasStandoffLinkTo"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "knora-api:hasStandoffLinkToValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:isDeleted"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:lastModificationDate"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:userHasPermission"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:versionArkUrl"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:versionDate"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:addresse"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:addressor"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:dateOfCoverLetter"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:detailsInDoc"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:documentIdNumber"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:familyLeftTogether"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:matchingFileAMKT"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:matchingFileBEO"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:matchingFileDH"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:matchingFileIHUS"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:matchingFileSD"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:matchingFileYildiz"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:matchingHRFile"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:ministryOfForeignAffairs"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:noPhotographs"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:noPhotographsSent"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:pageNumber"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:photograph"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:photographValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:police"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:specialCommision"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "rdfs:label"
+          }
+        }
+      ]
+    },
+    {
+      "@id": "pou:Document",
+      "@type": "owl:Class",
+      "knora-api:canBeInstantiated": true,
+      "knora-api:isResourceClass": true,
+      "rdfs:comment": "none",
+      "rdfs:label": "Document",
+      "rdfs:subClassOf": [
+        {
+          "@id": "knora-api:StillImageRepresentation"
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:arkUrl"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:attachedToProject"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:attachedToUser"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:creationDate"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:deleteComment"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:deleteDate"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:deletedBy"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "knora-api:hasIncomingLinkValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:hasPermissions"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "knora-api:hasStandoffLinkTo"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "knora-api:hasStandoffLinkToValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:hasStillImageFileValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:isDeleted"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:lastModificationDate"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:userHasPermission"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:versionArkUrl"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:versionDate"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:nameOfDocument"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "rdfs:label"
+          }
+        }
+      ]
+    },
+    {
+      "@id": "pou:Person",
+      "@type": "owl:Class",
+      "knora-api:canBeInstantiated": true,
+      "knora-api:isResourceClass": true,
+      "rdfs:comment": "none",
+      "rdfs:label": "Person",
+      "rdfs:subClassOf": [
+        {
+          "@id": "knora-api:Resource"
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:arkUrl"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:attachedToProject"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:attachedToUser"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:creationDate"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:deleteComment"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:deleteDate"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:deletedBy"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "knora-api:hasIncomingLinkValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:hasPermissions"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "knora-api:hasStandoffLinkTo"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "knora-api:hasStandoffLinkToValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:isDeleted"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:lastModificationDate"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:userHasPermission"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:versionArkUrl"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:versionDate"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:addressUS"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:addressUSValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:beforeInUS"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:closestRelative"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:closestRelativeValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:dateHRFile"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:dateMinistryForeign"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:dateNationalityBureau"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:dateNationalityDesk"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:dateOfAdmission"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:dateOfAdmissionValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:dateOfArrival"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:dateOfArrivalValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:dateOfBirth"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:dateOfBirthValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:dateOfDeath"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:dateOfDeathValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:dateOfDeclaration"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:dateOfDeclarationValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:dateOfDeparture"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:dateOfDepartureValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:dateOfPetition"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:dateOfPetitionValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:dateOttomanConsulate"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:dateRussianConsulate"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:destinationCity"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:destinationCountry"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:detailsHRFile"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:fathersName"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:finalDestination"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:finalDestinationValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:gender"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:grandfathersName"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:house"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:husbandsName"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:joiningUS"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:joiningUSValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:lastName"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:lastResidence"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:lastResidenceValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:nameOfPerson"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:nameOfPersonValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:naturalizationPhoto"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:naturalizationPhotoValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:originKarye"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:originKaza"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:originMahalle"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:originTown"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:originalRelation"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:otherFiles"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:otherFilesValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:placeOfBirth"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:placeOfBirthValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:placeOfDeath"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:placeOfDeathValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:portOfArrival"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:portOfArrivalValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:portOfDeparture"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:portOfDepartureValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:presentInPic"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:reasonDetainment"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:reasonDetainmentValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:relToAnchorperson"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:roi"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:sourceClosestRelative"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:toWhomHRFile"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:topLetter"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:topLetterValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:turkishName"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "rdfs:label"
+          }
+        }
+      ]
+    },
+    {
+      "@id": "pou:PersonFile",
+      "@type": "owl:Class",
+      "knora-api:canBeInstantiated": true,
+      "knora-api:isResourceClass": true,
+      "rdfs:comment": "none",
+      "rdfs:label": "Person File Help Resource",
+      "rdfs:subClassOf": [
+        {
+          "@id": "knora-api:Resource"
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:arkUrl"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:attachedToProject"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:attachedToUser"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:creationDate"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:deleteComment"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:deleteDate"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:deletedBy"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "knora-api:hasIncomingLinkValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:hasPermissions"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "knora-api:hasStandoffLinkTo"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "knora-api:hasStandoffLinkToValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:isDeleted"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:lastModificationDate"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:userHasPermission"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:versionArkUrl"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:versionDate"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:addressTo"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:dateOfFile"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:documentName"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:issuedBy"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "rdfs:label"
+          }
+        }
+      ]
+    },
+    {
+      "@id": "pou:Photograph",
+      "@type": "owl:Class",
+      "knora-api:canBeInstantiated": true,
+      "knora-api:isResourceClass": true,
+      "rdfs:comment": "none",
+      "rdfs:label": "Photograph",
+      "rdfs:subClassOf": [
+        {
+          "@id": "knora-api:Resource"
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:arkUrl"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:attachedToProject"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:attachedToUser"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:creationDate"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:deleteComment"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:deleteDate"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:deletedBy"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "knora-api:hasIncomingLinkValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:hasPermissions"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "knora-api:hasStandoffLinkTo"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "knora-api:hasStandoffLinkToValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:isDeleted"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:lastModificationDate"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:userHasPermission"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:versionArkUrl"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:versionDate"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:anchorPerson"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:anchorPersonValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:dateOfPassport"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:destination"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:passportInfoCelib"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:passportInfoVarak"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:peopleOnPic"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:peopleOnPicValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:physicalCopy"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:physicalCopyValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "rdfs:label"
+          }
+        }
+      ]
+    },
+    {
+      "@id": "pou:PhysicalCopy",
+      "@type": "owl:Class",
+      "knora-api:canBeInstantiated": true,
+      "knora-api:isResourceClass": true,
+      "rdfs:comment": "none",
+      "rdfs:label": "Physical Copy",
+      "rdfs:subClassOf": [
+        {
+          "@id": "knora-api:StillImageRepresentation"
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:arkUrl"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:attachedToProject"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:attachedToUser"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:creationDate"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:deleteComment"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:deleteDate"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:deletedBy"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "knora-api:hasIncomingLinkValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:hasPermissions"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "knora-api:hasStandoffLinkTo"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "knora-api:hasStandoffLinkToValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:hasStillImageFileValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:isDeleted"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:lastModificationDate"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:userHasPermission"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:versionArkUrl"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:versionDate"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:backOfImage"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:backOfImageValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:bureaucraticStamp"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:colorOfInk"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:dateOfDocument"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:dateOfPhotograph"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:dateOnPhotograph"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:fileName"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:handwrittenOnFront"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:locationOfPhotographer"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:numbered"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:otherNotes"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:perforated"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:photographer"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:placeOfStudiosPhotographersName"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:printedInfoOnFront"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:roiMax"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:sameAs"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:sealOfState"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:sealOfStateIssuer"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:secondSeal"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:secondSealIssuer"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:writingOnFront"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "rdfs:label"
+          }
+        }
+      ]
+    },
+    {
+      "@id": "pou:RelatedPhotographs",
+      "@type": "owl:Class",
+      "knora-api:canBeInstantiated": true,
+      "knora-api:isResourceClass": true,
+      "rdfs:comment": "none",
+      "rdfs:label": "Document",
+      "rdfs:subClassOf": [
+        {
+          "@id": "knora-api:Resource"
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:arkUrl"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:attachedToProject"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:attachedToUser"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:creationDate"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:deleteComment"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:deleteDate"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:deletedBy"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "knora-api:hasIncomingLinkValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:hasPermissions"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "knora-api:hasStandoffLinkTo"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "knora-api:hasStandoffLinkToValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:isDeleted"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:lastModificationDate"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:userHasPermission"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:versionArkUrl"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:versionDate"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:documentRel"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:documentRelValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:notes"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:relatedPeople"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:relatedPeopleValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:relationship"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "pou:sourceOfRelationship"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "rdfs:label"
+          }
+        }
+      ]
+    },
+    {
+      "@id": "pou:SourcedDate",
+      "@type": "owl:Class",
+      "knora-api:canBeInstantiated": true,
+      "knora-api:isResourceClass": true,
+      "rdfs:comment": "none",
+      "rdfs:label": "Sourced Date",
+      "rdfs:subClassOf": [
+        {
+          "@id": "knora-api:Resource"
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:arkUrl"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:attachedToProject"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:attachedToUser"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:creationDate"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:deleteComment"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:deleteDate"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:deletedBy"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "knora-api:hasIncomingLinkValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:hasPermissions"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "knora-api:hasStandoffLinkTo"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "knora-api:hasStandoffLinkToValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:isDeleted"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:lastModificationDate"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:userHasPermission"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:versionArkUrl"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:versionDate"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:dateValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:documentOfSource"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:documentOfSourceValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:sourceOfDate"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "rdfs:label"
+          }
+        }
+      ]
+    },
+    {
+      "@id": "pou:SourcedText",
+      "@type": "owl:Class",
+      "knora-api:canBeInstantiated": true,
+      "knora-api:isResourceClass": true,
+      "rdfs:comment": "none",
+      "rdfs:label": "Sourced Text",
+      "rdfs:subClassOf": [
+        {
+          "@id": "knora-api:Resource"
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:arkUrl"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:attachedToProject"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:attachedToUser"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:creationDate"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:deleteComment"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:deleteDate"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:deletedBy"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "knora-api:hasIncomingLinkValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:hasPermissions"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "knora-api:hasStandoffLinkTo"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:minCardinality": 0,
+          "owl:onProperty": {
+            "@id": "knora-api:hasStandoffLinkToValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:isDeleted"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:lastModificationDate"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:userHasPermission"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:versionArkUrl"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "knora-api:versionDate"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:documentOfText"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:maxCardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:documentOfTextValue"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:sourceOfText"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "pou:text"
+          }
+        },
+        {
+          "@type": "owl:Restriction",
+          "knora-api:isInherited": true,
+          "owl:cardinality": 1,
+          "owl:onProperty": {
+            "@id": "rdfs:label"
+          }
+        }
+      ]
+    },
+    {
+      "@id": "pou:addressTo",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:PersonFile"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Address to",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:addressUS",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "pou:SourcedText"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Address joining in the US",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkTo"
+      }
+    },
+    {
+      "@id": "pou:addressUSValue",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkValueProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:LinkValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Address joining in the US",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkToValue"
+      }
+    },
+    {
+      "@id": "pou:addresse",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:CoverLetter"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Addresse",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:addressor",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:CoverLetter"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Addressor",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:anchorPerson",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "pou:Person"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Photograph"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Anchor Person",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkTo"
+      }
+    },
+    {
+      "@id": "pou:anchorPersonValue",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkValueProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:LinkValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Photograph"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Anchor Person",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkToValue"
+      }
+    },
+    {
+      "@id": "pou:backOfImage",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "pou:BackOfImage"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:PhysicalCopy"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Backside of Image",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkTo"
+      }
+    },
+    {
+      "@id": "pou:backOfImageValue",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkValueProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:LinkValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:PhysicalCopy"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Backside of Image",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkToValue"
+      }
+    },
+    {
+      "@id": "pou:beforeInUS",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:BooleanValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Whether ever before in US",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:bureaucraticStamp",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:PhysicalCopy"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Bureaucratic Stamp",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:closestRelative",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "pou:RelatedPhotographs"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Closest Relative or friend in place of origin",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkTo"
+      }
+    },
+    {
+      "@id": "pou:closestRelativeValue",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkValueProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:LinkValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Closest Relative or friend in place of origin",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkToValue"
+      }
+    },
+    {
+      "@id": "pou:colorOfInk",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:PhysicalCopy"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Color of Ink",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:dateHRFile",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:DateValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Date of HR File",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:dateMinistryForeign",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:DateValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Date the document was sent to the Ministry of Foreign Affairs",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:dateNationalityBureau",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:DateValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Date the document was sent to Nationality Bureau?",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:dateNationalityDesk",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:DateValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Date the document was sent to Nationality Desk?",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:dateOfAdmission",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "pou:SourcedDate"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Date of Admission",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkTo"
+      }
+    },
+    {
+      "@id": "pou:dateOfAdmissionValue",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkValueProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:LinkValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Date of Admission",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkToValue"
+      }
+    },
+    {
+      "@id": "pou:dateOfArrival",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "pou:SourcedDate"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Date of Arrival",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkTo"
+      }
+    },
+    {
+      "@id": "pou:dateOfArrivalValue",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkValueProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:LinkValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Date of Arrival",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkToValue"
+      }
+    },
+    {
+      "@id": "pou:dateOfBirth",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "pou:SourcedDate"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Date of Birth",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkTo"
+      }
+    },
+    {
+      "@id": "pou:dateOfBirthValue",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkValueProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:LinkValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Date of Birth",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkToValue"
+      }
+    },
+    {
+      "@id": "pou:dateOfCoverLetter",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:DateValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:CoverLetter"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Date",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:dateOfDeath",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "pou:SourcedDate"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Date of Death",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkTo"
+      }
+    },
+    {
+      "@id": "pou:dateOfDeathValue",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkValueProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:LinkValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Date of Death",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkToValue"
+      }
+    },
+    {
+      "@id": "pou:dateOfDeclaration",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "pou:SourcedDate"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Date of Declaration",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkTo"
+      }
+    },
+    {
+      "@id": "pou:dateOfDeclarationValue",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkValueProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:LinkValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Date of Declaration",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkToValue"
+      }
+    },
+    {
+      "@id": "pou:dateOfDeparture",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "pou:SourcedDate"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Date of Departure",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkTo"
+      }
+    },
+    {
+      "@id": "pou:dateOfDepartureValue",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkValueProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:LinkValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Date of Departure",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkToValue"
+      }
+    },
+    {
+      "@id": "pou:dateOfDocument",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:DateValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:PhysicalCopy"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Date of Document",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:dateOfFile",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:DateValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:PersonFile"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Date of File",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:dateOfPassport",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:DateValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Photograph"
+      },
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:Date"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Date of Passport",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:dateOfPetition",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "pou:SourcedDate"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Date of Petetion",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkTo"
+      }
+    },
+    {
+      "@id": "pou:dateOfPetitionValue",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkValueProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:LinkValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Date of Petetion",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkToValue"
+      }
+    },
+    {
+      "@id": "pou:dateOfPhotograph",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:DateValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:PhysicalCopy"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Date of photograph",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:dateOnPhotograph",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:DateValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:PhysicalCopy"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Date on photograph (Bureaucratic)",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:dateOttomanConsulate",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:DateValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Date the document was sent to the Ottoman Consulate?",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:dateRussianConsulate",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:DateValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Date the document was sent to Russian Consulate?",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:dateValue",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:DateValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:SourcedDate"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Date",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:destination",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Photograph"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Destination",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:destinationCity",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Destination City",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:destinationCountry",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Destination Country",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:detailsHRFile",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Relevant details in the HR document",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:detailsInDoc",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:CoverLetter"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Details in Document",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:documentIdNumber",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:CoverLetter"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Document ID Number",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:documentName",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:PersonFile"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Document Name",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:documentOfSource",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "pou:Document"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:SourcedDate"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Document",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkTo"
+      }
+    },
+    {
+      "@id": "pou:documentOfSourceValue",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkValueProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:LinkValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:SourcedDate"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Document",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkToValue"
+      }
+    },
+    {
+      "@id": "pou:documentOfText",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "pou:Document"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:SourcedText"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Document",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkTo"
+      }
+    },
+    {
+      "@id": "pou:documentOfTextValue",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkValueProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:LinkValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:SourcedText"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Document",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkToValue"
+      }
+    },
+    {
+      "@id": "pou:documentRel",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "pou:Document"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:RelatedPhotographs"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Document",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkTo"
+      }
+    },
+    {
+      "@id": "pou:documentRelValue",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkValueProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:LinkValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:RelatedPhotographs"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Document",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkToValue"
+      }
+    },
+    {
+      "@id": "pou:familyLeftTogether",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:BooleanValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:CoverLetter"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Did the Family leave together?",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:fathersName",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Father's Name",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:fileName",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:PhysicalCopy"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "File Name",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:finalDestination",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "pou:SourcedText"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Final Destination",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkTo"
+      }
+    },
+    {
+      "@id": "pou:finalDestinationValue",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkValueProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:LinkValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Final Destination",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkToValue"
+      }
+    },
+    {
+      "@id": "pou:gender",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:ListValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": "hlist=<http://rdfh.ch/lists/0827/enJmwAxKR7KUSLWL8LizfQ>",
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:Pulldown"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Gender",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:grandfathersName",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Grandfather's Name",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:handwrittenOnFront",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:BooleanValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:PhysicalCopy"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Hand-written on Front?",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:house",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "House",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:husbandsName",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Husband's Name",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:issuedBy",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:PersonFile"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Issued by",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:joiningUS",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "pou:RelatedPhotographs"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Person joining in the US",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkTo"
+      }
+    },
+    {
+      "@id": "pou:joiningUSValue",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkValueProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:LinkValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Person joining in the US",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkToValue"
+      }
+    },
+    {
+      "@id": "pou:lastName",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Last Name",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:lastResidence",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "pou:SourcedText"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Last place of residence",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkTo"
+      }
+    },
+    {
+      "@id": "pou:lastResidenceValue",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkValueProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:LinkValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Last place of residence",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkToValue"
+      }
+    },
+    {
+      "@id": "pou:locationOfPhotographer",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:PhysicalCopy"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Location of photographer",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:matchingFileAMKT",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:CoverLetter"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Matching file in A MKT",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:matchingFileBEO",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:CoverLetter"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Matching file in BEO",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:matchingFileDH",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:CoverLetter"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Matching file in DH",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:matchingFileIHUS",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:CoverLetter"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Matching file in I HUS",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:matchingFileSD",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:CoverLetter"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Matching file in A S D",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:matchingFileYildiz",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:CoverLetter"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Matching file in Yildiz",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:matchingHRFile",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:CoverLetter"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Matching HR File",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:ministryOfForeignAffairs",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:BooleanValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:CoverLetter"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Ministry of Foreign Affairs",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:nameOfDocument",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Document"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Name",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:nameOfPerson",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "pou:SourcedText"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Name",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkTo"
+      }
+    },
+    {
+      "@id": "pou:nameOfPersonValue",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkValueProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:LinkValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Name",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkToValue"
+      }
+    },
+    {
+      "@id": "pou:naturalizationPhoto",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "pou:SourcedText"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Naturalization Photo",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkTo"
+      }
+    },
+    {
+      "@id": "pou:naturalizationPhotoValue",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkValueProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:LinkValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Naturalization Photo",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkToValue"
+      }
+    },
+    {
+      "@id": "pou:noPhotographs",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:CoverLetter"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "How many Photographs?",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:noPhotographsSent",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:CoverLetter"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "How many Photographs sent?",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:notes",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:RelatedPhotographs"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Notes",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:nullProperty",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:BackOfImage"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Dummy property for upload",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:numbered",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:BooleanValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:PhysicalCopy"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Numbered?",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:originKarye",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Origin Karye",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:originKaza",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Origin Kaza",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:originMahalle",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Origin Mahalle",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:originTown",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Origin Town",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:originalRelation",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Original Relation that didn't fit in Anchorperson format",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:otherFiles",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "pou:PersonFile"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Other Files",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkTo"
+      }
+    },
+    {
+      "@id": "pou:otherFilesValue",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkValueProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:LinkValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Other Files",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkToValue"
+      }
+    },
+    {
+      "@id": "pou:otherNotes",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:PhysicalCopy"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Other Notes",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:pageNumber",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:CoverLetter"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Page Number",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:passportInfoCelib",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Photograph"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Passport information (Celib)",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:passportInfoVarak",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Photograph"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Passport information (Varak)",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:peopleOnPic",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "pou:Person"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Photograph"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "People on Picture",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkTo"
+      }
+    },
+    {
+      "@id": "pou:peopleOnPicValue",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkValueProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:LinkValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Photograph"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "People on Picture",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkToValue"
+      }
+    },
+    {
+      "@id": "pou:perforated",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:BooleanValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:PhysicalCopy"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Perforated?",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:photograph",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "pou:Photograph"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:CoverLetter"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Photograph",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkTo"
+      }
+    },
+    {
+      "@id": "pou:photographValue",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkValueProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:LinkValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:CoverLetter"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Photograph",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkToValue"
+      }
+    },
+    {
+      "@id": "pou:photographer",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:PhysicalCopy"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Photographer",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:physicalCopy",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "pou:PhysicalCopy"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Photograph"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Physical Copy",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkTo"
+      }
+    },
+    {
+      "@id": "pou:physicalCopyValue",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkValueProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:LinkValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Photograph"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Physical Copy",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkToValue"
+      }
+    },
+    {
+      "@id": "pou:placeOfBirth",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "pou:SourcedText"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Place of Birth",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkTo"
+      }
+    },
+    {
+      "@id": "pou:placeOfBirthValue",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkValueProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:LinkValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Place of Birth",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkToValue"
+      }
+    },
+    {
+      "@id": "pou:placeOfDeath",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "pou:SourcedText"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Place of Death",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkTo"
+      }
+    },
+    {
+      "@id": "pou:placeOfDeathValue",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkValueProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:LinkValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Place of Death",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkToValue"
+      }
+    },
+    {
+      "@id": "pou:placeOfStudiosPhotographersName",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:PhysicalCopy"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Place of Studio's Photographer's Name",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:police",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:BooleanValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:CoverLetter"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Police Department",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:portOfArrival",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "pou:SourcedText"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Port of Arrival",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkTo"
+      }
+    },
+    {
+      "@id": "pou:portOfArrivalValue",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkValueProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:LinkValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Port of Arrival",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkToValue"
+      }
+    },
+    {
+      "@id": "pou:portOfDeparture",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "pou:SourcedText"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Port of Departure",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkTo"
+      }
+    },
+    {
+      "@id": "pou:portOfDepartureValue",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkValueProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:LinkValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Port of Departure",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkToValue"
+      }
+    },
+    {
+      "@id": "pou:presentInPic",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:BooleanValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Present in Photograph",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:printedInfoOnFront",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:PhysicalCopy"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Printed Information on Front",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:reasonDetainment",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "pou:SourcedText"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Reason for Detainment",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkTo"
+      }
+    },
+    {
+      "@id": "pou:reasonDetainmentValue",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkValueProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:LinkValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Reason for Detainment",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkToValue"
+      }
+    },
+    {
+      "@id": "pou:relToAnchorperson",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:ListValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": "hlist=<http://rdfh.ch/lists/0827/h72SjnZmTLmhc4BOjtMk1w>",
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:Pulldown"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Relation to Anchorperson",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:relatedPeople",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "pou:Person"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:RelatedPhotographs"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Related People",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkTo"
+      }
+    },
+    {
+      "@id": "pou:relatedPeopleValue",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkValueProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:LinkValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:RelatedPhotographs"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Related People",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkToValue"
+      }
+    },
+    {
+      "@id": "pou:relationship",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:ListValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:RelatedPhotographs"
+      },
+      "salsah-gui:guiAttribute": "hlist=<http://rdfh.ch/lists/0827/h72SjnZmTLmhc4BOjtMk1w>",
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:Pulldown"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Relationship",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:roi",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Range of Interest",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:roiMax",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:PhysicalCopy"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "ROI Maximal Coordinates",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:sameAs",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:PhysicalCopy"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Same as",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:sealOfState",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:BooleanValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:PhysicalCopy"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Seal of State Institution?",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:sealOfStateIssuer",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:PhysicalCopy"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Seal of State Institution Issuer",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:secondSeal",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:PhysicalCopy"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Second Seal",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:secondSealIssuer",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:PhysicalCopy"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Second Seal Institution Issuer",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:sourceClosestRelative",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Source of closest Relative or friend in place of origin",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:sourceOfDate",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:SourcedDate"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Source",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:sourceOfRelationship",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:RelatedPhotographs"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Source",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:sourceOfText",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:SourcedText"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Source",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:specialCommision",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:BooleanValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:CoverLetter"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Special Commision",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:text",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:SourcedText"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Text",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:toWhomHRFile",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "To Whom was teh HR file sent?",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:topLetter",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "pou:PersonFile"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Top Letter",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkTo"
+      }
+    },
+    {
+      "@id": "pou:topLetterValue",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isLinkValueProperty": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:LinkValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Top Letter",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasLinkToValue"
+      }
+    },
+    {
+      "@id": "pou:turkishName",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:Person"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Turkish Last Name",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    },
+    {
+      "@id": "pou:writingOnFront",
+      "@type": "owl:ObjectProperty",
+      "knora-api:isEditable": true,
+      "knora-api:isResourceProperty": true,
+      "knora-api:objectType": {
+        "@id": "knora-api:TextValue"
+      },
+      "knora-api:subjectType": {
+        "@id": "pou:PhysicalCopy"
+      },
+      "salsah-gui:guiAttribute": [
+        "maxlength=128",
+        "size=32"
+      ],
+      "salsah-gui:guiElement": {
+        "@id": "salsah-gui:SimpleText"
+      },
+      "rdfs:comment": "none",
+      "rdfs:label": "Writing on Front",
+      "rdfs:subPropertyOf": {
+        "@id": "knora-api:hasValue"
+      }
+    }
+  ],
+  "@id": "http://api.pou.test.dasch.swiss/ontology/0827/pou/v2",
+  "@type": "owl:Ontology",
+  "knora-api:attachedToProject": {
+    "@id": "http://rdfh.ch/projects/0827"
+  },
+  "knora-api:lastModificationDate": {
+    "@type": "xsd:dateTimeStamp",
+    "@value": "2020-04-24T12:43:48.439514Z"
+  },
+  "rdfs:label": "Portraits of Unbelonging Ontology",
+  "@context": {
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "knora-api": "http://api.knora.org/ontology/knora-api/v2#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "salsah-gui": "http://api.knora.org/ontology/salsah-gui/v2#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "pou": "http://api.pou.test.dasch.swiss/ontology/0827/pou/v2#"
+  }
+}
