@@ -12,13 +12,13 @@ export interface LoginData {
   template: `
     <h1 mat-dialog-title>Login</h1>
     <mat-dialog-content [formGroup]="form">
-      <mat-form-field>
+      <mat-form-field class="example-full-width">
         <input matInput
                placeholder="Email"
-               formControlName="email">
+               formControlName="email" style="width: 90%">
       </mat-form-field>
       <br/>
-      <mat-form-field>
+      <mat-form-field class="example-full-width">
         <input matInput
                type="password"
                placeholder="Password"
@@ -32,7 +32,8 @@ export interface LoginData {
   `,
   styles: [
     '.dialogdemoBasicUsage #popupContainer { position: relative; }',
-    '#login-dialog { max-width: 90%; width: 500px; height: 500px;}'
+    '#login-dialog { max-width: 90%; width: 500px; height: 500px;}',
+    '.example-full-width { width: 100%; }'
   ]
 })
 

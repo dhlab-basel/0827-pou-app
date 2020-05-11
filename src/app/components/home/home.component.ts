@@ -26,7 +26,7 @@ class PhotoData {
     <p>
       Number of Photos: {{ nPhotos }}
     </p>
-    <mat-grid-list cols="5" rowHeight="1:1.8">
+    <mat-grid-list cols="5" rowHeight="1:2.5">
       <mat-grid-tile *ngFor="let x of photos">
         <mat-card>
           <mat-card-title>
@@ -36,9 +36,11 @@ class PhotoData {
             <p>
             <img class="newimg" mat-card-image src="{{x.baseurl}}/{{x.filename}}/full/200,/0/default.jpg"/>
             </p>
-            <p *ngIf="x.destination.length > 0">Destination: {{ x.destination[0] }}</p>
-            <p *ngFor="let ap of x.anchorpersons">Anchor person: {{ ap[0] }}</p>
-            <p *ngFor="let ap of x.peoplepersons">People on photo: {{ ap[0] }}</p>
+            <table>
+              <tr><td>Destination:</td><td>{{ x.destination[0] }}</td></tr>
+              <tr *ngFor="let ap of x.anchorpersons"><td>Anchor:</td><td>{{ap[0] }}</td></tr>
+              <tr *ngFor="let ap of x.peoplepersons"><td>on photo:</td><td>{{ ap[0] }}</td></tr>
+            </table>
           </mat-card-content>
         </mat-card>
       </mat-grid-tile>
@@ -124,10 +126,10 @@ export class HomeComponent implements OnInit {
           const peopleProp = this.knoraService.pouOntology + 'peopleOnPicValue';
           const peoplepersons = this.helpers.getLinkedTextValueAsString(onephoto, peopleProp, turkishNameProp);
 
-          const dateofphoto_prop = this.knoraService.pouOntology + 'dateOfPhotograph';
-          if (onephoto.properties.hasOwnProperty(dateofphoto_prop)) {
-            const dateofphoto_val: ReadDateValue = onephoto.getValuesAs(prop, ReadDateValue);
-            dateOfPhoto = dateofphoto_val.strval;
+          const dateofphotoProp = this.knoraService.pouOntology + 'dateOfPhotograph';
+          if (onephoto.properties.hasOwnProperty(dateofphotoProp)) {
+            const dateofphoto_val: ReadDateValue[] = onephoto.getValuesAs(dateofphotoProp, ReadDateValue);
+            dateOfPhoto = dateofphoto_val[0].strval;
           }
           return new PhotoData(label, baseurl, filename, destination, dateOfPhoto, anchorpersons, peoplepersons);
         });
