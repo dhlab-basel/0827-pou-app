@@ -14,8 +14,12 @@ class PhotoData {
               public filename: string,
               public destination: Array<string>,
               public dateofphoto: string,
-              public anchorpersons: Array<Array<string>>,
-              public peoplepersons: Array<Array<string>>) {}
+              public origFileName: string,
+              public anchorpersons: Array<Array<Array<string>>>,
+              public peoplepersons: Array<Array<string>>,
+              public firstnames: Array<Array<Array<string>>>
+              ) {}
+
 }
 
 
@@ -30,7 +34,7 @@ class PhotoData {
       <mat-grid-tile *ngFor="let x of photos">
         <mat-card>
           <mat-card-title>
-            <h3>{{ x.label }}</h3>
+            <h3>{{ x.origFileName }}</h3>
           </mat-card-title>
           <mat-card-content>
             <p>
@@ -38,8 +42,9 @@ class PhotoData {
             </p>
             <table>
               <tr><td>Destination:</td><td>{{ x.destination[0] }}</td></tr>
+              <tr><td>Last Name: </td><td>{{ x.peoplepersons[0] }}</td></tr>
               <tr *ngFor="let ap of x.anchorpersons"><td>Anchor:</td><td>{{ap[0] }}</td></tr>
-              <tr *ngFor="let ap of x.peoplepersons"><td>on photo:</td><td>{{ ap[0] }}</td></tr>
+              <tr *ngFor="let ap of x.firstnames"><td>on picture:</td><td>{{ ap[0] }}</td></tr>
             </table>
           </mat-card-content>
         </mat-card>
@@ -96,7 +101,9 @@ export class HomeComponent implements OnInit {
           let filename: string = '';
           let dateOfPhoto: string = '';
           let destination: Array<string> = [];
-
+          let origFileName: Array<string> = [];
+          let firstNames: Array<Array<Array<string>>> = [];
+          let anchorPersons: Array<Array<Array<string>>> = [];
           const destinationProp = this.knoraService.pouOntology + 'destination';
           if (onephoto.properties.hasOwnProperty(destinationProp)) {
             const destinationVals: ReadTextValueAsString[] = onephoto.getValuesAs(destinationProp, ReadTextValueAsString);
@@ -119,19 +126,44 @@ export class HomeComponent implements OnInit {
             }
           }
 
-          const anchorpersProp = this.knoraService.pouOntology + 'anchorPersonValue';
-          const turkishNameProp = this.knoraService.pouOntology + 'turkishName';
-          const anchorpersons = this.helpers.getLinkedTextValueAsString(onephoto, anchorpersProp, turkishNameProp);
-
+          const firstNameObjectProp = this.knoraService.pouOntology + 'nameOfPersonValue';
+          const firstNameProp = this.knoraService.pouOntology + 'text' ;
           const peopleProp = this.knoraService.pouOntology + 'peopleOnPicValue';
+          const anchorpersProp = this.knoraService.pouOntology + 'anchorPersonValue';
+          if (onephoto.properties.hasOwnProperty(peopleProp)) {
+            const people = onephoto.getValuesAs(peopleProp, ReadLinkValue);
+            if (people.length > 0) {
+              for (var pers of people) {
+                var peopleRead: ReadResource = pers.linkedResource;
+                firstNames.push(this.helpers.getLinkedTextValueAsString(peopleRead, firstNameObjectProp, firstNameProp));
+              }
+            }
+         }
+          if (onephoto.properties.hasOwnProperty(anchorpersProp)) {
+            const people = onephoto.getValuesAs(anchorpersProp, ReadLinkValue);
+            if (people.length > 0) {
+              for (var pers of people) {
+                var peopleRead: ReadResource = pers.linkedResource;
+                anchorPersons.push(this.helpers.getLinkedTextValueAsString(peopleRead, firstNameObjectProp, firstNameProp));
+              }
+            }
+          }
+
+          const turkishNameProp = this.knoraService.pouOntology + 'turkishName';
           const peoplepersons = this.helpers.getLinkedTextValueAsString(onephoto, peopleProp, turkishNameProp);
+
 
           const dateofphotoProp = this.knoraService.pouOntology + 'dateOfPhotograph';
           if (onephoto.properties.hasOwnProperty(dateofphotoProp)) {
             const dateofphoto_val: ReadDateValue[] = onephoto.getValuesAs(dateofphotoProp, ReadDateValue);
             dateOfPhoto = dateofphoto_val[0].strval;
           }
-          return new PhotoData(label, baseurl, filename, destination, dateOfPhoto, anchorpersons, peoplepersons);
+
+          const physProp = this.knoraService.pouOntology + 'physicalCopyValue';
+          const fileNameProp = this.knoraService.pouOntology + 'fileName';
+          origFileName = this.helpers.getLinkedTextValueAsString(onephoto, physProp, fileNameProp)[0];
+
+          return new PhotoData(label, baseurl, filename, destination, dateOfPhoto, origFileName[0], anchorPersons, peoplepersons, firstNames);
         });
         this.showProgbar = false;
       }

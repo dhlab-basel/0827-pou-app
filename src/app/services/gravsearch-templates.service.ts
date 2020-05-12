@@ -40,13 +40,17 @@ export class GravsearchTemplatesService {
         ?photograph pou:destination ?destination .
         ?physcop knora-api:hasStillImageFileValue ?imgfile .
         ?physcop pou:dateOfPhotograph ?photodate .
+        ?physcop pou:fileName ?fileName .
         ?anchorpers pou:turkishName ?tname .
         ?people pou:turkishName ?tname2 .
+        ?people pou:nameOfPerson ?firstNameObject .
+        ?firstNameObject pou:text ?firstName .
     } WHERE {
         ?photograph a knora-api:Resource .
         ?photograph a pou:Photograph .
         ?photograph pou:physicalCopy ?physcop .
         ?physcop knora-api:hasStillImageFileValue ?imgfile .
+        ?physcop pou:fileName ?fileName .
         OPTIONAL {
           ?photograph pou:anchorPerson ?anchorpers .
           ?anchorpers pou:turkishName ?tname .
@@ -54,6 +58,8 @@ export class GravsearchTemplatesService {
         OPTIONAL {
           ?photograph pou:peopleOnPic ?people .
           ?people pou:turkishName ?tname2 .
+          ?people pou:nameOfPerson ?firstNameObject .
+          ?firstNameObject pou:text ?firstName .
         }
         OPTIONAL { ?photograph pou:destination ?destination . }
         OPTIONAL { ?physcop pou:dateOfPhotograph ?photodate . }
