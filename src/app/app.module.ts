@@ -34,6 +34,7 @@ import {SparqlPrep} from './classes/sparql-prep';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import {Helpers} from './classes/helpers';
+import { PhotoPageComponent } from './components/photo-page/photo-page.component';
 
 export function initializeApp(appInitService: AppInitService) {
   return (): Promise<any> => {
@@ -46,7 +47,8 @@ export function initializeApp(appInitService: AppInitService) {
   declarations: [
     AppComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    PhotoPageComponent
   ],
   entryComponents: [
     LoginComponent

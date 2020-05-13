@@ -9,7 +9,8 @@ import {Constants} from '@knora/api/src/models/v2/Constants';
 import {Helpers} from '../../classes/helpers';
 
 class PhotoData {
-  constructor(public label: string,
+  constructor(public photoIri: string,
+              public label: string,
               public baseurl: string,
               public filename: string,
               public destination: Array<string>,
@@ -32,7 +33,7 @@ class PhotoData {
     </p>
     <mat-grid-list cols="5" rowHeight="1:2.5">
       <mat-grid-tile *ngFor="let x of photos">
-        <mat-card>
+        <mat-card (click)="photoClicked(x)">
           <mat-card-title>
             <h3>{{ x.origFileName }}</h3>
           </mat-card-title>
@@ -97,6 +98,7 @@ export class HomeComponent implements OnInit {
       (photos: ReadResource[]) => {
         this.photos = photos.map((onephoto: ReadResource) => {
           const label: string = onephoto.label;
+          const photoIri: string = onephoto.id;
           let baseurl: string = '-';
           let filename: string = '';
           let dateOfPhoto: string = '';
@@ -163,7 +165,17 @@ export class HomeComponent implements OnInit {
           const fileNameProp = this.knoraService.pouOntology + 'fileName';
           origFileName = this.helpers.getLinkedTextValueAsString(onephoto, physProp, fileNameProp)[0];
 
-          return new PhotoData(label, baseurl, filename, destination, dateOfPhoto, origFileName[0], anchorPersons, peoplepersons, firstNames);
+          return new PhotoData(
+            photoIri,
+            label,
+            baseurl,
+            filename,
+            destination,
+            dateOfPhoto,
+            origFileName[0],
+            anchorPersons,
+            peoplepersons,
+            firstNames);
         });
         this.showProgbar = false;
       }
@@ -182,6 +194,17 @@ export class HomeComponent implements OnInit {
     this.getPhotos();
   }
 
+  photoClicked(photoData: PhotoData): void {
+    console.log("CLICK DETECTED", photoData);
+    const url = 'photo/' + encodeURIComponent(photoData.photoIri);
+    this.router.navigateByUrl(url).then(e => {
+      if (e) {
+        console.log("Navigation is successful!");
+      } else {
+        console.log("Navigation has failed!");
+      }
+    });
+  }
 
   ngOnInit() {
     this.getPhotos();
