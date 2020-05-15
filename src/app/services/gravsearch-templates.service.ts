@@ -27,7 +27,6 @@ export class GravsearchTemplatesService {
     `, params);
     return result;
   }
-
   photos_query(params: {[index: string]: string}): string {
     const result = this.sparqlPrep.compile(`
     PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
@@ -45,7 +44,14 @@ export class GravsearchTemplatesService {
         ?people pou:turkishName ?tname2 .
         ?people pou:nameOfPerson ?firstNameObject .
         ?firstNameObject pou:text ?firstName .
+        {{ #if photo_iri }}
+        ?people pou:relationship ?relationship .
+        {{ #endif }}
     } WHERE {
+        {{ #if photo_iri }}
+        BIND(<{{ photo_iri }}> AS ?photo)
+        ?people pou:relationship ?relationship .
+        {{ #endif }}
         ?photograph a knora-api:Resource .
         ?photograph a pou:Photograph .
         ?photograph pou:physicalCopy ?physcop .

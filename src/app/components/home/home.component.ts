@@ -45,7 +45,8 @@ class PhotoData {
               <tr><td>Destination:</td><td>{{ x.destination[0] }}</td></tr>
               <tr><td>Last Name: </td><td>{{ x.peoplepersons[0] }}</td></tr>
               <tr *ngFor="let ap of x.anchorpersons"><td>Anchor:</td><td>{{ap[0] }}</td></tr>
-              <tr *ngFor="let ap of x.firstnames"><td>on picture:</td><td>{{ ap[0] }}</td></tr>
+              <tr *ngFor="let ap of x.firstnames"><td>on picture:</td><td *ngIf="x.anchorpersons[0][0] ===  ap[0]"><strong>{{ ap[0] }}</strong></td><td *ngIf="ap[0] != x.anchorpersons[0][0]">X{{ ap[0] }}X{{x.anchorpersons[0][0]}}X</td>
+              </tr>
             </table>
           </mat-card-content>
         </mat-card>
