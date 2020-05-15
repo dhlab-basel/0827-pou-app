@@ -49,7 +49,7 @@ export class GravsearchTemplatesService {
         {{ #endif }}
     } WHERE {
         {{ #if photo_iri }}
-        BIND(<{{ photo_iri }}> AS ?photo)
+        BIND(<{{ photo_iri }}> AS ?photograph)
         ?people pou:relationship ?relationship .
         {{ #endif }}
         ?photograph a knora-api:Resource .
@@ -74,4 +74,29 @@ export class GravsearchTemplatesService {
     `, params);
     return result;
   }
+
+  photos_query2(params: {[index: string]: string}): string {
+    const result = this.sparqlPrep.compile(`
+    PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
+    PREFIX pou: <{{ ontology }}/ontology/0827/pou/simple/v2#>
+    CONSTRUCT {
+        ?photograph knora-api:isMainResource true .
+        ?photograph pou:destination ?destination .
+        ?photograph pou:physicalCopy ?physcop .
+        ?physcop knora-api:hasStillImageFileValue ?imgfile .
+    } WHERE {
+        {{ #if photo_iri }}
+        BIND(<{{ photo_iri }}> AS ?photograph)
+        {{ #endif }}
+        ?photograph a knora-api:Resource .
+        ?photograph a pou:Photograph .
+        ?photograph pou:physicalCopy ?physcop .
+        ?physcop knora-api:hasStillImageFileValue ?imgfile .
+        OPTIONAL { ?photograph pou:destination ?destination . }
+    }
+    OFFSET {{ page }}
+    `, params);
+    return result;
+  }
+
 }

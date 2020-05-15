@@ -35,7 +35,7 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import {Helpers} from './classes/helpers';
 import { PhotoPageComponent } from './components/photo-page/photo-page.component';
-import { FamilyTreeComponent } from './compontents/family-tree/family-tree.component';
+import { FamilyTreeComponent } from './components/family-tree/family-tree.component';
 
 export function initializeApp(appInitService: AppInitService) {
   return (): Promise<any> => {

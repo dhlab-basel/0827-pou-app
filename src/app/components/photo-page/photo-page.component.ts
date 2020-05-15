@@ -5,16 +5,16 @@ import {Constants} from '@knora/api/src/models/v2/Constants';
 import {KnoraService} from '../../services/knora.service';
 import {Helpers} from '../../classes/helpers';
 class PhotoPageData {
-  constructor(public photoIri: string,
-              public label: string,
-              public baseurl: string,
-              public filename: string,
-              public destination: Array<string>,
-              public dateofphoto: string,
-              public origFileName: string,
-              public anchorpersons: Array<Array<Array<string>>>,
-              public peoplepersons: Array<Array<string>>,
-              public firstnames: Array<Array<Array<string>>>
+  constructor(public photoIri: string = '',
+              public label: string = '',
+              public baseurl: string = '',
+              public filename: string = '',
+              public destination: Array<string> = [],
+              public dateofphoto: string = '',
+              public origFileName: string = '',
+              public anchorpersons: Array<Array<Array<string>>> = [],
+              public peoplepersons: Array<Array<string>> = [],
+              public firstnames: Array<Array<Array<string>>> = []
   ) {}
 
 }
@@ -24,21 +24,24 @@ class PhotoPageData {
   template: `
     <mat-progress-bar mode="indeterminate" *ngIf="showProgbar"></mat-progress-bar>
     <p>
-      photo-page works! {{ photoIri }}
-      from graph request: {{photo.photoIri}}
+      photo-page works! {{ photoIri }}<br/>
+      from graph request: {{photo.photoIri}}<br/>
       {{photo.label}}
     </p>
   `,
   styles: []
 })
 export class PhotoPageComponent implements OnInit {
-  private photoIri: string;
-  private knoraService: KnoraService;
+  private photoIri: string = '';
   private photo: PhotoPageData;
-  private helpers: Helpers;
   private showProgbar: boolean = false;
-  constructor(public route: ActivatedRoute) {
+
+  constructor(public route: ActivatedRoute,
+              private knoraService: KnoraService,
+              private helpers: Helpers) {
+    this.photo = new PhotoPageData();
   }
+
 
   gaga() {
     this.route.params.subscribe(params => {
@@ -47,9 +50,9 @@ export class PhotoPageComponent implements OnInit {
   }
 
   getPhoto() {
-    const params = {photo_iri: this.photoIri};
+    const params = {photo_iri: this.photoIri, page: 0};
     this.showProgbar = true;
-    this.knoraService.gravsearchQuery('photos_query', params).subscribe(
+    this.knoraService.gravsearchQuery('photos_query2', params).subscribe(
       (photo: ReadResource[]) => {
         this.photo = photo.map((onephoto: ReadResource) => {
           const label: string = onephoto.label;
@@ -60,15 +63,19 @@ export class PhotoPageComponent implements OnInit {
           let destination: Array<string> = [];
           let origFileName: Array<string> = [];
           let firstNames: Array<Array<Array<string>>> = [];
+          let peoplepersons: Array<Array<string>> = [];
           let anchorPersons: Array<Array<Array<string>>> = [];
+
           const destinationProp = this.knoraService.pouOntology + 'destination';
           if (onephoto.properties.hasOwnProperty(destinationProp)) {
             const destinationVals: ReadTextValueAsString[] = onephoto.getValuesAs(destinationProp, ReadTextValueAsString);
-            for (const gaga of destinationVals) {
-              destination.push(gaga.strval);
+            for (const destval of destinationVals) {
+              destination.push(destval.strval);
             }
           }
+          console.log(onephoto);
 
+          /*
           const prop = this.knoraService.pouOntology + 'physicalCopyValue';
           if (onephoto.properties.hasOwnProperty(prop)) {
             const linkval: ReadLinkValue[] = onephoto.getValuesAs(prop, ReadLinkValue);
@@ -119,6 +126,7 @@ export class PhotoPageComponent implements OnInit {
           const physProp = this.knoraService.pouOntology + 'physicalCopyValue';
           const fileNameProp = this.knoraService.pouOntology + 'fileName';
           origFileName = this.helpers.getLinkedTextValueAsString(onephoto, physProp, fileNameProp)[0];
+           */
           this.showProgbar = false;
           return new PhotoPageData(
             photoIri,
