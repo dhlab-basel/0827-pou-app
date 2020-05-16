@@ -107,6 +107,7 @@ export class HomeComponent implements OnInit {
           let origFileName: Array<string> = [];
           let firstNames: Array<Array<Array<string>>> = [];
           let anchorPersons: Array<Array<Array<string>>> = [];
+
           const destinationProp = this.knoraService.pouOntology + 'destination';
           if (onephoto.properties.hasOwnProperty(destinationProp)) {
             const destinationVals: ReadTextValueAsString[] = onephoto.getValuesAs(destinationProp, ReadTextValueAsString);
@@ -116,18 +117,9 @@ export class HomeComponent implements OnInit {
           }
 
           const prop = this.knoraService.pouOntology + 'physicalCopyValue';
-          if (onephoto.properties.hasOwnProperty(prop)) {
-            const linkval: ReadLinkValue[] = onephoto.getValuesAs(prop, ReadLinkValue);
-            if (linkval.length > 0) {
-              const stillimgres: ReadResource = linkval[0].linkedResource;
-              const prop2 = Constants.KnoraApiV2 + Constants.Delimiter + 'hasStillImageFileValue';
-              if (stillimgres.properties.hasOwnProperty(prop2)) {
-                const gaga: Array<ReadStillImageFileValue> = stillimgres.getValuesAs(prop2, ReadStillImageFileValue);
-                baseurl = gaga[0].iiifBaseUrl;
-                filename = gaga[0].filename;
-              }
-            }
-          }
+          const physcop = this.helpers.getLinkedStillImage(onephoto, prop);
+          baseurl = physcop[0].iiifBaseUrl;
+          filename = physcop[0].filename;
 
           const firstNameObjectProp = this.knoraService.pouOntology + 'nameOfPersonValue';
           const firstNameProp = this.knoraService.pouOntology + 'text' ;

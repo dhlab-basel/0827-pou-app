@@ -84,6 +84,14 @@ export class GravsearchTemplatesService {
         ?photograph pou:destination ?destination .
         ?photograph pou:physicalCopy ?physcop .
         ?physcop knora-api:hasStillImageFileValue ?imgfile .
+        ?photograph pou:anchorPerson ?anchorpers .
+        ?anchorpers pou:turkishName ?apname .
+        ?anchorpers pou:nameOfPerson ?apFirstNameObject .
+        ?apFirstNameObject pou:text ?firstName .
+        ?photograph pou:peopleOnPic ?peopleOnPic .
+        ?peopleOnPic pou:turkishName ?name .
+        ?peopleOnPic pou:nameOfPerson ?firstNameObject .
+        ?firstNameObject pou:text ?firstName .
     } WHERE {
         {{ #if photo_iri }}
         BIND(<{{ photo_iri }}> AS ?photograph)
@@ -93,6 +101,20 @@ export class GravsearchTemplatesService {
         ?photograph pou:physicalCopy ?physcop .
         ?physcop knora-api:hasStillImageFileValue ?imgfile .
         OPTIONAL { ?photograph pou:destination ?destination . }
+        OPTIONAL {
+          ?photograph pou:anchorPerson ?anchorpers .
+          OPTIONAL { ?anchorpers pou:turkishName ?apname . }
+          ?anchorpers pou:nameOfPerson ?apFirstNameObject .
+          ?apFirstNameObject pou:text ?firstName .
+        }
+        OPTIONAL {
+          ?photograph pou:peopleOnPic ?peopleOnPic .
+          OPTIONAL { ?peopleOnPic pou:turkishName ?name . }
+          OPTIONAL {
+            ?peopleOnPic pou:nameOfPerson ?firstNameObject .
+            ?firstNameObject pou:text ?firstName .
+          }
+        }
     }
     OFFSET {{ page }}
     `, params);

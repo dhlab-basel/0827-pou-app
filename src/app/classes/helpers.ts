@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
-import {ReadLinkValue, ReadResource, ReadTextValueAsString} from '@knora/api';
+import {ReadLinkValue, ReadResource, ReadStillImageFileValue, ReadTextValueAsString} from '@knora/api';
 import {TypeGuard} from '@knora/api/src/models/v2/resources/type-guard';
 import {ReadValue} from '@knora/api/src/models/v2/resources/values/read/read-value';
+import {Constants} from '@knora/api/src/models/v2/Constants';
 
 
 @Injectable()
@@ -9,18 +10,26 @@ export class Helpers {
 
   constructor() { }
 
+  getLinkedReadResources(res: ReadResource, linkProp: string): Array<ReadResource> {
+    const result: Array<ReadResource> = [];
+    if (res.properties.hasOwnProperty(linkProp)) {
+      const linkvals: ReadLinkValue[] = res.getValuesAs(linkProp, ReadLinkValue);
+      for (const linkval of linkvals) {
+        result.push(linkval.linkedResource);
+      }
+    }
+    return result;
+  }
+
   getLinkedTextValueAsString(res: ReadResource, linkprop: string, valprop: string): Array<Array<string>> {
     const result: Array<Array<string>> = [];
-    if (res.properties.hasOwnProperty(linkprop)) {
-      const linkvals: ReadLinkValue[] = res.getValuesAs(linkprop, ReadLinkValue);
-      for (const linkval of linkvals) {
-        const linkRes = linkval.linkedResource;
+    const linkedResources = this.getLinkedReadResources(res, linkprop);
+    for (const linkedResource of linkedResources) {
+      if (linkedResource.properties.hasOwnProperty(valprop)) {
+        const vals = linkedResource.getValuesAs(valprop, ReadTextValueAsString);
         const tvals: Array<string> = [];
-        if (linkRes.properties.hasOwnProperty(valprop)) {
-          const vals = linkRes.getValuesAs(valprop, ReadTextValueAsString);
-          for (const val of vals) {
-            tvals.push(val.text);
-          }
+        for (const val of vals) {
+          tvals.push(val.text);
         }
         result.push(tvals);
       }
@@ -28,22 +37,48 @@ export class Helpers {
     return result;
   }
 
-  getLinkedValueAs<T extends ReadValue>(res: ReadResource, linkprop: string, valprop: string, valueType: TypeGuard.Constructor<T>): Array<Array<T>> {
+  getLinkedValueAs<T extends ReadValue>(res: ReadResource,
+                                        linkprop: string,
+                                        valprop: string,
+                                        valueType: TypeGuard.Constructor<T>): Array<Array<T>> {
     const result: Array<Array<T>> = [];
-    if (res.properties.hasOwnProperty(linkprop)) {
-      const linkvals: ReadLinkValue[] = res.getValuesAs(linkprop, ReadLinkValue);
-      for (const linkval of linkvals) {
-        const linkRes = linkval.linkedResource;
-        const tvals: Array<T> = [];
-        if (linkRes.properties.hasOwnProperty(valprop)) {
-          const vals = linkRes.getValuesAs(valprop, valueType);
-          for (const val of vals) {
-            tvals.push(val);
-          }
+    const linkedResources = this.getLinkedReadResources(res, linkprop);
+    for (const linkedResource of linkedResources) {
+      const tvals: Array<T> = [];
+      if (linkedResource.properties.hasOwnProperty(valprop)) {
+        const vals = linkedResource.getValuesAs(valprop, valueType);
+        for (const val of vals) {
+          tvals.push(val);
         }
-        result.push(tvals);
+      }
+      result.push(tvals);
+    }
+    return result;
+  }
+
+  getLinkedStillImage(res: ReadResource,
+                      linkProp: string): Array<ReadStillImageFileValue> {
+    const result: Array<ReadStillImageFileValue> = [];
+    if (res.properties.hasOwnProperty(linkProp)) {
+      const linkvals: ReadLinkValue[] = res.getValuesAs(linkProp, ReadLinkValue);
+      for (const linkval of linkvals) {
+        const stillimgres: ReadResource = linkval.linkedResource;
+        const prop2 = Constants.KnoraApiV2 + Constants.Delimiter + 'hasStillImageFileValue';
+        if (stillimgres.properties.hasOwnProperty(prop2)) {
+          result.push(stillimgres.getValuesAs(prop2, ReadStillImageFileValue)[0]);
+        }
       }
     }
     return result;
+  }
+
+  getStringValue(res: ReadResource, prop: string, index: number = 0): string | undefined {
+    if (res.properties.hasOwnProperty(prop)) {
+      const strs = res.getValuesAsStringArray(prop);
+      if ((index < 0) || (index >= strs.length)) return undefined;
+      return strs[index];
+    } else {
+      return undefined;
+    }
   }
 }
