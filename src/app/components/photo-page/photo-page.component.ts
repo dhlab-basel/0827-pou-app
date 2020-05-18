@@ -7,16 +7,16 @@ import {Helpers} from '../../classes/helpers';
 class PhotoPageData {
   constructor(public photoIri: string = '',
               public label: string = '',
-              public baseurl: string = '',
-              public filename: string = '',
+              public imageBaseURL: string = '',
+              public imageFileName: string = '',
               public destination: Array<string> = [],
-              public dateofphoto: string = '',
-              public origFileName: string = '',
-              public anchorpersons: Person = new Person(),
-              public peoplepersons: Array<Person> = [],
+              public dateOfPhoto: string = '',
+              public fileName: string = '',
+              public anchorPersons: Person = new Person(),
+              public peopleOnPic: Array<Person> = [],
   ) {}
 }
-
+// TODO: a Person can have multiple first and last names.
 class Person {
   constructor(public turkishName: string = '',
               public firstName: string = '') {}
@@ -26,14 +26,26 @@ class Person {
   selector: 'app-photo-page',
   template: `
     <mat-progress-bar mode="indeterminate" *ngIf="showProgbar"></mat-progress-bar>
-    <p>
-      photo-page works! {{ photoIri }}<br/>
-      from graph request: {{photo.photoIri}}<br/>
-      {{photo.label}}
-    </p>
+    <mat-grid-list cols="5" rowHeight="1:2.5">
+      <mat-grid-tile>
+        <mat-card>
+          <mat-card-title>
+            <h3>{{ photo.fileName }}</h3>
+          </mat-card-title>
+          <mat-card-content>
+            <p>
+              <img class="newimg" mat-card-image src="{{photo.imageBaseURL}}/{{photo.imageFileName}}/full/200,/0/default.jpg"/>
+            </p>
+            </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+    </mat-grid-list>
   `,
-  styles: []
+  styles: [ '.mat-grid-list {margin-left: 10px; margin-right: 10px;}',
+    '.mat-card-title {font-size: 12pt;}',
+    '.newimg {max-width: 200px;}']
 })
+
 export class PhotoPageComponent implements OnInit {
   private photoIri: string = '';
   private photo: PhotoPageData;
@@ -57,11 +69,12 @@ export class PhotoPageComponent implements OnInit {
 
             const label: string = onephoto.label;
             const photoIri: string = onephoto.id;
-            let baseurl: string = '-';
-            let filename: string = '';
+            let imageBaseURL: string = '-';
+            let imageFileName: string = '';
             let dateOfPhoto: string = '';
-            let origFileName: Array<string> = [];
-            let peoplepersons: Array<Array<string>> = [];
+            let fileName: Array<string> = [];
+            //TODO: Should be Person objects rather than Arrays of Strings. 
+            let peopleOnPic: Array<Array<string>> = [];
             let anchorPersons: Array<Array<Array<string>>> = [];
 
             //
@@ -71,12 +84,12 @@ export class PhotoPageComponent implements OnInit {
             const destination = this.helpers.getStringValue(onephoto, destinationProp);
 
             //
-            // get baseurl and imageid (filename) from physical copy
+            // get imageBaseURL and imageid (imageFileName) from physical copy
             //
             const prop = this.knoraService.pouOntology + 'physicalCopyValue';
             const physcop = this.helpers.getLinkedStillImage(onephoto, prop);
-            baseurl = physcop[0].iiifBaseUrl;
-            filename = physcop[0].filename;
+            imageBaseURL = physcop[0].iiifBaseUrl;
+            imageFileName = physcop[0].filename;
 
             //
             // get turkish name and firstname of anchor person
@@ -99,6 +112,7 @@ export class PhotoPageComponent implements OnInit {
             const peopleOnPicLinkValues = this.helpers.getLinkedValueAs(onephoto, peopleOnPicProp, nameOfPersonProp, ReadLinkValue);
             for (const peopleOnPicLinkValue of peopleOnPicLinkValues) {
               const gaga = peopleOnPicLinkValue[0].linkedResource;
+              //TODO: This method seems to only return one value per person, even though a person can have multiple first names. How can we handle this?
               const firstname = this.helpers.getStringValue(gaga, textProp);
               console.log(firstname);
             }
@@ -128,7 +142,7 @@ export class PhotoPageComponent implements OnInit {
              }
 
              const turkishNameProp = this.knoraService.pouOntology + 'turkishName';
-             const peoplepersons = this.helpers.getLinkedTextValueAsString(onephoto, peopleProp, turkishNameProp);
+             const peopleOnPic = this.helpers.getLinkedTextValueAsString(onephoto, peopleProp, turkishNameProp);
 
 
              const dateofphotoProp = this.knoraService.pouOntology + 'dateOfPhotograph';
@@ -139,20 +153,20 @@ export class PhotoPageComponent implements OnInit {
 
              const physProp = this.knoraService.pouOntology + 'physicalCopyValue';
              const fileNameProp = this.knoraService.pouOntology + 'fileName';
-             origFileName = this.helpers.getLinkedTextValueAsString(onephoto, physProp, fileNameProp)[0];
+             fileName = this.helpers.getLinkedTextValueAsString(onephoto, physProp, fileNameProp)[0];
               */
             this.showProgbar = false;
             return new PhotoPageData(
               photoIri,
               label,
-              baseurl,
-              filename,
+              imageBaseURL,
+              imageFileName,
               destination,
               dateOfPhoto,
-              origFileName[0],
+              fileName[0],
               anchorPersons,
-              peoplepersons,
-              firstName);
+              peopleOnPic,
+              apFirstname);
           })[0];
         }
       );
