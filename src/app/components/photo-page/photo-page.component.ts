@@ -152,7 +152,7 @@ export class PhotoPageComponent implements OnInit {
               origFileName[0],
               anchorPersons,
               peoplepersons,
-              firstNames);
+              firstName);
           })[0];
         }
       );
