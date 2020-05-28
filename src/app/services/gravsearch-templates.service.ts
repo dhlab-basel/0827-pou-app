@@ -92,6 +92,7 @@ export class GravsearchTemplatesService {
         ?peopleOnPic pou:turkishName ?name .
         ?peopleOnPic pou:nameOfPerson ?firstNameObject .
         ?firstNameObject pou:text ?firstName .
+        ?peopleOnPic pou:relToAnchorperson ?relationship .
     } WHERE {
         {{ #if photo_iri }}
         BIND(<{{ photo_iri }}> AS ?photograph)
@@ -113,6 +114,7 @@ export class GravsearchTemplatesService {
           OPTIONAL {
             ?peopleOnPic pou:nameOfPerson ?firstNameObject .
             ?firstNameObject pou:text ?firstName .
+            ?peopleOnPic pou:relToAnchorperson ?relationship .
           }
         }
     }

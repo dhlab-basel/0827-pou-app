@@ -19,7 +19,7 @@ class PhotoPageData {
 // TODO: a Person can have multiple first and last names.
 class Person {
   constructor(public turkishName: string = '',
-              public firstName: string = '') {}
+              public firstName: string = '', public relationship: string = '') {}
 }
 
 @Component({
@@ -40,8 +40,9 @@ class Person {
         </mat-card>
       </mat-grid-tile>
     </mat-grid-list>
+    <p *ngFor = "let x of photo.peopleOnPic">{{x.firstName}} {{x.turkishName}} {{x.relationship}}</p>
   `,
-  styles: [ '.mat-grid-list {margin-left: 10px; margin-right: 10px;}',
+  styles: [ ' .mat-grid-list {margin-left: 10px; margin-right: 10px;}',
     '.mat-card-title {font-size: 12pt;}',
     '.newimg {max-width: 200px;}']
 })
@@ -54,7 +55,7 @@ export class PhotoPageComponent implements OnInit {
   constructor(public route: ActivatedRoute,
               private knoraService: KnoraService,
               private helpers: Helpers) {
-    this.photo = new PhotoPageData();
+    this.photo = new PhotoPageData('', '','','','','','',new Person(),[]);
   }
 
   getPhoto() {
@@ -75,7 +76,7 @@ export class PhotoPageComponent implements OnInit {
             let fileName: Array<string> = [];
             //TODO: Should be Person objects rather than Arrays of Strings.
             let peopleOnPic: Array<Person> = [];
-            let anchorPersons: Person = new Person();
+            let anchorPersons: Person;
 
             //
             // get destination
@@ -104,19 +105,33 @@ export class PhotoPageComponent implements OnInit {
             const nameOfPersonReadResource = nameOfPersonLinkValue[0][0].linkedResource;
             const textProp = this.knoraService.pouOntology + 'text';
             const apFirstname = this.helpers.getStringValue(nameOfPersonReadResource, textProp);
-
+            anchorPersons = new Person( apTurkishName, apFirstname);
             //
             // get first names of other people on photo
             //
             const peopleOnPicProp = this.knoraService.pouOntology + 'peopleOnPicValue';
+            const relationshipProp = this.knoraService.pouOntology + 'relToAnchorperson';
             const peopleOnPicLinkValues = this.helpers.getLinkedValueAs(onephoto, peopleOnPicProp, nameOfPersonProp, ReadLinkValue);
+            const peopleOnPicValues = this.helpers.getLinkedReadResources(onephoto, peopleOnPicProp);
+            let relValue: string = '';
+            let firstNameValues: ReadResource;
+            let firstName : string = '';
+            for (let person of peopleOnPicValues) {
+              relValue = this.helpers.getStringValue(person, relationshipProp);
+              firstNameValues = this.helpers.getLinkedReadResources(person, nameOfPersonProp)[0]; // in this line we ommit all other than the first entry of all first names. Change to Array later.
+              firstName = this.helpers.getStringValue(firstNameValues, textProp);
+              peopleOnPic.push(new Person(apTurkishName, firstName, relValue));
+              }
+            console.log(peopleOnPic);
+            /*
             for (const peopleOnPicLinkValue of peopleOnPicLinkValues) {
               const gaga = peopleOnPicLinkValue[0].linkedResource;
-              //TODO: This method seems to only return one value per person, even though a person can have multiple first names. How can we handle this?
+              // TODO: This method seems to only return one value per person, even though a person can have multiple first names. How can we handle this?
               const firstname = this.helpers.getStringValue(gaga, textProp);
-              console.log(firstname);
-            }
-            //this.helpers.getLinkedTextValueAsString()
+              // TODO: Do we push a Person object for every firstname a person has? Do we need to change firstnames to Arrays?
+              peopleOnPic.push(new Person(apTurkishName, firstname));
+            }*/
+            // this.helpers.getLinkedTextValueAsString()
             /*
              const firstNameObjectProp = this.knoraService.pouOntology + 'nameOfPersonValue';
              const firstNameProp = this.knoraService.pouOntology + 'text';
