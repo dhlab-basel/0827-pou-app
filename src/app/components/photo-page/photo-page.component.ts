@@ -9,7 +9,7 @@ class PhotoPageData {
               public label: string = '',
               public imageBaseURL: string = '',
               public imageFileName: string = '',
-              public destination: Array<string> = [],
+              public destination: string,
               public dateOfPhoto: string = '',
               public fileName: string = '',
               public anchorPersons: Person = new Person(),
@@ -73,9 +73,9 @@ export class PhotoPageComponent implements OnInit {
             let imageFileName: string = '';
             let dateOfPhoto: string = '';
             let fileName: Array<string> = [];
-            //TODO: Should be Person objects rather than Arrays of Strings. 
-            let peopleOnPic: Array<Array<string>> = [];
-            let anchorPersons: Array<Array<Array<string>>> = [];
+            //TODO: Should be Person objects rather than Arrays of Strings.
+            let peopleOnPic: Array<Person> = [];
+            let anchorPersons: Person = new Person();
 
             //
             // get destination
@@ -165,8 +165,7 @@ export class PhotoPageComponent implements OnInit {
               dateOfPhoto,
               fileName[0],
               anchorPersons,
-              peopleOnPic,
-              apFirstname);
+              peopleOnPic);
           })[0];
         }
       );
