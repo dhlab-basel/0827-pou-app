@@ -42,6 +42,7 @@ export class GravsearchTemplatesService {
         ?physcop pou:fileName ?fileName .
         ?anchorpers pou:turkishName ?tname .
         ?people pou:turkishName ?tname2 .
+        ?people pou:originTown ?originTown .
         ?people pou:nameOfPerson ?firstNameObject .
         ?firstNameObject pou:text ?firstName .
         {{ #if photo_iri }}
@@ -59,11 +60,12 @@ export class GravsearchTemplatesService {
         ?physcop pou:fileName ?fileName .
         OPTIONAL {
           ?photograph pou:anchorPerson ?anchorpers .
-          ?anchorpers pou:turkishName ?tname .
+          OPTIONAL {?anchorpers pou:turkishName ?tname .}
         }
         OPTIONAL {
           ?photograph pou:peopleOnPic ?people .
-          ?people pou:turkishName ?tname2 .
+          OPTIONAL{?people pou:originTown ?originTown .}
+          OPTIONAL{?people pou:turkishName ?tname2 .}
           ?people pou:nameOfPerson ?firstNameObject .
           ?firstNameObject pou:text ?firstName .
         }

@@ -36,7 +36,8 @@ class PhotoData {
       <mat-grid-tile *ngFor="let x of photos">
         <mat-card (click)="photoClicked(x)">
           <mat-card-title>
-            <h3>{{ x.lastNamesOnPic[0] }}</h3>
+            <h3 *ngIf="x.lastNamesOnPic.length > 0">{{ x.lastNamesOnPic[0] }}</h3>
+            <h3 *ngIf="x.lastNamesOnPic.length === 0">No last name</h3>
           </mat-card-title>
           <mat-card-content>
             <p>
@@ -53,7 +54,7 @@ class PhotoData {
               </tr>
               <tr *ngFor="let ap of x.firstNamesOnPic">
                 <td>on picture:</td>
-                <td *ngIf="x.anchorPersonFirstNames[0][0][0] ===  ap[0][0]"><strong>{{ ap[0] }}</strong></td>
+                <td  *ngIf= "x.anchorPersonFirstNames[0][0][0] ===  ap[0][0]"><strong>{{ ap[0] }}</strong></td>
                 <td *ngIf="ap[0][0] != x.anchorPersonFirstNames[0][0][0]">{{ ap[0] }}</td>
               </tr>
             </table>
@@ -166,7 +167,7 @@ export class HomeComponent implements OnInit {
           const fileNameProp = this.knoraService.pouOntology + 'fileName';
           fileName = this.helpers.getLinkedTextValueAsString(onePhoto, physicalCopyProp, fileNameProp)[0];
 
-          return new PhotoData(
+          const res = new PhotoData(
             photoIri,
             label,
             imageBaseURL,
@@ -177,6 +178,10 @@ export class HomeComponent implements OnInit {
             anchorPersonFirstNames,
             lastNamesOnPic,
             firstNamesOnPic);
+          if (res.anchorPersonFirstNames.length === 0 || res.anchorPersonFirstNames[0].length === 0 || res.anchorPersonFirstNames[0][0].length === 0) {
+            res.anchorPersonFirstNames = [[['']]]; // ugly fix if no anchorperson is given. Should be obsolete when data is cleaned.
+          }
+          return res;
         });
         this.showProgbar = false;
       }
