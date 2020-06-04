@@ -36,7 +36,7 @@ class PhotoData {
       <mat-grid-tile *ngFor="let x of photos">
         <mat-card (click)="photoClicked(x)">
           <mat-card-title>
-            <h3>{{ x.origFileName }}</h3>
+            <h3>{{ x.lastNamesOnPic[0] }}</h3>
           </mat-card-title>
           <mat-card-content>
             <p>
@@ -48,8 +48,8 @@ class PhotoData {
                 <td>{{ x.destination[0] }}</td>
               </tr>
               <tr>
-                <td>Last Name:</td>
-                <td>{{ x.lastNamesOnPic[0] }}</td>
+                <td>File Name:</td>
+                <td>{{ x.origFileName }}</td>
               </tr>
               <tr *ngFor="let ap of x.firstNamesOnPic">
                 <td>on picture:</td>
@@ -134,6 +134,7 @@ export class HomeComponent implements OnInit {
           const firstNameProp = this.knoraService.pouOntology + 'text';
           const peopleOnPicProp = this.knoraService.pouOntology + 'peopleOnPicValue';
           const anchorPersProp = this.knoraService.pouOntology + 'anchorPersonValue';
+          const originTownProp = this.knoraService.pouOntology + 'originTown';
           if (onePhoto.properties.hasOwnProperty(peopleOnPicProp)) {
             const people = onePhoto.getValuesAs(peopleOnPicProp, ReadLinkValue);
             if (people.length > 0) {
