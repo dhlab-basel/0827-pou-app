@@ -16,10 +16,47 @@ class PhotoPageData {
               public peopleOnPic: Array<Person> = [],
   ) {}
 }
+
+class Roi {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+
+  constructor(roiString: string | undefined) {
+    if (roiString === undefined) {
+      this.x = 0;
+      this.y = 0;
+      this.w = 0;
+      this.h = 0;
+    } else {
+      const strparts = roiString.split(',');
+      if (strparts.length !== 4) {
+        this.x = 0;
+        this.y = 0;
+        this.w = 0;
+        this.h = 0;
+      } else {
+        this.x = parseInt(strparts[0], 10);
+        this.y = parseInt(strparts[2], 10);
+        this.w = parseInt(strparts[1], 10) - this.x;
+        this.h = parseInt(strparts[3], 10) - this.y;
+      }
+    }
+  }
+
+  getIIIFroi(): string {
+    return this.x.toString() + ',' + this.y.toString() + ',' + this.w.toString() + ',' + this.h.toString();
+  }
+}
+
 // TODO: a Person can have multiple first and last names.
 class Person {
   constructor(public turkishName: string = '',
-              public firstName: string = '', public relationship: string = '') {}
+              public firstName: string = '',
+              public relationship: string = '',
+              public roi: Roi = new Roi(undefined)
+              ) {}
 }
 
 @Component({
@@ -40,7 +77,10 @@ class Person {
         </mat-card>
       </mat-grid-tile>
     </mat-grid-list>
-    <p *ngFor = "let x of photo.peopleOnPic">{{x.firstName}} {{x.turkishName}} {{x.relationship}}</p>
+    <p *ngFor = "let x of photo.peopleOnPic">
+      <img class="newimg" mat-card-image src="{{photo.imageBaseURL}}/{{photo.imageFileName}}/{{x.roi.getIIIFroi()}}/200,/0/default.jpg"/>
+      {{x.firstName}} {{x.turkishName}} {{x.relationship}}
+    </p>
   `,
   styles: [ ' .mat-grid-list {margin-left: 10px; margin-right: 10px;}',
     '.mat-card-title {font-size: 12pt;}',
@@ -111,17 +151,23 @@ export class PhotoPageComponent implements OnInit {
             //
             const peopleOnPicProp = this.knoraService.pouOntology + 'peopleOnPicValue';
             const relationshipProp = this.knoraService.pouOntology + 'relToAnchorperson';
+            const roiProp = this.knoraService.pouOntology + 'roi';
             const peopleOnPicLinkValues = this.helpers.getLinkedValueAs(onephoto, peopleOnPicProp, nameOfPersonProp, ReadLinkValue);
             const peopleOnPicValues = this.helpers.getLinkedReadResources(onephoto, peopleOnPicProp);
             let relValue: string = '';
+            let roiValue: string = '';
             let firstNameValues: ReadResource;
             let firstName : string = '';
             for (let person of peopleOnPicValues) {
               relValue = this.helpers.getStringValue(person, relationshipProp);
+              roiValue = this.helpers.getStringValue(person, roiProp);
+              console.log('........------>', roiValue);
+              const roi = new Roi(roiValue);
+              console.log('========------>', roi.getIIIFroi());
               firstNameValues = this.helpers.getLinkedReadResources(person, nameOfPersonProp)[0]; // in this line we ommit all other than the first entry of all first names. Change to Array later.
               firstName = this.helpers.getStringValue(firstNameValues, textProp);
-              peopleOnPic.push(new Person(apTurkishName, firstName, relValue));
-              }
+              peopleOnPic.push(new Person(apTurkishName, firstName, relValue, roi));
+            }
             console.log(peopleOnPic);
             /*
             for (const peopleOnPicLinkValue of peopleOnPicLinkValues) {
