@@ -1,0 +1,58 @@
+['daughter-in-law',
+'son-in-law',
+'grandchild',
+'brother-in-law',
+'sister-in-law',
+"sister-in-law's-son",
+"paternal-uncle's-son",
+'paternal-uncle',
+"wife's-sister",
+"maternal-uncle's-son",
+"husband's-sister",
+'paternal-aunt',
+"brother-in-law's-son",
+"brother-in-law's-daughter",
+"husband-or-wife's-brother",
+'brother',
+"brother's-child",
+"brother's-wife",
+'grandson',
+'granddaughter', level=2
+'sister',level=0
+'sibling',level=0
+'mother-in-law',level=-1
+'daughter', level=1
+'mother', level=-1
+'son', level=1
+'self', level=0
+'intended',
+'father',
+'stepmother',
+'child',
+'niece',
+'nephew',
+'husband',
+'wife',
+'spouse',
+"wife's-brother",
+'employer',
+'employee',
+'non-biological-child',
+'fiancee',
+'protection',
+'spouses-brother',
+'child-of-sibling',
+'non-biological-daughter',
+"brother's-daughter",
+'maid-domestic',
+"brother's-son",
+'grandmother',
+'non-biological-son',
+"sister's-child",
+'relative',
+'step-paternal-uncle',
+'self-and-family']
+
+gaga = {
+  'grandmother': 1
+}
