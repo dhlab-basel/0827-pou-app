@@ -4,6 +4,13 @@ import {ReadDateValue, ReadLinkValue, ReadResource, ReadStillImageFileValue, Rea
 import {Constants} from '@knora/api/src/models/v2/Constants';
 import {KnoraService} from '../../services/knora.service';
 import {Helpers} from '../../classes/helpers';
+
+const relations: {[index: string]: number} = {
+  Self: 0,
+  Wife: 0,
+  Daughter: 1
+};
+
 class PhotoPageData {
   constructor(public photoIri: string = '',
               public label: string = '',
@@ -55,7 +62,9 @@ class Person {
   constructor(public turkishName: string = '',
               public firstName: string = '',
               public relationship: string = '',
-              public roi: Roi = new Roi(undefined)
+              public roi: Roi = new Roi(undefined),
+              public x: number = 0,
+              public y: number = 0
               ) {}
 }
 
@@ -77,10 +86,36 @@ class Person {
         </mat-card>
       </mat-grid-tile>
     </mat-grid-list>
-    <p *ngFor = "let x of photo.peopleOnPic">
+    <!--<p *ngFor = "let x of photo.peopleOnPic">
       <img class="newimg" mat-card-image src="{{photo.imageBaseURL}}/{{photo.imageFileName}}/{{x.roi.getIIIFroi()}}/200,/0/default.jpg"/>
       {{x.firstName}} {{x.turkishName}} {{x.relationship}}
-    </p>
+    </p>-->
+    <svg width="1000" height="1000">
+      <g *ngFor="let peopers of photo.peopleOnPic; let index=index">
+        <image [attr.x]="peopers.x*300"
+
+               [attr.y]="peopers.y*350"
+
+               width="200" height="200"
+
+               [attr.xlink:href]="photo.imageBaseURL + '/' + photo.imageFileName + '/' + peopers.roi.getIIIFroi() + '/,200/0/default.jpg'"/>
+        <text [attr.x]="peopers.x*300"
+
+              [attr.y]="peopers.y*350 + 210"
+
+              width="400" height="30"
+
+              class="cssEmployeeName"
+
+              dominant-baseline="middle"
+
+              text-anchor="left">
+          {{peopers.firstName}} {{peopers.turkishName}} {{peopers.relationship}}
+        </text>
+      </g>
+    </svg>
+
+
   `,
   styles: [ ' .mat-grid-list {margin-left: 10px; margin-right: 10px;}',
     '.mat-card-title {font-size: 12pt;}',
@@ -158,6 +193,9 @@ export class PhotoPageComponent implements OnInit {
             let roiValue: string = '';
             let firstNameValues: ReadResource;
             let firstName : string = '';
+            let index = 0;
+            let miny = 99999;
+            let maxy = -99999
             for (let person of peopleOnPicValues) {
               relValue = this.helpers.getStringValue(person, relationshipProp);
               roiValue = this.helpers.getStringValue(person, roiProp);
@@ -165,7 +203,21 @@ export class PhotoPageComponent implements OnInit {
               const roi = new Roi(roiValue);
               firstNameValues = this.helpers.getLinkedReadResources(person, nameOfPersonProp)[0]; // in this line we ommit all other than the first entry of all first names. Change to Array later.
               firstName = this.helpers.getStringValue(firstNameValues, textProp);
-              peopleOnPic.push(new Person(apTurkishName, firstName, relValue, roi));
+              // level = relations[relValue]
+              const x = 0;
+              const y = relations[relValue];
+              if (y < miny) { miny = y; }
+              if (y > maxy) { maxy = y; }
+              peopleOnPic.push(new Person(apTurkishName, firstName, relValue, roi, x, y));
+              index++;
+            }
+            const ny = maxy - miny + 1;
+            const xcnt: Array<number> = [];
+            for (let i = 0; i < ny; i++) { xcnt.push(0); }
+            for (const p of peopleOnPic) {
+              p.y = p.y - miny;
+              p.x = xcnt[p.y];
+              xcnt[p.y]++;
             }
             console.log(peopleOnPic);
             /*

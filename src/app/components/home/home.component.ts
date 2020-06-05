@@ -28,20 +28,20 @@ class PhotoData {
   }
 getOrigin(){
     let toReturn = '';
-    if (this.originTown) {
+    if (this.originTown !== undefined) {
       toReturn += this.originTown + ' - ';
     }
-    if (this.originKaza) {
+    if (this.originKaza !== undefined) {
       toReturn += this.originKaza + ' - ';
     }
-    if (this.originKarye) {
+    if (this.originKarye !== undefined) {
       toReturn += this.originKarye + ' - ';
     }
-    if (this.originMahalle) {
+    if (this.originMahalle !== undefined) {
       toReturn += this.originMahalle + ' - ';
     }
-    if (this.originHouse) {
-      toReturn += this.originMahalle + ' - ';
+    if (this.originHouse !== undefined) {
+      toReturn += this.originHouse + ' - ';
     }
     if (toReturn.length > 0) {
       toReturn = toReturn.slice(0, -3);
