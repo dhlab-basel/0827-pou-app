@@ -19,10 +19,35 @@ class PhotoData {
               public anchorPersonFirstNames: Array<Array<Array<string>>>,
               public lastNamesOnPic: Array<Array<string>>,
               public firstNamesOnPic: Array<Array<Array<string>>>,
-              public originTown: string
+              public originTown: string,
+              public originKaza: string,
+              public originKarye: string,
+              public originMahalle: string,
+              public originHouse: string
   ) {
   }
-
+getOrigin(){
+    let toReturn = '';
+    if (this.originTown) {
+      toReturn += this.originTown + ' - ';
+    }
+    if (this.originKaza) {
+      toReturn += this.originKaza + ' - ';
+    }
+    if (this.originKarye) {
+      toReturn += this.originKarye + ' - ';
+    }
+    if (this.originMahalle) {
+      toReturn += this.originMahalle + ' - ';
+    }
+    if (this.originHouse) {
+      toReturn += this.originMahalle + ' - ';
+    }
+    if (toReturn.length > 0) {
+      toReturn = toReturn.slice(0, -3);
+    }
+    return toReturn;
+}
 }
 
 
@@ -45,9 +70,9 @@ class PhotoData {
               <img class="newimg" mat-card-image src="{{x.imageBaseURL}}/{{x.imageFileName}}/full/200,/0/default.jpg"/>
             </p>
             <table>
-              <tr *ngIf = "x.originTown">
+              <tr *ngIf = "x.getOrigin().length>0">
                 <td>Origin:</td>
-                <td>{{ x.originTown}}</td>
+                <td>{{ x.getOrigin()}}</td>
               </tr>
               <tr>
                 <td>File Name:</td>
@@ -137,7 +162,15 @@ export class HomeComponent implements OnInit {
           const peopleOnPicProp = this.knoraService.pouOntology + 'peopleOnPicValue';
           const anchorPersProp = this.knoraService.pouOntology + 'anchorPersonValue';
           const originTownProp = this.knoraService.pouOntology + 'originTown';
+          const originKazaProp = this.knoraService.pouOntology + 'originKaza';
+          const originKaryeProp = this.knoraService.pouOntology + 'originKarye';
+          const originMahalleProp = this.knoraService.pouOntology + 'originMahalle';
+          const originHouseProp = this.knoraService.pouOntology + 'house';
           let originTown: string = undefined;
+          let originKaza: string = undefined;
+          let originKarye: string = undefined;
+          let originMahalle: string = undefined;
+          let originHouse: string = undefined;
           if (onePhoto.properties.hasOwnProperty(peopleOnPicProp)) {
             const people = onePhoto.getValuesAs(peopleOnPicProp, ReadLinkValue);
             if (people.length > 0) {
@@ -154,9 +187,25 @@ export class HomeComponent implements OnInit {
                 const peopleRead: ReadResource = pers.linkedResource;
                 anchorPersonFirstNames.push(this.helpers.getLinkedTextValueAsString(peopleRead, firstNameObjectProp, firstNameProp));
                 const originTownValue = peopleRead.getValuesAsStringArray(originTownProp);
+                const originKazaValue = peopleRead.getValuesAsStringArray(originKazaProp);
+                const originKaryeValue = peopleRead.getValuesAsStringArray(originKaryeProp);
+                const originMahalleValue = peopleRead.getValuesAsStringArray(originMahalleProp);
+                const originHouseValue = peopleRead.getValuesAsStringArray(originHouseProp);
                if (originTownValue.length>0 && !originTown){
                  originTown = originTownValue[0];
                }
+                if (originKazaValue.length>0 && !originKaza){
+                  originKaza = originKazaValue[0];
+                }
+                if (originKaryeValue.length>0 && !originKarye){
+                  originKarye = originKaryeValue[0];
+                }
+                if (originMahalleValue.length>0 && !originMahalle){
+                  originMahalle = originMahalleValue[0];
+                }
+                if (originHouseValue.length>0 && !originHouse){
+                  originHouse = originHouseValue[0];
+                }
               }
             }
           }
@@ -184,10 +233,15 @@ export class HomeComponent implements OnInit {
             anchorPersonFirstNames,
             lastNamesOnPic,
             firstNamesOnPic,
-            originTown);
+            originTown,
+            originKaza,
+            originKarye,
+            originMahalle,
+            originHouse);
           if (res.anchorPersonFirstNames.length === 0 || res.anchorPersonFirstNames[0].length === 0 || res.anchorPersonFirstNames[0][0].length === 0) {
             res.anchorPersonFirstNames = [[['']]]; // ugly fix if no anchorperson is given. Should be obsolete when data is cleaned.
           }
+          console.log(res.originTown);
           return res;
         });
         this.showProgbar = false;

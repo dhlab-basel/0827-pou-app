@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { SparqlPrep} from '../classes/sparql-prep';
+import {Injectable} from '@angular/core';
+import {SparqlPrep} from '../classes/sparql-prep';
 
 @Injectable({
   providedIn: 'root'
@@ -7,9 +7,10 @@ import { SparqlPrep} from '../classes/sparql-prep';
 
 export class GravsearchTemplatesService {
 
-  constructor(private sparqlPrep: SparqlPrep) { }
+  constructor(private sparqlPrep: SparqlPrep) {
+  }
 
-  person_query(params: {[index: string]: string}): string {
+  person_query(params: { [index: string]: string }): string {
     const result = this.sparqlPrep.compile(`
     PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
     PREFIX pou: <{{ ontology }}/ontology/0827/pou/simple/v2#>
@@ -27,7 +28,8 @@ export class GravsearchTemplatesService {
     `, params);
     return result;
   }
-  photos_query(params: {[index: string]: string}): string {
+
+  photos_query(params: { [index: string]: string }): string {
     const result = this.sparqlPrep.compile(`
     PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
     PREFIX pou: <{{ ontology }}/ontology/0827/pou/simple/v2#>
@@ -43,6 +45,10 @@ export class GravsearchTemplatesService {
         ?anchorpers pou:turkishName ?tname .
         ?people pou:turkishName ?tname2 .
         ?people pou:originTown ?originTown .
+        ?people pou:originKaza ?originKaza .
+        ?people pou:originKarye ?originKarye .
+        ?people pou:originMahalle ?originMahalle .
+        ?people pou:house ?originHouse .
         ?people pou:nameOfPerson ?firstNameObject .
         ?firstNameObject pou:text ?firstName .
         {{ #if photo_iri }}
@@ -65,6 +71,10 @@ export class GravsearchTemplatesService {
         OPTIONAL {
           ?photograph pou:peopleOnPic ?people .
           OPTIONAL{?people pou:originTown ?originTown .}
+          OPTIONAL{?people pou:originKaza ?originKaza .}
+          OPTIONAL{?people pou:originKarye ?originKarye .}
+          OPTIONAL{?people pou:originMahalle ?originMahalle .}
+          OPTIONAL{?people pou:house ?originHouse .}
           OPTIONAL{?people pou:turkishName ?tname2 .}
           ?people pou:nameOfPerson ?firstNameObject .
           ?firstNameObject pou:text ?firstName .
@@ -77,7 +87,7 @@ export class GravsearchTemplatesService {
     return result;
   }
 
-  photos_query2(params: {[index: string]: string}): string {
+  photos_query2(params: { [index: string]: string }): string {
     const result = this.sparqlPrep.compile(`
     PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
     PREFIX pou: <{{ ontology }}/ontology/0827/pou/simple/v2#>
