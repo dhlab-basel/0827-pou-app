@@ -96,6 +96,7 @@ export class GravsearchTemplatesService {
         ?firstNameObject pou:text ?firstName .
         ?peopleOnPic pou:relToAnchorperson ?relationship .
         ?peopleOnPic pou:roi ?roi .
+        ?peopleOnPic pou:originTown ?originTown .
     } WHERE {
         {{ #if photo_iri }}
         BIND(<{{ photo_iri }}> AS ?photograph)
@@ -115,6 +116,7 @@ export class GravsearchTemplatesService {
           ?photograph pou:peopleOnPic ?peopleOnPic .
           OPTIONAL { ?peopleOnPic pou:turkishName ?name . }
           OPTIONAL { ?peopleOnPic pou:roi ?roi . }
+          OPTIONAL { ?peopleOnPic pou:originTown ?originTown .}
           OPTIONAL {
             ?peopleOnPic pou:nameOfPerson ?firstNameObject .
             ?firstNameObject pou:text ?firstName .

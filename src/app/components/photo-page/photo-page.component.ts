@@ -161,9 +161,8 @@ export class PhotoPageComponent implements OnInit {
             for (let person of peopleOnPicValues) {
               relValue = this.helpers.getStringValue(person, relationshipProp);
               roiValue = this.helpers.getStringValue(person, roiProp);
-              console.log('........------>', roiValue);
+              console.log(this.helpers.getStringValue(person, this.knoraService.pouOntology + 'originTown'));
               const roi = new Roi(roiValue);
-              console.log('========------>', roi.getIIIFroi());
               firstNameValues = this.helpers.getLinkedReadResources(person, nameOfPersonProp)[0]; // in this line we ommit all other than the first entry of all first names. Change to Array later.
               firstName = this.helpers.getStringValue(firstNameValues, textProp);
               peopleOnPic.push(new Person(apTurkishName, firstName, relValue, roi));

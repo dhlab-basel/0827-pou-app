@@ -18,7 +18,8 @@ class PhotoData {
               public origFileName: string,
               public anchorPersonFirstNames: Array<Array<Array<string>>>,
               public lastNamesOnPic: Array<Array<string>>,
-              public firstNamesOnPic: Array<Array<Array<string>>>
+              public firstNamesOnPic: Array<Array<Array<string>>>,
+              public originTown: string
   ) {
   }
 
@@ -44,9 +45,9 @@ class PhotoData {
               <img class="newimg" mat-card-image src="{{x.imageBaseURL}}/{{x.imageFileName}}/full/200,/0/default.jpg"/>
             </p>
             <table>
-              <tr>
-                <td>Destination:</td>
-                <td>{{ x.destination[0] }}</td>
+              <tr *ngIf = "x.originTown">
+                <td>Origin:</td>
+                <td>{{ x.originTown}}</td>
               </tr>
               <tr>
                 <td>File Name:</td>
@@ -136,6 +137,7 @@ export class HomeComponent implements OnInit {
           const peopleOnPicProp = this.knoraService.pouOntology + 'peopleOnPicValue';
           const anchorPersProp = this.knoraService.pouOntology + 'anchorPersonValue';
           const originTownProp = this.knoraService.pouOntology + 'originTown';
+          let originTown: string = undefined;
           if (onePhoto.properties.hasOwnProperty(peopleOnPicProp)) {
             const people = onePhoto.getValuesAs(peopleOnPicProp, ReadLinkValue);
             if (people.length > 0) {
@@ -151,6 +153,10 @@ export class HomeComponent implements OnInit {
               for (let pers of people) {
                 const peopleRead: ReadResource = pers.linkedResource;
                 anchorPersonFirstNames.push(this.helpers.getLinkedTextValueAsString(peopleRead, firstNameObjectProp, firstNameProp));
+                const originTownValue = peopleRead.getValuesAsStringArray(originTownProp);
+               if (originTownValue.length>0 && !originTown){
+                 originTown = originTownValue[0];
+               }
               }
             }
           }
@@ -177,7 +183,8 @@ export class HomeComponent implements OnInit {
             fileName[0],
             anchorPersonFirstNames,
             lastNamesOnPic,
-            firstNamesOnPic);
+            firstNamesOnPic,
+            originTown);
           if (res.anchorPersonFirstNames.length === 0 || res.anchorPersonFirstNames[0].length === 0 || res.anchorPersonFirstNames[0][0].length === 0) {
             res.anchorPersonFirstNames = [[['']]]; // ugly fix if no anchorperson is given. Should be obsolete when data is cleaned.
           }
