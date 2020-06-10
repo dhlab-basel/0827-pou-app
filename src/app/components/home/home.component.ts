@@ -14,7 +14,7 @@ class PhotoData {
               public imageBaseURL: string,
               public imageFileName: string,
               public destination: Array<string>,
-              public dateOfPhoto: string,
+              public dateOnPhoto: string,
               public origFileName: string,
               public anchorPersonFirstNames: Array<Array<Array<string>>>,
               public lastNamesOnPic: Array<Array<string>>,
@@ -78,6 +78,10 @@ getOrigin(){
                 <td>File Name:</td>
                 <td>{{ x.origFileName }}</td>
               </tr>
+              <tr>
+                <td> Date on Photo</td>
+                <td> {{x.dateOnPhoto}}</td>
+              </tr>
               <tr *ngFor="let ap of x.firstNamesOnPic">
                 <td>on picture:</td>
                 <td  *ngIf= "x.anchorPersonFirstNames[0][0][0] ===  ap[0][0]"><strong>{{ ap[0] }}</strong></td>
@@ -138,7 +142,7 @@ export class HomeComponent implements OnInit {
           const photoIri: string = onePhoto.id;
           let imageBaseURL: string = '-';
           let imageFileName: string = '';
-          let dateOfPhoto: string = '';
+          let dateOnPhoto: string = '';
           let destination: Array<string> = [];
           let fileName: Array<string> = [];
           let firstNamesOnPic: Array<Array<Array<string>>> = [];
@@ -214,10 +218,11 @@ export class HomeComponent implements OnInit {
           const lastNamesOnPic = this.helpers.getLinkedTextValueAsString(onePhoto, peopleOnPicProp, turkishNameProp);
 
 
-          const dateOfPhotoProp = this.knoraService.pouOntology + 'dateOfPhotograph';
-          if (onePhoto.properties.hasOwnProperty(dateOfPhotoProp)) {
-            const dateOfPhotoVal: ReadDateValue[] = onePhoto.getValuesAs(dateOfPhotoProp, ReadDateValue);
-            dateOfPhoto = dateOfPhotoVal[0].strval;
+          const dateOnPhotoProp = this.knoraService.pouOntology + 'dateOnPhotograph';
+
+          const dateOnPhotos = this.helpers.getLinkedDateValueAsString(onePhoto, physicalCopyProp, dateOnPhotoProp);
+          if (dateOnPhotos.length > 0 && dateOnPhotos[0].length > 0){
+            dateOnPhoto = dateOnPhotos[0][0];
           }
           const fileNameProp = this.knoraService.pouOntology + 'fileName';
           fileName = this.helpers.getLinkedTextValueAsString(onePhoto, physicalCopyProp, fileNameProp)[0];
@@ -228,7 +233,7 @@ export class HomeComponent implements OnInit {
             imageBaseURL,
             imageFileName,
             destination,
-            dateOfPhoto,
+            dateOnPhoto,
             fileName[0],
             anchorPersonFirstNames,
             lastNamesOnPic,
@@ -241,7 +246,6 @@ export class HomeComponent implements OnInit {
           if (res.anchorPersonFirstNames.length === 0 || res.anchorPersonFirstNames[0].length === 0 || res.anchorPersonFirstNames[0][0].length === 0) {
             res.anchorPersonFirstNames = [[['']]]; // ugly fix if no anchorperson is given. Should be obsolete when data is cleaned.
           }
-          console.log(res.originTown);
           return res;
         });
         this.showProgbar = false;

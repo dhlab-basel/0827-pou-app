@@ -4,11 +4,63 @@ import {ReadDateValue, ReadLinkValue, ReadResource, ReadStillImageFileValue, Rea
 import {Constants} from '@knora/api/src/models/v2/Constants';
 import {KnoraService} from '../../services/knora.service';
 import {Helpers} from '../../classes/helpers';
-
+// TODO: Family tree with lines AND logic in rows itself
 const relations: {[index: string]: number} = {
+  Daughterinlaw: 1,
+  Soninlaw: 1,
+  Grandchild: 2,
+  Brotherinlaw: 0,
+  Sisterinlaw: 0,
+  Sisterinlawsson: 1,
+  PaternalUnclesson: 0,
+  Paternaluncle: -1,
+  Wifessister: 0,
+  Maternalunclesson: 0,
+  Husbandssister: 0,
+  Paternalaunt: -1,
+  Brotherinlawsson: 1,
+  Brotherinlawsdaughter: 1,
+  Husbandorwifesbrother: 0,
+  Brother: 0,
+  Brotherschild: 1,
+  Brotherswife: 0,
+  Grandson: 2,
+  Granddaughter: 2,
+  Sister: 0,
+  Sibling: 0,
+  Motherinlaw: -1,
+  Daughter: 1,
+  Mother: -1,
+  Son: 1,
   Self: 0,
+  Intended: 0,
+  Father: -1,
+  Stepmother: -1,
+  Child: 1,
+  Niece: 1,
+  Nephew: 1,
+  Husband: 0,
   Wife: 0,
-  Daughter: 1
+  Spouse: 0,
+  Wifesbrother: 0,
+  Employer: -1,
+  Employee: 1,
+  NonbiologicalChild: 1,
+  Fiancee: 0,
+  Onewhoisundertheprotectionofintheserviceof: 1,
+  SpousesBrother: 0,
+  ChildofSibling: 1,
+  NonbiologicalDaughter: 1,
+  BrothersDaughter: 1,
+  Maiddomestic:1,
+  BrothersSon: 1,
+  Grandmother: -2,
+  NonbiologicalSon: 1,
+  Sisterschild: 1,
+  Relative: 3,
+  StepPaternalUncle: -1,
+  SelfandFamily: 0
+
 };
 
 class PhotoPageData {
@@ -205,7 +257,7 @@ export class PhotoPageComponent implements OnInit {
               firstName = this.helpers.getStringValue(firstNameValues, textProp);
               // level = relations[relValue]
               const x = 0;
-              const y = relations[relValue];
+              const y = this.getRelListValue(relValue);
               if (y < miny) { miny = y; }
               if (y > maxy) { maxy = y; }
               peopleOnPic.push(new Person(apTurkishName, firstName, relValue, roi, x, y));
@@ -283,7 +335,14 @@ export class PhotoPageComponent implements OnInit {
       );
     });
   }
-
+  getRelListValue(s: string) : number{
+    s = s.replace('-', '');
+    s = s.replace(',', '');
+    s = s.replace("'", '');
+    s = s.replace('/', '');
+    s = s.replace(' ', '');
+    return relations[s];
+  }
   ngOnInit() {
     this.getPhoto();
   }

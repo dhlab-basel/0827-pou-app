@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ReadLinkValue, ReadResource, ReadStillImageFileValue, ReadTextValueAsString} from '@knora/api';
+import {ReadDateValue, ReadLinkValue, ReadResource, ReadStillImageFileValue, ReadTextValueAsString} from '@knora/api';
 import {TypeGuard} from '@knora/api/src/models/v2/resources/type-guard';
 import {ReadValue} from '@knora/api/src/models/v2/resources/values/read/read-value';
 import {Constants} from '@knora/api/src/models/v2/Constants';
@@ -30,6 +30,24 @@ export class Helpers {
         const tvals: Array<string> = [];
         for (const val of vals) {
           tvals.push(val.text);
+        }
+        result.push(tvals);
+      }
+    }
+    return result;
+  }
+  /*
+  This method only returns the Start date!
+   */
+  getLinkedDateValueAsString(res: ReadResource, linkprop: string, valprop: string): Array<Array<string>> {
+    const result: Array<Array<string>> = [];
+    const linkedResources = this.getLinkedReadResources(res, linkprop);
+    for (const linkedResource of linkedResources) {
+      if (linkedResource.properties.hasOwnProperty(valprop)) {
+        const vals = linkedResource.getValuesAs(valprop, ReadDateValue);
+        const tvals: Array<string> = [];
+        for (const val of vals) {
+          tvals.push(val.date.start.year.toString() + '-' + val.date.start.month.toString() + '-' + val.date.start.day.toString());
         }
         result.push(tvals);
       }
