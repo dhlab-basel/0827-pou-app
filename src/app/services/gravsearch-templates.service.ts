@@ -28,7 +28,22 @@ export class GravsearchTemplatesService {
     `, params);
     return result;
   }
-
+  physical_copy_query(params: { [index: string]: string }): string {
+    const result = this.sparqlPrep.compile(`
+    PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
+    PREFIX pou: <{{ ontology }}/ontology/0827/pou/simple/v2#>
+    CONSTRUCT {
+        ?physcop knora-api:isMainResource true .
+        ?physcop knora-api:hasIncomingLinkValue ?photo .
+    } WHERE {
+        ?physcop a knora-api:Resource .
+        ?physcop a pou:PhysicalCopy .
+        OPTIONAL{?physcop knora-api:hasIncomingLinkValue ?photo .}
+    }
+    OFFSET {{ page }}
+    `, params);
+    return result;
+  }
   photos_query(params: { [index: string]: string }): string {
     const result = this.sparqlPrep.compile(`
     PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>

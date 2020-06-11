@@ -23,7 +23,8 @@ class PhotoData {
               public originKaza: string,
               public originKarye: string,
               public originMahalle: string,
-              public originHouse: string
+              public originHouse: string,
+              public photographer: string
   ) {
   }
 getOrigin(){
@@ -74,19 +75,21 @@ getOrigin(){
                 <td>Origin:</td>
                 <td>{{ x.getOrigin()}}</td>
               </tr>
-              <tr>
-                <td>File Name:</td>
-                <td>{{ x.origFileName }}</td>
-              </tr>
-              <tr>
-                <td> Date on Photo</td>
+              <tr *ngIf="x.dateOnPhoto.length>0" >
+                <td>Date on Photo:</td>
                 <td> {{x.dateOnPhoto}}</td>
               </tr>
+              <tr *ngIf = "x.photographer.length>0">
+                <td>Photographer:</td>
+                <td>{{x.photographer}}</td>
+              </tr>
+              <!--
               <tr *ngFor="let ap of x.firstNamesOnPic">
                 <td>on picture:</td>
                 <td  *ngIf= "x.anchorPersonFirstNames[0][0][0] ===  ap[0][0]"><strong>{{ ap[0] }}</strong></td>
                 <td *ngIf="ap[0][0] != x.anchorPersonFirstNames[0][0][0]">{{ ap[0] }}</td>
               </tr>
+              -->
             </table>
           </mat-card-content>
         </mat-card>
@@ -133,8 +136,10 @@ export class HomeComponent implements OnInit {
     );
 
     const params = {
-      page: String(this.page),
+      page: String(this.page)
     };
+    this.knoraService.gravsearchQuery('physical_copy_query', params).subscribe((p: ReadResource []) => { console.log('Physical Copies:', p); }
+    );
     this.knoraService.gravsearchQuery('photos_query', params).subscribe(
       (photos: ReadResource[]) => {
         this.photos = photos.map((onePhoto: ReadResource) => {
@@ -143,6 +148,7 @@ export class HomeComponent implements OnInit {
           let imageBaseURL: string = '-';
           let imageFileName: string = '';
           let dateOnPhoto: string = '';
+          let photographer: string = '';
           let destination: Array<string> = [];
           let fileName: Array<string> = [];
           let firstNamesOnPic: Array<Array<Array<string>>> = [];
@@ -226,7 +232,11 @@ export class HomeComponent implements OnInit {
           }
           const fileNameProp = this.knoraService.pouOntology + 'fileName';
           fileName = this.helpers.getLinkedTextValueAsString(onePhoto, physicalCopyProp, fileNameProp)[0];
-
+          const photographerProp = this.knoraService.pouOntology + 'photographer';
+          const photographerArray = this.helpers.getLinkedTextValueAsString(onePhoto, physicalCopyProp, photographerProp)
+          if (photographerArray.length > 0) {
+            photographer = photographerArray[0][0];
+          }
           const res = new PhotoData(
             photoIri,
             label,
@@ -242,7 +252,8 @@ export class HomeComponent implements OnInit {
             originKaza,
             originKarye,
             originMahalle,
-            originHouse);
+            originHouse,
+            photographer);
           if (res.anchorPersonFirstNames.length === 0 || res.anchorPersonFirstNames[0].length === 0 || res.anchorPersonFirstNames[0][0].length === 0) {
             res.anchorPersonFirstNames = [[['']]]; // ugly fix if no anchorperson is given. Should be obsolete when data is cleaned.
           }
