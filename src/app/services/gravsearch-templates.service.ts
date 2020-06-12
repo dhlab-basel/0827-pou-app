@@ -33,13 +33,26 @@ export class GravsearchTemplatesService {
     PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
     PREFIX pou: <{{ ontology }}/ontology/0827/pou/simple/v2#>
     CONSTRUCT {
-        ?physcop knora-api:isMainResource true .
-        ?physcop knora-api:hasIncomingLinkValue ?photo .
+      ?physcop knora-api:isMainResource true .
+      ?physcop pou:dateOnPhotograph ?date .
+      ?physcop knora-api:hasStillImageFileValue ?imgfile .
+      ?physcop pou:photographer ?photographer .
+      ?photo pou:physicalCopy ?physcopy .
+      ?photo pou:peopleOnPic ?people .
+      ?people pou:turkishName ?turkishName .
+      ?people pou:originTown ?originTown .
+      ?people pou:originKaza ?originKaza .
+      ?people pou:originKarye ?originKarye .
+      ?people pou:originMahalle ?originMahalle .
+      ?people pou:house ?originHouse .
     } WHERE {
-        ?physcop a knora-api:Resource .
-        ?physcop a pou:PhysicalCopy .
-        OPTIONAL{?physcop knora-api:hasIncomingLinkValue ?photo .}
+      ?physcop a knora-api:Resource .
+      ?physcop a pou:PhysicalCopy .
+      ?physcop pou:dateOnPhotograph ?date .
+      ?photo pou:physicalCopy ?physcopy .
+      OPTIONAL { ?photo pou:destination ?dest . }
     }
+    ORDER BY ?date
     OFFSET {{ page }}
     `, params);
     return result;

@@ -138,8 +138,8 @@ export class HomeComponent implements OnInit {
     const params = {
       page: String(this.page)
     };
-    this.knoraService.gravsearchQuery('physical_copy_query', params).subscribe((p: ReadResource []) => { console.log('Physical Copies:', p); }
-    );
+    // this.knoraService.gravsearchQuery('physical_copy_query', params).subscribe((p: ReadResource []) => { console.log('Physical Copies:', p); }
+    // );
     this.knoraService.gravsearchQuery('photos_query', params).subscribe(
       (photos: ReadResource[]) => {
         this.photos = photos.map((onePhoto: ReadResource) => {
