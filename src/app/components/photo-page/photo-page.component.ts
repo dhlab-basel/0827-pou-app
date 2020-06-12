@@ -189,6 +189,7 @@ export class PhotoPageComponent implements OnInit {
     this.route.params.subscribe(urlparams => {
       this.photoIri = urlparams.iri;
       const queryParams = {photo_iri: this.photoIri, page: '0'};
+      console.log(queryParams);
       this.showProgbar = true;
       this.knoraService.gravsearchQuery('photos_query2', queryParams).subscribe(
         (photo: ReadResource[]) => {

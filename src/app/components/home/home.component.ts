@@ -13,12 +13,8 @@ class PhotoData {
               public label: string,
               public imageBaseURL: string,
               public imageFileName: string,
-              public destination: Array<string>,
               public dateOnPhoto: string,
-              public origFileName: string,
-              public anchorPersonFirstNames: Array<Array<Array<string>>>,
-              public lastNamesOnPic: Array<Array<string>>,
-              public firstNamesOnPic: Array<Array<Array<string>>>,
+              public turkishName: string,
               public originTown: string,
               public originKaza: string,
               public originKarye: string,
@@ -63,8 +59,8 @@ getOrigin(){
       <mat-grid-tile *ngFor="let x of photos">
         <mat-card (click)="photoClicked(x)">
           <mat-card-title>
-            <h3 *ngIf="x.lastNamesOnPic.length > 0">{{ x.lastNamesOnPic[0] }}</h3>
-            <h3 *ngIf="x.lastNamesOnPic.length === 0">No last name</h3>
+            <h3 *ngIf="x.turkishName">{{ x.turkishName }}</h3>
+            <h3 *ngIf="!x.turkishName">No last name</h3>
           </mat-card-title>
           <mat-card-content>
             <p>
@@ -138,8 +134,84 @@ export class HomeComponent implements OnInit {
     const params = {
       page: String(this.page)
     };
-    // this.knoraService.gravsearchQuery('physical_copy_query', params).subscribe((p: ReadResource []) => { console.log('Physical Copies:', p); }
-    // );
+    this.knoraService.gravsearchQuery('physical_copy_query', params).subscribe((physicalCopy: ReadResource[]) => {
+        this.photos = physicalCopy.map((onePhoto: ReadResource) => {
+          const label: string = onePhoto.label;
+          let imageBaseURL: string = '-';
+          let imageFileName: string = '';
+          let dateOnPhoto: string = '';
+          let photographer: string = '';
+          let turkishName: string = undefined;
+          const image = this.helpers.getStillImage(onePhoto);
+          imageBaseURL = image.iiifBaseUrl;
+          imageFileName = image.filename;
+          const photoProp = Constants.KnoraApiV2 + Constants.Delimiter + 'hasIncomingLinkValue';
+          const peopleOnPicProp = this.knoraService.pouOntology + 'peopleOnPicValue';
+          const originTownProp = this.knoraService.pouOntology + 'originTown';
+          const originKazaProp = this.knoraService.pouOntology + 'originKaza';
+          const originKaryeProp = this.knoraService.pouOntology + 'originKarye';
+          const originMahalleProp = this.knoraService.pouOntology + 'originMahalle';
+          const originHouseProp = this.knoraService.pouOntology + 'house';
+          const turkishNameProp = this.knoraService.pouOntology + 'turkishName';
+          let originTown: string = undefined;
+          let originKaza: string = undefined;
+          let originKarye: string = undefined;
+          let originMahalle: string = undefined;
+          let originHouse: string = undefined;
+          const photo = onePhoto.getValuesAs(photoProp, ReadLinkValue);
+          const photoRead = photo[0].linkedResource;
+          const photoIri: string = photoRead.id;
+          if (photoRead.properties.hasOwnProperty(peopleOnPicProp)) {
+            const people = photoRead.getValuesAs(peopleOnPicProp, ReadLinkValue);
+            if (people.length > 0) {
+              for (const pers of people) {
+                const peopleRead: ReadResource = pers.linkedResource;
+                const turkishNames = peopleRead.getValuesAsStringArray(turkishNameProp);
+                if (turkishNames.length > 0 && !turkishName) {
+                  turkishName = turkishNames[0];
+                }
+                const originTownValue = peopleRead.getValuesAsStringArray(originTownProp);
+                const originKazaValue = peopleRead.getValuesAsStringArray(originKazaProp);
+                const originKaryeValue = peopleRead.getValuesAsStringArray(originKaryeProp);
+                const originMahalleValue = peopleRead.getValuesAsStringArray(originMahalleProp);
+                const originHouseValue = peopleRead.getValuesAsStringArray(originHouseProp);
+                if (originTownValue.length > 0 && !originTown) {
+                  originTown = originTownValue[0];
+                }
+                if (originKazaValue.length > 0 && !originKaza) {
+                  originKaza = originKazaValue[0];
+                }
+                if (originKaryeValue.length > 0 && !originKarye){
+                  originKarye = originKaryeValue[0];
+                }
+                if (originMahalleValue.length > 0 && !originMahalle) {
+                  originMahalle = originMahalleValue[0];
+                }
+                if (originHouseValue.length > 0 && !originHouse) {
+                  originHouse = originHouseValue[0];
+                }
+              }
+            }
+          }
+
+
+          const dateOnPhotoProp = this.knoraService.pouOntology + 'dateOnPhotograph';
+          const datesOnPhoto = onePhoto.getValuesAs(dateOnPhotoProp, ReadDateValue)
+          if (datesOnPhoto.length > 0) {
+            dateOnPhoto = datesOnPhoto[0].strval.substr(10, 10);
+          }
+          const photographerProp = this.knoraService.pouOntology + 'photographer';
+          const photographerArray = onePhoto.getValuesAsStringArray(photographerProp);
+          if (photographerArray.length > 0) {
+            photographer = photographerArray[0];
+          }
+          const res = new PhotoData(photoIri, label, imageBaseURL, imageFileName, dateOnPhoto, turkishName, originTown, originKaza, originKarye, originMahalle, originHouse, photographer);
+          return res;
+        });
+        this.showProgbar = false;
+      }
+    );
+    /*
     this.knoraService.gravsearchQuery('photos_query', params).subscribe(
       (photos: ReadResource[]) => {
         this.photos = photos.map((onePhoto: ReadResource) => {
@@ -229,6 +301,7 @@ export class HomeComponent implements OnInit {
           const dateOnPhotos = this.helpers.getLinkedDateValueAsString(onePhoto, physicalCopyProp, dateOnPhotoProp);
           if (dateOnPhotos.length > 0 && dateOnPhotos[0].length > 0){
             dateOnPhoto = dateOnPhotos[0][0];
+            dateOnPhoto = dateOnPhoto.substr(10, 10);
           }
           const fileNameProp = this.knoraService.pouOntology + 'fileName';
           fileName = this.helpers.getLinkedTextValueAsString(onePhoto, physicalCopyProp, fileNameProp)[0];
@@ -261,7 +334,7 @@ export class HomeComponent implements OnInit {
         });
         this.showProgbar = false;
       }
-    );
+    );*/
   }
 
   pageChanged(event): void {

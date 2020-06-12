@@ -33,25 +33,36 @@ export class GravsearchTemplatesService {
     PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
     PREFIX pou: <{{ ontology }}/ontology/0827/pou/simple/v2#>
     CONSTRUCT {
-      ?physcop knora-api:isMainResource true .
-      ?physcop pou:dateOnPhotograph ?date .
-      ?physcop knora-api:hasStillImageFileValue ?imgfile .
-      ?physcop pou:photographer ?photographer .
-      ?photo pou:physicalCopy ?physcopy .
-      ?photo pou:peopleOnPic ?people .
-      ?people pou:turkishName ?turkishName .
-      ?people pou:originTown ?originTown .
-      ?people pou:originKaza ?originKaza .
-      ?people pou:originKarye ?originKarye .
-      ?people pou:originMahalle ?originMahalle .
-      ?people pou:house ?originHouse .
-    } WHERE {
-      ?physcop a knora-api:Resource .
-      ?physcop a pou:PhysicalCopy .
-      ?physcop pou:dateOnPhotograph ?date .
-      ?photo pou:physicalCopy ?physcopy .
-      OPTIONAL { ?photo pou:destination ?dest . }
-    }
+    ?physcop knora-api:isMainResource true .
+    ?physcop pou:dateOnPhotograph ?date .
+    ?photo pou:physicalCopy ?physcop .
+    ?physcop knora-api:hasStillImageFileValue ?imgfile .
+    ?physcop pou:photographer ?photographer .
+    ?photo pou:peopleOnPic ?people .
+    ?photo pou:dateOfPassport ?dateOfPassport .
+    ?people pou:originTown ?originTown .
+    ?people pou:originKaza ?originKaza .
+    ?people pou:originKarye ?originKarye .
+    ?people pou:originMahalle ?originMahalle .
+    ?people pou:house ?originHouse .
+    ?people pou:turkishName ?tname2 .
+
+} WHERE {
+    ?physcop a knora-api:Resource .
+    ?physcop a pou:PhysicalCopy .
+    OPTIONAL{?physcop pou:dateOnPhotograph ?date .}
+    ?photo pou:physicalCopy ?physcop .
+    OPTIONAL{?photo pou:dateOfPassport ?dateOfPassport . }
+    ?physcop knora-api:hasStillImageFileValue ?imgfile .
+    OPTIONAL{?physcop pou:photographer ?photographer .}
+    ?photo pou:peopleOnPic ?people .
+    OPTIONAL{?people pou:originTown ?originTown .}
+    OPTIONAL{?people pou:originKaza ?originKaza .}
+    OPTIONAL{?people pou:originKarye ?originKarye .}
+    OPTIONAL{?people pou:originMahalle ?originMahalle .}
+    OPTIONAL{ ?people pou:house ?originHouse .}
+    OPTIONAL{?people pou:turkishName ?tname2 .}
+}
     ORDER BY ?date
     OFFSET {{ page }}
     `, params);

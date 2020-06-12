@@ -47,7 +47,7 @@ export class Helpers {
         const vals = linkedResource.getValuesAs(valprop, ReadDateValue);
         const tvals: Array<string> = [];
         for (const val of vals) {
-          tvals.push(val.date.start.year.toString() + '-' + val.date.start.month.toString() + '-' + val.date.start.day.toString());
+          tvals.push(val.strval);
         }
         result.push(tvals);
       }
@@ -73,7 +73,12 @@ export class Helpers {
     }
     return result;
   }
-
+  getStillImage(res: ReadResource) {
+    const prop = Constants.KnoraApiV2 + Constants.Delimiter + 'hasStillImageFileValue';
+    if (res.properties.hasOwnProperty(prop)) {
+      return res.getValuesAs(prop, ReadStillImageFileValue)[0];
+    }
+  }
   getLinkedStillImage(res: ReadResource,
                       linkProp: string): Array<ReadStillImageFileValue> {
     const result: Array<ReadStillImageFileValue> = [];
