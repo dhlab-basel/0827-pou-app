@@ -36,6 +36,7 @@ import { LoginComponent } from './components/login/login.component';
 import {Helpers} from './classes/helpers';
 import { PhotoPageComponent } from './components/photo-page/photo-page.component';
 import { FamilyTreeComponent } from './components/family-tree/family-tree.component';
+import { SearchPageComponent } from './components/search-page/search-page.component';
 
 export function initializeApp(appInitService: AppInitService) {
   return (): Promise<any> => {
@@ -50,7 +51,8 @@ export function initializeApp(appInitService: AppInitService) {
     HomeComponent,
     LoginComponent,
     PhotoPageComponent,
-    FamilyTreeComponent
+    FamilyTreeComponent,
+    SearchPageComponent
   ],
   entryComponents: [
     LoginComponent

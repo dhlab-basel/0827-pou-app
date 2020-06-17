@@ -1,0 +1,21 @@
+<div class="form-container">
+  <mat-form-field>
+    <mat-select [(ngModel)]="selectedResourceType" placeholder="Resource type">
+      <mat-option value="physCop">Physical Copy</mat-option>
+      <mat-option value="coverLetter">Cover Letter</mat-option>
+      <mat-option value="person">Person</mat-option>
+      <mat-option value="photo">Photograph</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div *ngFor="let no of arr">
+    <mat-form-field >
+      <mat-select placeholder ="property {{no}}">
+        <mat-option value="prop1">Property 1</mat-option>
+        <mat-option value="prop2">Property 2</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <textarea matInput placeholder="Value {{no}}"></textarea>
+    </mat-form-field>
+  </div>
+</div>

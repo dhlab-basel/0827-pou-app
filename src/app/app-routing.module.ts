@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent} from './components/home/home.component';
 import {PhotoPageComponent} from './components/photo-page/photo-page.component';
 import {FamilyTreeComponent} from './components/family-tree/family-tree.component';
+import {SearchPageComponent} from './components/search-page/search-page.component';
 
 
 const routes: Routes = [
@@ -17,6 +18,10 @@ const routes: Routes = [
   {
     path: 'tree',
     component: FamilyTreeComponent
+  },
+  {
+    path: 'search',
+    component: SearchPageComponent
   }
 ];
 
