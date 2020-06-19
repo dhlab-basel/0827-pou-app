@@ -9,9 +9,8 @@
   </mat-form-field>
   <div *ngFor="let no of arr">
     <mat-form-field >
-      <mat-select placeholder ="property {{no}}">
-        <mat-option value="prop1">Property 1</mat-option>
-        <mat-option value="prop2">Property 2</mat-option>
+      <mat-select placeholder ="property {{no}}" *ngFor="let property of getProps()">
+        <mat-option value="0">{{property['prop']}}</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field>

@@ -6,7 +6,7 @@ import {
   KnoraApiConfig,
   KnoraApiConnection,
   LoginResponse,
-  LogoutResponse,
+  LogoutResponse, ReadOntology,
   ReadResource
 } from '@knora/api';
 import {catchError, finalize, map, take, tap} from 'rxjs/operators';
@@ -95,6 +95,11 @@ export class KnoraService {
         console.log('gravsearchQuery result:', res);
         return res as Array<ReadResource>;
       }));
+  }
+  getOntology(iri: string): Observable<ReadOntology> {
+    return this.knoraApiConnection.v2.ontologyCache.getOntology(iri).pipe( // ToDo: Use cache
+      map((cachedata: Map<string, ReadOntology>)  => cachedata.get(iri) as ReadOntology)
+    );
   }
 
 
