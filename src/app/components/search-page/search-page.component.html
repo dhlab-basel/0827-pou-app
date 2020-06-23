@@ -9,12 +9,14 @@
   </mat-form-field>
   <div *ngFor="let no of arr">
     <mat-form-field >
-      <mat-select placeholder ="property {{no}}" *ngFor="let property of getProps()">
-        <mat-option value="0">{{property['prop']}}</mat-option>
+      <mat-select #propfield [value] =  "propertiesChosen[no]" placeholder="Property {{no}}" (selectionChange) = "propertiesChosen[no] = propfield.value">
+        <mat-option *ngFor="let property of getProps()" [value]="property.prop">{{property.prop}}</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field>
-      <textarea matInput placeholder="Value {{no}}"></textarea>
+      <textarea #valuefield matInput [value]="valuesChosen[no]"  placeholder="Value {{no}}" (keyup)="valuesChosen[no] = valuefield.value"></textarea>
     </mat-form-field>
+    <a mat-button (click)="removeProperty(no)"> X </a>
   </div>
+  <a mat-button (click)="addProperty()">Add Property</a>
 </div>

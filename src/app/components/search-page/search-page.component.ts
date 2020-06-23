@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {KnoraService} from '../../services/knora.service';
-import {on} from 'cluster';
 
 @Component({
   selector: 'app-search-page',
@@ -8,8 +7,9 @@ import {on} from 'cluster';
   styleUrls: ['./search-page.component.scss']
 })
 export class SearchPageComponent implements OnInit {
-  propertyFields: number = 5;
   arr: number[];
+  propertiesChosen: string[];
+  valuesChosen: string[];
   selectedResourceType: string;
   personProps: { 'prop': string, 'type': string }[] = [];
   photoProps: { 'prop': string, 'type': string }[] = [];
@@ -23,7 +23,9 @@ export class SearchPageComponent implements OnInit {
   backOfImageProps: { 'prop': string, 'type': string }[] = [];
 
   constructor(private knoraService: KnoraService) {
-    this.arr = Array(this.propertyFields).fill(0).map((x, i) => i);
+    this.arr = Array(1).fill(0).map((x, i) => i);
+    this.propertiesChosen = Array(1).fill('');
+    this.valuesChosen = Array(1).fill('');
   }
 
   ngOnInit() {
@@ -35,7 +37,7 @@ export class SearchPageComponent implements OnInit {
       for (const key in ontoValue.properties) {
         const prop = ontoValue.properties[key];
         const objValue = prop.objectType.substring(prop.objectType.lastIndexOf('#') + 1, prop.objectType.length);
-        if (objValue === 'LinkValue'){
+        if (objValue === 'LinkValue') {
           continue;
         }
         const subValue = prop.subjectType.substring(prop.subjectType.lastIndexOf('#') + 1, prop.subjectType.length);
@@ -44,7 +46,6 @@ export class SearchPageComponent implements OnInit {
             this.personFileProps.push({prop: prop.label, type: objValue});
             break;
           case 'Person':
-            console.log('reached');
             this.personProps.push({prop: prop.label, type: objValue});
             break;
           case 'CoverLetter':
@@ -96,6 +97,23 @@ export class SearchPageComponent implements OnInit {
         return [];
       }
     }
+  }
+  addProperty() {
+    this.arr = Array(this.arr.length + 1).fill(0).map((x, i) => i);
+    this.propertiesChosen.push('');
+    this.valuesChosen.push('');
+    console.log(this.propertiesChosen);
+    console.log(this.valuesChosen);
+  }
+  removeProperty(no: number) {
+    console.log('called with', no);
+    if (this.arr.length === 0) {
+      return;
+    }
+    this.propertiesChosen.splice(no, 1);
+    this.valuesChosen.splice(no, 1);
+    this.arr.pop();
+    console.log(this.arr);
   }
 
 }
