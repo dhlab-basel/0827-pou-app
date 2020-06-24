@@ -7,7 +7,7 @@ import {
   KnoraApiConnection,
   LoginResponse,
   LogoutResponse, ReadOntology,
-  ReadResource
+  ReadResource, ListAdminCache, ListResponse
 } from '@knora/api';
 import {catchError, finalize, map, take, tap} from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
@@ -21,6 +21,7 @@ export class KnoraService {
   pouOntology: string;
   loggedin: boolean;
   useremail: string;
+  listAdminCache: ListAdminCache;
 
   constructor(private appInitService: AppInitService,
               private queryTemplates: GravsearchTemplatesService
@@ -99,6 +100,11 @@ export class KnoraService {
   getOntology(iri: string): Observable<ReadOntology> {
     return this.knoraApiConnection.v2.ontologyCache.getOntology(iri).pipe( // ToDo: Use cache
       map((cachedata: Map<string, ReadOntology>)  => cachedata.get(iri) as ReadOntology)
+    );
+  }
+  getList(listIri: string): Observable<ListResponse> {
+    return this.listAdminCache.getList(listIri).pipe(
+      map( (res: ListResponse) => res)
     );
   }
 

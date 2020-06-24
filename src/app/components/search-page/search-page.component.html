@@ -7,16 +7,41 @@
       <mat-option value="photo">Photograph</mat-option>
     </mat-select>
   </mat-form-field>
+  <mat-slide-toggle (change)="onlyCount = !onlyCount">Return only count</mat-slide-toggle>
   <div *ngFor="let no of arr">
+    <div style="display: inline-block">
     <mat-form-field >
-      <mat-select #propfield [value] =  "propertiesChosen[no]" placeholder="Property {{no}}" (selectionChange) = "propertiesChosen[no] = propfield.value">
+      <mat-select #propfield [value] =  "propertiesChosen[no].prop" placeholder="Property {{no}}" (selectionChange) = "changeProperty(no, propfield.value)">
         <mat-option *ngFor="let property of getProps()" [value]="property.prop">{{property.prop}}</mat-option>
       </mat-select>
     </mat-form-field>
+    </div>
     <mat-form-field>
-      <textarea #valuefield matInput [value]="valuesChosen[no]"  placeholder="Value {{no}}" (keyup)="valuesChosen[no] = valuefield.value"></textarea>
+      <mat-select #operatorfield [value]="operatorsChosen[no]" (selectionChange)="operatorsChosen[no] = operatorfield.value">
+        <mat-option value = "exists">Exists</mat-option>
+        <mat-option value = "equals">Equals</mat-option>
+      </mat-select>
     </mat-form-field>
+    <div style="display: inline-block" *ngIf="operatorsChosen[no] === 'equals'">
+    <div style="display: inline-block" [ngSwitch]="propertiesChosen[no].type">
+      <mat-form-field *ngSwitchCase="'TextValue'">
+        <textarea #valuefield matInput [value]="valuesChosen[no]"  placeholder="Value {{no}}" (keyup)="valuesChosen[no] = valuefield.value"></textarea>
+      </mat-form-field>
+      <mat-form-field *ngSwitchCase="'BooleanValue'">
+        <mat-select #valuefield [value]="valuesChosen[no]"  placeholder="Value {{no}}" (selectionChange)="valuesChosen[no] = valuefield.value">
+          <mat-option value="True">True</mat-option>
+          <mat-option value="False">False</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngSwitchCase="'DateValue'">
+        <input matInput [matDatepicker]="myDatepicker" (dateInput) = "dateValueChanged(no, $event)">
+        <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+        <mat-datepicker #myDatepicker startView="multi-year" [startAt]="startDateForCalendars"></mat-datepicker>
+      </mat-form-field>
+    </div>
+    </div>
     <a mat-button (click)="removeProperty(no)"> X </a>
   </div>
   <a mat-button (click)="addProperty()">Add Property</a>
+  <a mat-button (click)="createQuery()">Search</a>
 </div>

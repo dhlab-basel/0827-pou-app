@@ -27,7 +27,7 @@ import {
   MatFormFieldControl,
   MatSelectModule,
   MatTooltipModule,
-  MatAutocompleteModule
+  MatAutocompleteModule, MatDatepickerModule, MatNativeDateModule, MatSlideToggleModule
 } from '@angular/material';
 
 import {SparqlPrep} from './classes/sparql-prep';
@@ -83,7 +83,10 @@ export function initializeApp(appInitService: AppInitService) {
     FormsModule,
     ReactiveFormsModule,
     MatSelectModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSlideToggleModule
   ],
   providers: [
     AppInitService,
