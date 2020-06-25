@@ -1,10 +1,10 @@
 <div class="form-container">
   <mat-form-field>
     <mat-select [(ngModel)]="selectedResourceType" placeholder="Resource type">
-      <mat-option value="physCop">Physical Copy</mat-option>
-      <mat-option value="coverLetter">Cover Letter</mat-option>
-      <mat-option value="person">Person</mat-option>
-      <mat-option value="photo">Photograph</mat-option>
+      <mat-option value="PhysicalCopy">Physical Copy</mat-option>
+      <mat-option value="CoverLetter">Cover Letter</mat-option>
+      <mat-option value="Person">Person</mat-option>
+      <mat-option value="Photograph">Photograph</mat-option>
     </mat-select>
   </mat-form-field>
   <mat-slide-toggle (change)="onlyCount = !onlyCount">Return only count</mat-slide-toggle>
@@ -20,6 +20,7 @@
       <mat-select #operatorfield [value]="operatorsChosen[no]" (selectionChange)="operatorsChosen[no] = operatorfield.value">
         <mat-option value = "exists">Exists</mat-option>
         <mat-option value = "equals">Equals</mat-option>
+        <!-- TODO: do we want to add something like entails here? Other operators?  -->
       </mat-select>
     </mat-form-field>
     <div style="display: inline-block" *ngIf="operatorsChosen[no] === 'equals'">

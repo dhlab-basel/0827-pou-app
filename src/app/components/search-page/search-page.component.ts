@@ -3,6 +3,7 @@ import {KnoraService} from '../../services/knora.service';
 import {MatDatepickerInputEvent, MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material';
 import {stringify} from 'querystring';
+import {SparqlPrep} from '../../classes/sparql-prep';
 
 class Property {
   constructor(public prop: string, public type: string, public originalName: string) {}
@@ -31,7 +32,7 @@ export class SearchPageComponent implements OnInit {
   startDateForCalendars = new Date(1905, 1, 1);
   onlyCount: boolean = false;
 
-  constructor(private knoraService: KnoraService) {
+  constructor(private knoraService: KnoraService, private sparqlPrep: SparqlPrep) {
     this.arr = Array(1).fill(0).map((x, i) => i);
     this.propertiesChosen = Array(1).fill(new Property('', '', ''));
     this.valuesChosen = Array(1).fill('');
@@ -92,16 +93,16 @@ export class SearchPageComponent implements OnInit {
   }
   getProps(): Property[] {
     switch (this.selectedResourceType) {
-      case 'physCop': {
+      case 'PhysicalCopy': {
         return this.physCopProps;
       }
-      case 'photo': {
+      case 'Photograph': {
         return this.photoProps;
       }
-      case 'person': {
+      case 'Person': {
         return this.personProps;
       }
-      case 'coverLetter': {
+      case 'CoverLetter': {
         return this.coverLetterProps;
       }
       default: {
@@ -136,7 +137,7 @@ export class SearchPageComponent implements OnInit {
   }
   dateValueChanged(index: number, event: MatDatepickerInputEvent<unknown>) {
     const value: Date = event.value as Date;
-    this.valuesChosen[index] = value.getFullYear().toString() + '-' + (value.getMonth() + 1).toString() + '-' + value.getDate().toString()
+    this.valuesChosen[index] = value.getFullYear().toString() + '-' + (value.getMonth() + 1).toString() + '-' + value.getDate().toString();
   }
   createQuery() {
     let query = 'PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>\n';
@@ -145,8 +146,16 @@ export class SearchPageComponent implements OnInit {
     for (const property of this.propertiesChosen) {
       query += ('?mainres pou:' + property.originalName + ' ?' + property.originalName + ' .\n');
     }
-    query += '} WHERE {\n';
+    query += '} WHERE {\n?mainres a knora-api:Resource .\n?mainres a pou:' + this.selectedResourceType + ' .\n';
+    // TODO: Add code to filter for values given here if equals.
+    for (const property of this.propertiesChosen) {
+      query += ('?mainres pou:' + property.originalName + ' ?' + property.originalName + ' .\n');
+    }
+    query += '}';
+
     console.log(query);
+    const params = {};
+    console.log(this.sparqlPrep.compile(query, params));
   }
 
 }
