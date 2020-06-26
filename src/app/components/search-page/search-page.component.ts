@@ -143,7 +143,7 @@ export class SearchPageComponent implements OnInit {
     const value: Date = event.value as Date;
     this.valuesChosen[index] = value.getFullYear().toString() + '-' + (value.getMonth() + 1).toString() + '-' + value.getDate().toString();
   }
-  createQuery() {
+  createFormQuery() {
     let query = 'PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>\n';
     query += 'PREFIX pou: <{{ ontology }}/ontology/0827/pou/simple/v2#>\n';
     query += 'CONSTRUCT {\n?mainres knora-api:isMainResource true .\n';
@@ -165,6 +165,22 @@ export class SearchPageComponent implements OnInit {
         console.log('GAGA: (© by Lukas)', gaga);
       }
     );
+  }
+  createGravfieldQuery(enteredString: string) {
+    const params = {ontology: this.appInitService.getSettings().ontologyPrefix};
+    let query = 'PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>\n';
+    const mainres = enteredString.substring(0, enteredString.indexOf(' '));
+    query += 'PREFIX pou: <{{ ontology }}/ontology/0827/pou/simple/v2#>\n';
+    query += 'CONSTRUCT {\n' + mainres + ' knora-api:isMainResource true .';
+    query += enteredString + '\n} WHERE {\n' + mainres + ' a knora-api:Resource .\n' + mainres + 'a pou:' + this.selectedResourceType + enteredString + '}';
+    const querystring = this.sparqlPrep.compile(query, params);
+    console.log(querystring);
+    this.knoraService.gravsearchQueryByString(querystring).subscribe(
+      (gaga: ReadResource[]) => {
+        console.log('GAGA: (© by Lukas)', gaga);
+      }
+    );
+
   }
 
 }
