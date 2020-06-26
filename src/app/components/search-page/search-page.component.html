@@ -56,7 +56,12 @@
     </mat-select>
   </mat-form-field>
   <mat-form-field appearance="outline">
-    <textarea #gravField cdkTextareaAutosize cdkAutosizeMinRows="10" cdkAutosizeMaxRows="50" matInput  placeholder="Enter gravsearch query"></textarea>
+    <textarea #gravField cdkTextareaAutosize cdkAutosizeMinRows="10" cdkAutosizeMaxRows="50" matInput  placeholder="Enter gravsearch query">
+?a pou:peopleOnPic ?b .
+?a pou:destination ?d .
+?b pou:turkishName ?c .
+?b pou:originTown ?t .
+</textarea>
   </mat-form-field>
   <a mat-button (click)="createGravfieldQuery(gravField.value)"> Search</a>
   <a mat-button (click)="gravField.value = ''">Clear</a>
@@ -64,3 +69,14 @@
 <div style="display: inline-block; margin-left: 50px">
   <a mat-button>Create linked query</a>
 </div>
+<mat-divider></mat-divider>
+<table>
+  <tr *ngFor="let searchResult of searchResults">
+    <td *ngFor="let values of searchResult">
+      <div *ngFor="let value of values">
+        {{value}}
+      </div>
+    </td>
+  </tr>
+</table>
+

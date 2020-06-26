@@ -5,11 +5,13 @@ import {MatNativeDateModule} from '@angular/material';
 import {stringify} from 'querystring';
 import {SparqlPrep} from '../../classes/sparql-prep';
 import {AppInitService} from '../../app-init.service';
-import {ReadResource} from '@knora/api';
+import {ReadDateValue, ReadLinkValue, ReadResource, ReadTextValueAsString, ReadValue} from '@knora/api';
 
 class Property {
   constructor(public prop: string, public type: string, public originalName: string) {}
 }
+
+
 @Component({
   selector: 'app-search-page',
   templateUrl: './search-page.component.html',
@@ -34,6 +36,9 @@ export class SearchPageComponent implements OnInit {
   startDateForCalendars = new Date(1905, 1, 1);
   onlyCount: boolean = false;
 
+  searchResults: Array<Array<Array<string>>> = [];
+  columnsToDisplay: Array<string> = ['0', '1', '2'];
+
   constructor(private appInitService: AppInitService,
               private knoraService: KnoraService,
               private sparqlPrep: SparqlPrep) {
@@ -46,6 +51,7 @@ export class SearchPageComponent implements OnInit {
   ngOnInit() {
     this.getOnto();
   }
+
   getOnto() {
     const onto = this.knoraService.getOntology(this.knoraService.pouOntology.slice(0, -1));
     onto.subscribe( ontoValue => {
@@ -90,11 +96,11 @@ export class SearchPageComponent implements OnInit {
             break;
           default:
             console.log('Couldnt find: ', subValue);
-
         }
       }
     });
   }
+
   getProps(): Property[] {
     switch (this.selectedResourceType) {
       case 'PhysicalCopy': {
@@ -114,6 +120,7 @@ export class SearchPageComponent implements OnInit {
       }
     }
   }
+
   addProperty() {
     this.arr = Array(this.arr.length + 1).fill(0).map((x, i) => i);
     this.propertiesChosen.push(new Property('', '', ''));
@@ -121,6 +128,7 @@ export class SearchPageComponent implements OnInit {
     this.operatorsChosen.push('exists');
     console.log(this.onlyCount);
   }
+
   removeProperty(no: number) {
     if (this.arr.length === 0) {
       return;
@@ -130,6 +138,7 @@ export class SearchPageComponent implements OnInit {
     this.operatorsChosen.splice(no, 1);
     this.arr.pop();
   }
+
   changeProperty(index: number, value: string) {
     this.propertiesChosen[index].prop = value;
     for (const property of this.getProps()) {
@@ -139,10 +148,12 @@ export class SearchPageComponent implements OnInit {
       }
     }
   }
+
   dateValueChanged(index: number, event: MatDatepickerInputEvent<unknown>) {
     const value: Date = event.value as Date;
     this.valuesChosen[index] = value.getFullYear().toString() + '-' + (value.getMonth() + 1).toString() + '-' + value.getDate().toString();
   }
+
   createFormQuery() {
     let query = 'PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>\n';
     query += 'PREFIX pou: <{{ ontology }}/ontology/0827/pou/simple/v2#>\n';
@@ -166,18 +177,73 @@ export class SearchPageComponent implements OnInit {
       }
     );
   }
+
+/*
+?a pou:peopleOnPic ?b .
+?a pou:destination ?d .
+?b pou:turkishName ?c .
+ */
   createGravfieldQuery(enteredString: string) {
     const params = {ontology: this.appInitService.getSettings().ontologyPrefix};
     let query = 'PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>\n';
     const mainres = enteredString.substring(0, enteredString.indexOf(' '));
     query += 'PREFIX pou: <{{ ontology }}/ontology/0827/pou/simple/v2#>\n';
-    query += 'CONSTRUCT {\n' + mainres + ' knora-api:isMainResource true .';
-    query += enteredString + '\n} WHERE {\n' + mainres + ' a knora-api:Resource .\n' + mainres + 'a pou:' + this.selectedResourceType + enteredString + '}';
+    query += 'CONSTRUCT {\n' + mainres + ' knora-api:isMainResource true .\n';
+    query += enteredString + '\n} WHERE {\n' + mainres + ' a knora-api:Resource .\n' + mainres + ' a pou:' + this.selectedResourceType + ' .\n' + enteredString + '}';
     const querystring = this.sparqlPrep.compile(query, params);
     console.log(querystring);
     this.knoraService.gravsearchQueryByString(querystring).subscribe(
-      (gaga: ReadResource[]) => {
-        console.log('GAGA: (© by Lukas)', gaga);
+      (readResources: ReadResource[]) => {
+        console.log('GAGA: (© by Lukas)', readResources);
+        this.searchResults = [];
+        this.columnsToDisplay = [];
+        for (const readResource of readResources) {
+          const dataArr: Array<Array<string>> = [];
+          dataArr.push([readResource.label]);
+          this.columnsToDisplay = [];
+          for (const i in readResource.properties) {
+            if (readResource.properties[i][0] instanceof ReadTextValueAsString) {
+              const tmpArr = [];
+              for (const gaga of readResource.properties[i]) {
+                const data: ReadTextValueAsString = gaga as ReadTextValueAsString;
+                tmpArr.push(data.strval);
+              }
+              dataArr.push(tmpArr);
+            } else if (readResource.properties[i][0] instanceof ReadLinkValue) {
+              const tmpArr = [];
+              for (const gaga of readResource.properties[i]) {
+
+                const data: ReadLinkValue = gaga as ReadLinkValue;
+                let str = '';
+                const linkedRes: ReadResource = data.linkedResource;
+                for (const k in linkedRes.properties) {
+                  const gugus: Array<ReadValue> = linkedRes.properties[k];
+                  for (const gugu of gugus) {
+                    str += gugu.propertyLabel + ': ' + gugu.strval + ' ';
+                  }
+                }
+                tmpArr.push(str);
+              }
+              dataArr.push(tmpArr);
+            } else if (readResource.properties[i][0] instanceof ReadDateValue) {
+              const tmpArr = [];
+              for (const gaga of readResource.properties[i]) {
+                const data: ReadDateValue = gaga as ReadDateValue;
+                tmpArr.push(data.strval);
+              }
+              dataArr.push(tmpArr);
+            } else {
+              const tmpArr = [];
+              for (const gaga of readResource.properties[i]) {
+                const data: ReadValue = gaga as ReadValue;
+                tmpArr.push(data.strval);
+              }
+              dataArr.push(tmpArr);
+            }
+          }
+          this.searchResults.push(dataArr);
+        }
+        console.log('LABELS:', this.searchResults);
       }
     );
 
