@@ -97,6 +97,14 @@ export class KnoraService {
         return res as Array<ReadResource>;
       }));
   }
+  gravsearchQueryByString(querystring: string): Observable<Array<ReadResource>> {
+    return this.knoraApiConnection.v2.search.doExtendedSearch(querystring).pipe(
+      map((res: Array<ReadResource>) => {
+        console.log('gravsearchQuery result:', res);
+        return res as Array<ReadResource>;
+      }));
+  }
+
   getOntology(iri: string): Observable<ReadOntology> {
     return this.knoraApiConnection.v2.ontologyCache.getOntology(iri).pipe( // ToDo: Use cache
       map((cachedata: Map<string, ReadOntology>)  => cachedata.get(iri) as ReadOntology)

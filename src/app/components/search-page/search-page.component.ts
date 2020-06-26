@@ -5,6 +5,7 @@ import {MatNativeDateModule} from '@angular/material';
 import {stringify} from 'querystring';
 import {SparqlPrep} from '../../classes/sparql-prep';
 import {AppInitService} from '../../app-init.service';
+import {ReadResource} from '@knora/api';
 
 class Property {
   constructor(public prop: string, public type: string, public originalName: string) {}
@@ -157,7 +158,13 @@ export class SearchPageComponent implements OnInit {
     query += '}';
 
     const params = {ontology: this.appInitService.getSettings().ontologyPrefix };
-    console.log(this.sparqlPrep.compile(query, params));
+    const querystring = this.sparqlPrep.compile(query, params);
+    console.log(querystring);
+    this.knoraService.gravsearchQueryByString(querystring).subscribe(
+      (gaga: ReadResource[]) => {
+        console.log('GAGA: (© by Lukas)', gaga);
+      }
+    );
   }
 
 }
