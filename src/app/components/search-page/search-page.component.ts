@@ -4,6 +4,7 @@ import {MatDatepickerInputEvent, MatDatepickerModule} from '@angular/material/da
 import {MatNativeDateModule} from '@angular/material';
 import {stringify} from 'querystring';
 import {SparqlPrep} from '../../classes/sparql-prep';
+import {AppInitService} from '../../app-init.service';
 
 class Property {
   constructor(public prop: string, public type: string, public originalName: string) {}
@@ -32,7 +33,9 @@ export class SearchPageComponent implements OnInit {
   startDateForCalendars = new Date(1905, 1, 1);
   onlyCount: boolean = false;
 
-  constructor(private knoraService: KnoraService, private sparqlPrep: SparqlPrep) {
+  constructor(private appInitService: AppInitService,
+              private knoraService: KnoraService,
+              private sparqlPrep: SparqlPrep) {
     this.arr = Array(1).fill(0).map((x, i) => i);
     this.propertiesChosen = Array(1).fill(new Property('', '', ''));
     this.valuesChosen = Array(1).fill('');
@@ -153,8 +156,7 @@ export class SearchPageComponent implements OnInit {
     }
     query += '}';
 
-    console.log(query);
-    const params = {};
+    const params = {ontology: this.appInitService.getSettings().ontologyPrefix };
     console.log(this.sparqlPrep.compile(query, params));
   }
 
