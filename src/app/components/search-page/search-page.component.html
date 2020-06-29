@@ -71,8 +71,8 @@
 </div>
 <mat-divider></mat-divider>
 <table>
-  <tr *ngFor="let searchResult of searchResults">
-    <td *ngFor="let values of searchResult">
+  <tr *ngFor="let searchResult of searchResults"  (click)="resultClicked(searchResult.targetIri)" class="clickable">
+    <td *ngFor="let values of searchResult.results">
       <div *ngFor="let value of values">
         {{value}}
       </div>

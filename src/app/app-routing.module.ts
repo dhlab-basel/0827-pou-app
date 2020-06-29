@@ -5,6 +5,7 @@ import { HomeComponent} from './components/home/home.component';
 import {PhotoPageComponent} from './components/photo-page/photo-page.component';
 import {FamilyTreeComponent} from './components/family-tree/family-tree.component';
 import {SearchPageComponent} from './components/search-page/search-page.component';
+import {DetailsPageComponent} from './components/details-page/details-page.component';
 
 
 const routes: Routes = [
@@ -22,6 +23,9 @@ const routes: Routes = [
   {
     path: 'search',
     component: SearchPageComponent
+  }, {
+    path: 'details/:iri',
+    component: DetailsPageComponent
   }
 ];
 

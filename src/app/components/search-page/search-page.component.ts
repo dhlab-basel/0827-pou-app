@@ -6,9 +6,13 @@ import {stringify} from 'querystring';
 import {SparqlPrep} from '../../classes/sparql-prep';
 import {AppInitService} from '../../app-init.service';
 import {ReadDateValue, ReadLinkValue, ReadResource, ReadTextValueAsString, ReadValue} from '@knora/api';
+import {Router} from '@angular/router';
 
 class Property {
   constructor(public prop: string, public type: string, public originalName: string) {}
+}
+class SearchResult {
+  constructor(public targetIri: string, public results: Array<Array<string>>) {}
 }
 
 
@@ -36,12 +40,14 @@ export class SearchPageComponent implements OnInit {
   startDateForCalendars = new Date(1905, 1, 1);
   onlyCount: boolean = false;
 
-  searchResults: Array<Array<Array<string>>> = [];
+
+  searchResults: Array<SearchResult>;
   columnsToDisplay: Array<string> = ['0', '1', '2'];
 
   constructor(private appInitService: AppInitService,
               private knoraService: KnoraService,
-              private sparqlPrep: SparqlPrep) {
+              private sparqlPrep: SparqlPrep,
+              private router: Router) {
     this.arr = Array(1).fill(0).map((x, i) => i);
     this.propertiesChosen = Array(1).fill(new Property('', '', ''));
     this.valuesChosen = Array(1).fill('');
@@ -198,8 +204,8 @@ export class SearchPageComponent implements OnInit {
         this.searchResults = [];
         this.columnsToDisplay = [];
         for (const readResource of readResources) {
-          const dataArr: Array<Array<string>> = [];
-          dataArr.push([readResource.label]);
+          const results: Array<Array<string>> = [];
+          results.push([readResource.label]);
           this.columnsToDisplay = [];
           for (const i in readResource.properties) {
             if (readResource.properties[i][0] instanceof ReadTextValueAsString) {
@@ -208,7 +214,7 @@ export class SearchPageComponent implements OnInit {
                 const data: ReadTextValueAsString = gaga as ReadTextValueAsString;
                 tmpArr.push(data.strval);
               }
-              dataArr.push(tmpArr);
+              results.push(tmpArr);
             } else if (readResource.properties[i][0] instanceof ReadLinkValue) {
               const tmpArr = [];
               for (const gaga of readResource.properties[i]) {
@@ -224,29 +230,43 @@ export class SearchPageComponent implements OnInit {
                 }
                 tmpArr.push(str);
               }
-              dataArr.push(tmpArr);
+              results.push(tmpArr);
             } else if (readResource.properties[i][0] instanceof ReadDateValue) {
               const tmpArr = [];
               for (const gaga of readResource.properties[i]) {
                 const data: ReadDateValue = gaga as ReadDateValue;
                 tmpArr.push(data.strval);
               }
-              dataArr.push(tmpArr);
+              results.push(tmpArr);
             } else {
               const tmpArr = [];
               for (const gaga of readResource.properties[i]) {
                 const data: ReadValue = gaga as ReadValue;
                 tmpArr.push(data.strval);
               }
-              dataArr.push(tmpArr);
+              results.push(tmpArr);
             }
           }
-          this.searchResults.push(dataArr);
+          this.searchResults.push(new SearchResult(readResource.id, results));
         }
+        // this.searchResults = new SearchResults('IRI', results);
         console.log('LABELS:', this.searchResults);
       }
     );
-
   }
+
+  resultClicked(targetIri: string): void {
+    console.log('CLICKED: ', targetIri);
+    console.log('RESTYPE:', this.selectedResourceType);
+    const url: string = 'details/' + encodeURIComponent(targetIri);
+    this.router.navigateByUrl(url).then(e => {
+      if (e) {
+        console.log("Navigation is successful!");
+      } else {
+        console.log("Navigation has failed!");
+      }
+    });
+  }
+
 
 }
