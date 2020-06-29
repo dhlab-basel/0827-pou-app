@@ -1,2 +1,20 @@
-<p>details-page works!</p>
-<p>{{iri}}</p>
+<ul>
+  <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: props }"></ng-container>
+</ul>
+
+<ng-template #recursiveListTmpl let-list="list">
+  <li *ngFor="let item of list">
+    <p *ngIf="item.name !== 'dummy'">
+    {{ item.name }}
+    </p>
+    <p *ngIf="item.name === 'dummy'"><br></p>
+    <ul *ngIf="item.links.length > 0">
+      <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: item.links }"></ng-container>
+    </ul>
+    <ul *ngIf="item.values.length > 0">
+      <p *ngFor="let val of item.values">
+        {{val}}
+      </p>
+    </ul>
+  </li>
+</ng-template>
