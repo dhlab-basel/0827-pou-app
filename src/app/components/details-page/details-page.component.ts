@@ -4,6 +4,7 @@ import {KnoraService} from '../../services/knora.service';
 import {ReadLinkValue, ReadResource} from '@knora/api';
 import {first} from 'rxjs/operators';
 
+const imageSize = 200;
 class PropStore {
   constructor(public name: string, public values: string[], public links: PropStore[]) {
   }
@@ -64,6 +65,12 @@ export class DetailsPageComponent implements OnInit {
       }
     );*/
   }
-
+  getImageLink(originalLink) {
+    originalLink = originalLink.substring(0, originalLink.lastIndexOf('/') );
+    originalLink = originalLink.substring(0, originalLink.lastIndexOf('/') );
+    originalLink = originalLink.substring(0, originalLink.lastIndexOf('/') + 1 );
+    originalLink += imageSize + ',/0/default.jpg';
+    return originalLink;
+  }
 
 }

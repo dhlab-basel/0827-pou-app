@@ -39,6 +39,10 @@ export class SearchPageComponent implements OnInit {
   backOfImageProps: Property[] = [];
   startDateForCalendars = new Date(1905, 1, 1);
   onlyCount: boolean = false;
+  gravQueryFieldText = '?a pou:peopleOnPic ?b .\n' +
+    '?a pou:destination ?d .\n' +
+    '?b pou:turkishName ?c .\n' +
+    '?b pou:originTown ?t .';
 
 
   searchResults: Array<SearchResult>;
@@ -126,6 +130,44 @@ export class SearchPageComponent implements OnInit {
       }
     }
   }
+  getPropsOfResclass(resclass: string): Property[] {
+    console.log('Called with:', resclass);
+    switch (resclass) {
+      case 'PhysicalCopy': {
+        return this.physCopProps;
+      }
+      case 'Photograph': {
+        return this.photoProps;
+      }
+      case 'Person': {
+        return this.personProps;
+      }
+      case 'CoverLetter': {
+        return this.coverLetterProps;
+      }
+      case 'PersonFile': {
+        return this.personFileProps;
+      }
+      case 'SourcedDate': {
+        return this.sourcedDateProps;
+      }
+      case 'SourcedText': {
+        return this.sourcedTextProps;
+      }
+      case 'RelatedPhotographs': {
+        return this.relPhotosProps;
+      }
+      case 'Document': {
+        return this.documentProps;
+      }
+      case 'BackOfImage': {
+        return this.backOfImageProps;
+      }
+      default: {
+        return [];
+      }
+    }
+  }
 
   addProperty() {
     this.arr = Array(this.arr.length + 1).fill(0).map((x, i) => i);
@@ -143,6 +185,13 @@ export class SearchPageComponent implements OnInit {
     this.valuesChosen.splice(no, 1);
     this.operatorsChosen.splice(no, 1);
     this.arr.pop();
+  }
+  deleteAllProps(){
+    if (this.arr.length === 0) {
+      return;
+    }
+    this.removeProperty(0);
+    this.deleteAllProps();
   }
 
   changeProperty(index: number, value: string) {

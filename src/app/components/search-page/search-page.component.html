@@ -20,7 +20,7 @@
       <mat-select #operatorfield [value]="operatorsChosen[no]" (selectionChange)="operatorsChosen[no] = operatorfield.value">
         <mat-option value = "exists">Exists</mat-option>
         <mat-option value = "equals">Equals</mat-option>
-        <!-- TODO: do we want to add something like entails here? Other operators?  -->
+        <mat-option value = "contains">Contains </mat-option>
       </mat-select>
     </mat-form-field>
     <div style="display: inline-block" *ngIf="operatorsChosen[no] === 'equals'">
@@ -39,6 +39,11 @@
         <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
         <mat-datepicker #myDatepicker startView="multi-year" [startAt]="startDateForCalendars"></mat-datepicker>
       </mat-form-field>
+      <ng-container *ngSwitchDefault>
+        <ng-container *ngTemplateOutlet="resourcePropEquals; context: {type: propertiesChosen[no].type}">
+
+        </ng-container>
+      </ng-container>
     </div>
     </div>
     <a mat-button (click)="removeProperty(no)"> X </a>
@@ -48,26 +53,11 @@
 </div>
 <div style="display: inline-block; margin-left: 50px; margin-right: 50px;">
   <mat-form-field appearance="outline">
-    <mat-select [(ngModel)]="selectedResourceType" placeholder="Resource type">
-      <mat-option value="PhysicalCopy">Physical Copy</mat-option>
-      <mat-option value="CoverLetter">Cover Letter</mat-option>
-      <mat-option value="Person">Person</mat-option>
-      <mat-option value="Photograph">Photograph</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field appearance="outline">
-    <textarea #gravField cdkTextareaAutosize cdkAutosizeMinRows="10" cdkAutosizeMaxRows="50" matInput  placeholder="Enter gravsearch query">
-?a pou:peopleOnPic ?b .
-?a pou:destination ?d .
-?b pou:turkishName ?c .
-?b pou:originTown ?t .
+    <textarea #gravField cdkTextareaAutosize cdkAutosizeMinRows="10" cdkAutosizeMaxRows="50" matInput  value = "{{gravQueryFieldText}}">
 </textarea>
   </mat-form-field>
   <a mat-button (click)="createGravfieldQuery(gravField.value)"> Search</a>
-  <a mat-button (click)="gravField.value = ''">Clear</a>
-</div>
-<div style="display: inline-block; margin-left: 50px">
-  <a mat-button>Create linked query</a>
+  <a mat-button (click)="gravField.value = ''; deleteAllProps()">Clear</a>
 </div>
 <mat-divider></mat-divider>
 <table>
@@ -80,3 +70,40 @@
   </tr>
 </table>
 
+<ng-template #resourcePropEquals let-type="type">
+  <mat-form-field>
+  <mat-select #propfield>
+    <mat-option *ngFor="let property of getPropsOfResclass(type)" [value]="property">{{property.prop}}</mat-option>
+  </mat-select>
+</mat-form-field>
+  <mat-form-field>
+    <mat-select #operatorfield >
+      <mat-option value = "exists">Exists</mat-option>
+      <mat-option value = "equals">Equals</mat-option>
+      <mat-option value = "contains">Contains </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div style="display: inline-block" *ngIf="operatorfield.value === 'equals'">
+    <div style="display: inline-block" [ngSwitch]="propfield.value.type">
+      <mat-form-field *ngSwitchCase="'TextValue'">
+        <textarea matInput></textarea>
+      </mat-form-field>
+      <mat-form-field *ngSwitchCase="'BooleanValue'">
+        <mat-select>
+          <mat-option value="True">True</mat-option>
+          <mat-option value="False">False</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngSwitchCase="'DateValue'">
+        <input matInput [matDatepicker]="myDatepicker">
+        <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+        <mat-datepicker #myDatepicker startView="multi-year" [startAt]="startDateForCalendars"></mat-datepicker>
+      </mat-form-field>
+      <ng-container *ngSwitchDefault>
+        <ng-container *ngTemplateOutlet="resourcePropEquals; context: {type: propfield.value.type}">
+
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+</ng-template>
