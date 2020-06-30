@@ -46,7 +46,7 @@ export class AppComponent {
       });
   }
 
-  private logout(): void {
+  public logout(): void {
     this.knoraService.logout().subscribe(data => {
       this.loggedin = false;
     });

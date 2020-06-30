@@ -105,6 +105,12 @@ export class KnoraService {
         return res as Array<ReadResource>;
       }));
   }
+  gravsearchQueryByStringCount(querystring: string): Observable<number> {
+    return this.knoraApiConnection.v2.search.doExtendedSearchCountQuery(querystring).pipe(
+      map((data: CountQueryResponse) => {
+        return data.numberOfResults;
+      }));
+  }
 
   getOntology(iri: string): Observable<ReadOntology> {
     return this.knoraApiConnection.v2.ontologyCache.getOntology(iri).pipe( // ToDo: Use cache
