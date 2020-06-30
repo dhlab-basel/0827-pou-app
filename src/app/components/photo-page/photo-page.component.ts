@@ -176,8 +176,8 @@ class Person {
 
 export class PhotoPageComponent implements OnInit {
   private photoIri: string = '';
-  private photo: PhotoPageData;
-  private showProgbar: boolean = false;
+  public photo: PhotoPageData;
+  public showProgbar: boolean = false;
 
   constructor(public route: ActivatedRoute,
               private knoraService: KnoraService,
