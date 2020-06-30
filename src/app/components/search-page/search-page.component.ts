@@ -65,6 +65,7 @@ export class SearchPageComponent implements OnInit {
   getOnto() {
     const onto = this.knoraService.getOntology(this.knoraService.pouOntology.slice(0, -1));
     onto.subscribe( ontoValue => {
+      console.log('ONTOLOGY', ontoValue);
       for (const key in ontoValue.properties) {
         const prop = ontoValue.properties[key];
         const objValue = prop.objectType.substring(prop.objectType.lastIndexOf('#') + 1, prop.objectType.length);
