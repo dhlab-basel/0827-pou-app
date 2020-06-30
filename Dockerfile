@@ -1,7 +1,7 @@
 ### STAGE 1: Build ###
 
 # We label our stage as 'builder'
-FROM node:11-stretch as builder
+FROM node:12-stretch as builder
 
 LABEL maintainer="ivan.subotic@unibas.ch"
 
@@ -23,18 +23,18 @@ COPY . .
 
 # Install all the packages
 RUN npm install -g @angular/cli
-RUN yarn install
+RUN npm install
 
 ## Build the angular app in production mode and store the artifacts in dist folder
 ## should be: $(npm bin)/ng build --prod --env=prod --build-optimizer
-RUN yarn build-prod
+RUN npm run build-prod
 
 ### STAGE 2: Setup ###
 
 FROM dhlabbasel/nginx-server:v1.0.1
 
-LABEL maintainer="ivan.subotic@unibas.ch"
+LABEL maintainer="400790+subotic@users.noreply.github.com"
 
 RUN rm -rf /public/*
 
-COPY --from=builder /usr/app/dist/test-app /public
+COPY --from=builder /usr/app/dist/0827-pou-app /public
