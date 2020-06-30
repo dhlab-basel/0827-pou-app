@@ -60,6 +60,9 @@
   <a mat-button (click)="gravField.value = ''; deleteAllProps()">Clear</a>
 </div>
 <mat-divider></mat-divider>
+<div *ngIf = "countRes">
+  <p>Count returned: {{countRes}}</p>
+</div>
 <table>
   <tr *ngFor="let searchResult of searchResults"  (click)="resultClicked(searchResult.targetIri)" class="clickable">
     <td *ngFor="let values of searchResult.results">

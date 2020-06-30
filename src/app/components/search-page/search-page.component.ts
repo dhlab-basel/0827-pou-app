@@ -39,6 +39,8 @@ export class SearchPageComponent implements OnInit {
   backOfImageProps: Property[] = [];
   startDateForCalendars = new Date(1905, 1, 1);
   onlyCount: boolean = false;
+  countRes: number;
+  currentIdentifier = 'a1';
   gravQueryFieldText = '?a pou:peopleOnPic ?b .\n' +
     '?a pou:destination ?d .\n' +
     '?b pou:turkishName ?c .\n' +
@@ -226,11 +228,7 @@ export class SearchPageComponent implements OnInit {
     const params = {ontology: this.appInitService.getSettings().ontologyPrefix };
     const querystring = this.sparqlPrep.compile(query, params);
     console.log(querystring);
-    this.knoraService.gravsearchQueryByString(querystring).subscribe(
-      (gaga: ReadResource[]) => {
-        console.log('GAGA: (© by Lukas)', gaga);
-      }
-    );
+    this.fire(querystring);
   }
 
 /*
@@ -247,6 +245,17 @@ export class SearchPageComponent implements OnInit {
     query += enteredString + '\n} WHERE {\n' + mainres + ' a knora-api:Resource .\n' + mainres + ' a pou:' + this.selectedResourceType + ' .\n' + enteredString + '}';
     const querystring = this.sparqlPrep.compile(query, params);
     console.log(querystring);
+    this.fire(querystring);
+  }
+  fire(querystring) {
+    if (this.onlyCount) {
+      this.knoraService.gravsearchQueryByStringCount(querystring).subscribe(
+        (no: number) => {
+          this.countRes = no;
+        }
+      );
+      return;
+    }
     this.knoraService.gravsearchQueryByString(querystring).subscribe(
       (readResources: ReadResource[]) => {
         console.log('GAGA: (© by Lukas)', readResources);
@@ -316,6 +325,8 @@ export class SearchPageComponent implements OnInit {
       }
     });
   }
-
-
+  getNextIdentifier() {
+    const lastChar = this.currentIdentifier.substr(1);
+    const num = Number(lastChar);
+  }
 }
