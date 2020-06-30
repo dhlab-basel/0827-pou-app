@@ -5,11 +5,14 @@ import {MatNativeDateModule} from '@angular/material';
 import {stringify} from 'querystring';
 import {SparqlPrep} from '../../classes/sparql-prep';
 import {AppInitService} from '../../app-init.service';
-import {ReadDateValue, ReadLinkValue, ReadResource, ReadTextValueAsString, ReadValue} from '@knora/api';
+import {ReadDateValue, ReadLinkValue, ReadResource, ReadTextValueAsString, ReadValue, ResourcePropertyDefinition} from '@knora/api';
 import {Router} from '@angular/router';
 
+class PouListNode {
+  constructor(public iri: string, public label: string) {}
+}
 class Property {
-  constructor(public prop: string, public type: string, public originalName: string) {}
+  constructor(public prop: string, public type: string, public originalName: string, public listiri?: string) {}
 }
 class SearchResult {
   constructor(public targetIri: string, public results: Array<Array<string>>) {}
@@ -45,6 +48,7 @@ export class SearchPageComponent implements OnInit {
     '?a pou:destination ?d .\n' +
     '?b pou:turkishName ?c .\n' +
     '?b pou:originTown ?t .';
+  lists: {[index: string]: Array<PouListNode>} = {};
 
 
   searchResults: Array<SearchResult>;
@@ -69,43 +73,61 @@ export class SearchPageComponent implements OnInit {
     onto.subscribe( ontoValue => {
       console.log('ONTOLOGY', ontoValue);
       for (const key in ontoValue.properties) {
-        const prop = ontoValue.properties[key];
+        const prop = ontoValue.properties[key] as ResourcePropertyDefinition;
         const objValue = prop.objectType.substring(prop.objectType.lastIndexOf('#') + 1, prop.objectType.length);
         const origName = prop.id.substring(prop.id.lastIndexOf('#') + 1, prop.id.length);
         if (objValue === 'LinkValue') {
           continue;
         }
+        let listIri: string;
+        if (objValue === 'ListValue') {
+          const tmp = prop.guiAttributes[0].split('=');
+          listIri = tmp[1].slice(1, -1);
+          if (this.lists[listIri] === undefined) {
+            this.lists[listIri] = []; // empty list to prevent double loading! getList is asynchronous!!!
+            this.knoraService.getList(listIri).subscribe(
+              listResponse => {
+                const listNodes: Array<PouListNode> = [];
+                for (const listNode of listResponse.list.children) {
+                  listNodes.push(new PouListNode(listNode.id, listNode.labels[0].value));
+                }
+                this.lists[listIri] = listNodes;
+                console.log('========>', this.lists[listIri]);
+              }
+            );
+          }
+        }
         const subValue = prop.subjectType.substring(prop.subjectType.lastIndexOf('#') + 1, prop.subjectType.length);
         switch (subValue) {
           case 'PersonFile':
-            this.personFileProps.push({prop: prop.label, type: objValue, originalName: origName});
+            this.personFileProps.push(new Property(prop.label, objValue, origName, listIri));
             break;
           case 'Person':
-            this.personProps.push({prop: prop.label, type: objValue, originalName: origName});
+            this.personProps.push(new Property(prop.label, objValue, origName, listIri));
             break;
           case 'CoverLetter':
-            this.coverLetterProps.push({prop: prop.label, type: objValue, originalName: origName});
+            this.coverLetterProps.push(new Property(prop.label, objValue, origName, listIri));
             break;
           case 'Photograph':
-            this.photoProps.push({prop: prop.label, type: objValue, originalName: origName});
+            this.photoProps.push(new Property(prop.label, objValue, origName, listIri));
             break;
           case 'PhysicalCopy':
-            this.physCopProps.push({prop: prop.label, type: objValue, originalName: origName});
+            this.physCopProps.push(new Property(prop.label, objValue, origName, listIri));
             break;
           case 'SourcedDate':
-            this.sourcedDateProps.push({prop: prop.label, type: objValue, originalName: origName});
+            this.sourcedDateProps.push(new Property(prop.label, objValue, origName, listIri));
             break;
           case 'SourcedText':
-            this.sourcedTextProps.push({prop: prop.label, type: objValue, originalName: origName});
+            this.sourcedTextProps.push(new Property(prop.label, objValue, origName, listIri));
             break;
           case 'RelatedPhotographs':
-            this.relPhotosProps.push({prop: prop.label, type: objValue, originalName: origName});
+            this.relPhotosProps.push(new Property(prop.label, objValue, origName, listIri));
             break;
           case 'BackOfImage':
-            this.backOfImageProps.push({prop: prop.label, type: objValue, originalName: origName});
+            this.backOfImageProps.push(new Property(prop.label, objValue, origName, listIri));
             break;
           case 'Document':
-            this.documentProps.push({prop: prop.label, type: objValue, originalName: origName});
+            this.documentProps.push(new Property(prop.label, objValue, origName, listIri));
             break;
           default:
             console.log('Couldnt find: ', subValue);
