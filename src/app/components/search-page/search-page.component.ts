@@ -242,6 +242,11 @@ export class SearchPageComponent implements OnInit {
     const value: Date = event.value as Date;
     this.valuesChosen[index] = value.getFullYear().toString() + '-' + (value.getMonth() + 1).toString() + '-' + value.getDate().toString();
   }
+  dateValueChangeOnLinkedRes(id: number, level: number, event: MatDatepickerInputEvent<unknown>) {
+    const value: Date  = event.value as Date;
+    const valstr = value.getFullYear().toString() + '-' + (value.getMonth() + 1).toString() + '-' + value.getDate().toString();
+    this.changeValueOfLinkedRes(id, level, valstr);
+  }
 
   createFormQuery() {
     /*let query = 'PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>\n';
