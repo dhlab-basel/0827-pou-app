@@ -2,3 +2,16 @@
 @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.wrapper {
+  display: flex;
+}
+.form-container {
+  flex: 3;
+  padding: 0 10px;
+}
+.rightside {
+  flex: 1;
+  padding: 0 10px;
+}
+
+

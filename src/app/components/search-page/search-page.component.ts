@@ -49,10 +49,7 @@ export class SearchPageComponent implements OnInit {
   countRes: number;
   formQueryString: string;
   currentIdentifier = 'a1';
-  gravQueryFieldText = '?a pou:peopleOnPic ?b .\n' +
-    '?a pou:destination ?d .\n' +
-    '?b pou:turkishName ?c .\n' +
-    '?b pou:originTown ?t .';
+  gravQueryFieldText = '';
   lists: {[index: string]: Array<PouListNode>} = {};
 
 
@@ -267,6 +264,13 @@ export class SearchPageComponent implements OnInit {
           curr = curr.value;
           currProp = tmp.prop;
         }
+        if (curr !== ''){
+          query += 'FILTER regex(?' + currProp.originalName + ', "' + curr + '", "i").\n';
+        }
+        } else {
+        if (value !== '') {
+          query += 'FILTER regex(?' + property.originalName + ', "' + value + '", "i").\n';
+        }
       }
     }
     /*query += '} WHERE {\n?mainres a knora-api:Resource .\n?mainres a pou:' + this.selectedResourceType + ' .\n';
@@ -292,10 +296,15 @@ export class SearchPageComponent implements OnInit {
  */
   createGravfieldQuery(enteredString: string) {
     // TODO: When a property without ':' in it is entered, we would like to append pou:
-    console.log(enteredString.split('\n')); //could be used to go through line by line.
+    const filters: string[] = [];
+    enteredString = this.formQueryString + enteredString;
     const params = {ontology: this.appInitService.getSettings().ontologyPrefix};
     let query = 'PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>\n';
     const mainres = enteredString.substring(0, enteredString.indexOf(' '));
+    const lines = enteredString.split('\n');
+    for (const line of lines){
+      // TODO: refactor query that it goes through lines and add filters to filter and append them at the end and stuff. 
+    }
     query += 'PREFIX pou: <{{ ontology }}/ontology/0827/pou/simple/v2#>\n';
     query += 'CONSTRUCT {\n' + mainres + ' knora-api:isMainResource true .\n';
     query += enteredString + '\n} WHERE {\n' + mainres + ' a knora-api:Resource .\n' + mainres + ' a pou:' + this.selectedResourceType + ' .\n' + enteredString + '}';
