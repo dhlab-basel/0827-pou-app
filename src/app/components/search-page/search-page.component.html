@@ -107,6 +107,11 @@
         <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
         <mat-datepicker #myDatepicker startView="multi-year" [startAt]="startDateForCalendars"></mat-datepicker>
       </mat-form-field>
+      <mat-form-field *ngSwitchCase="'ListValue'">
+        <mat-select #listfield>
+          <mat-option *ngFor="let node of lists[propfield.value.listiri]" [value]="node.label">{{node.label}}</mat-option> <!-- not so dangerous ducktyping -->
+        </mat-select>
+      </mat-form-field>
       <ng-container *ngSwitchDefault>
         <ng-container *ngTemplateOutlet="resourcePropEquals; context: {type: propfield.value.type}">
 
