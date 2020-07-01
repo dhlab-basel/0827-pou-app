@@ -193,6 +193,13 @@ export class SearchPageComponent implements OnInit {
       }
     }
   }
+  logEverything(){
+    console.log('Properties Chosen: ', this.propertiesChosen);
+    console.log('Values Chosen: ', this.valuesChosen);
+  }
+  changeProp(index: number, value: Property) {
+    this.propertiesChosen[index] = value;
+  }
 
   addProperty() {
     this.arr = Array(this.arr.length + 1).fill(0).map((x, i) => i);
@@ -219,7 +226,7 @@ export class SearchPageComponent implements OnInit {
     this.deleteAllProps();
   }
 
-  changeProperty(index: number, value: string) {
+  /*changeProperty(index: number, value: string) {
     this.propertiesChosen[index].prop = value;
     for (const property of this.getProps()) {
       if (property.prop === value) {
@@ -227,7 +234,7 @@ export class SearchPageComponent implements OnInit {
         this.propertiesChosen[index].originalName = property.originalName;
       }
     }
-  }
+  }*/
 
   dateValueChanged(index: number, event: MatDatepickerInputEvent<unknown>) {
     const value: Date = event.value as Date;
@@ -334,6 +341,15 @@ export class SearchPageComponent implements OnInit {
         console.log('LABELS:', this.searchResults);
       }
     );
+  }
+  getListNodeByLabel(label: string): PouListNode {
+    for (const id in this.lists) {
+      for (const node of this.lists[id]) {
+        if (node.label === label) {
+          return node;
+        }
+      }
+    }
   }
 
   resultClicked(targetIri: string): void {

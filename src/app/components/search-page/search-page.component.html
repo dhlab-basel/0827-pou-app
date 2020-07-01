@@ -11,8 +11,8 @@
   <div *ngFor="let no of arr">
     <div style="display: inline-block">
     <mat-form-field >
-      <mat-select #propfield [value] =  "propertiesChosen[no].prop" placeholder="Property {{no}}" (selectionChange) = "changeProperty(no, propfield.value)">
-        <mat-option *ngFor="let property of getProps()" [value]="property.prop">{{property.prop}}</mat-option>
+      <mat-select #propfield [value] =  "propertiesChosen[no]" placeholder="Property {{no}}" (selectionChange) = "changeProp(no, propfield.value); logEverything()">
+        <mat-option *ngFor="let property of getProps()" [value]="property">{{property.prop}}</mat-option>
       </mat-select>
     </mat-form-field>
     </div>
@@ -40,8 +40,8 @@
         <mat-datepicker #myDatepicker startView="multi-year" [startAt]="startDateForCalendars"></mat-datepicker>
       </mat-form-field>
       <mat-form-field *ngSwitchCase="'ListValue'">
-        <mat-select>
-          <mat-option *ngFor="let node of lists[propertiesChosen[no].listiri]">{{node.label}}</mat-option>
+        <mat-select #listfield [value] = "valuesChosen[no]" (selectionChange)="valuesChosen[no] = listfield.value">
+         <mat-option *ngFor="let node of lists[propertiesChosen[no].listiri]" [value]="node.label">{{node.label}}</mat-option>
         </mat-select>
       </mat-form-field>
       <ng-container *ngSwitchDefault>
