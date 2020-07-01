@@ -17,7 +17,11 @@ class Property {
 class SearchResult {
   constructor(public targetIri: string, public results: Array<Array<string>>) {}
 }
-
+class PropertyValuePair {
+  constructor(public prop: Property, public value: valueType) {
+  }
+}
+type valueType = (string | PropertyValuePair);
 
 @Component({
   selector: 'app-search-page',
@@ -27,7 +31,7 @@ class SearchResult {
 export class SearchPageComponent implements OnInit {
   arr: number[];
   propertiesChosen: Property[];
-  valuesChosen: string[];
+  valuesChosen: valueType[];
   operatorsChosen: string[];
   selectedResourceType: string;
   personProps: Property[] = [];
@@ -43,6 +47,7 @@ export class SearchPageComponent implements OnInit {
   startDateForCalendars = new Date(1905, 1, 1);
   onlyCount: boolean = false;
   countRes: number;
+  formQueryString: string;
   currentIdentifier = 'a1';
   gravQueryFieldText = '?a pou:peopleOnPic ?b .\n' +
     '?a pou:destination ?d .\n' +
@@ -71,7 +76,6 @@ export class SearchPageComponent implements OnInit {
   getOnto() {
     const onto = this.knoraService.getOntology(this.knoraService.pouOntology.slice(0, -1));
     onto.subscribe( ontoValue => {
-      console.log('ONTOLOGY', ontoValue);
       for (const key in ontoValue.properties) {
         const prop = ontoValue.properties[key] as ResourcePropertyDefinition;
         const objValue = prop.objectType.substring(prop.objectType.lastIndexOf('#') + 1, prop.objectType.length);
@@ -92,7 +96,6 @@ export class SearchPageComponent implements OnInit {
                   listNodes.push(new PouListNode(listNode.id, listNode.labels[0].value));
                 }
                 this.lists[listIri] = listNodes;
-                console.log('========>', this.lists[listIri]);
               }
             );
           }
@@ -156,7 +159,6 @@ export class SearchPageComponent implements OnInit {
     }
   }
   getPropsOfResclass(resclass: string): Property[] {
-    console.log('Called with:', resclass);
     switch (resclass) {
       case 'PhysicalCopy': {
         return this.physCopProps;
@@ -199,6 +201,7 @@ export class SearchPageComponent implements OnInit {
   }
   changeProp(index: number, value: Property) {
     this.propertiesChosen[index] = value;
+    this.valuesChosen[index] = '';
   }
 
   addProperty() {
@@ -206,7 +209,6 @@ export class SearchPageComponent implements OnInit {
     this.propertiesChosen.push(new Property('', '', ''));
     this.valuesChosen.push('');
     this.operatorsChosen.push('exists');
-    console.log(this.onlyCount);
   }
 
   removeProperty(no: number) {
@@ -242,13 +244,27 @@ export class SearchPageComponent implements OnInit {
   }
 
   createFormQuery() {
-    let query = 'PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>\n';
+    /*let query = 'PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>\n';
     query += 'PREFIX pou: <{{ ontology }}/ontology/0827/pou/simple/v2#>\n';
-    query += 'CONSTRUCT {\n?mainres knora-api:isMainResource true .\n';
-    for (const property of this.propertiesChosen) {
+    query += 'CONSTRUCT {\n?mainres knora-api:isMainResource true .\n';*/
+    let query = '';
+    for (let i = 0; i < this.propertiesChosen.length; i++) {
+      const property = this.propertiesChosen[i];
+      const value = this.valuesChosen[i];
       query += ('?mainres pou:' + property.originalName + ' ?' + property.originalName + ' .\n');
+      if (value instanceof PropertyValuePair) {
+        let curr: valueType = value;
+        let currProp = property;
+        while (curr instanceof PropertyValuePair) {
+          curr = curr as PropertyValuePair;
+          query += ('?' + currProp.originalName + ' pou:' + curr.prop.originalName + ' ?' + curr.prop.originalName + ' .\n');
+          const tmp = curr;
+          curr = curr.value;
+          currProp = tmp.prop;
+        }
+      }
     }
-    query += '} WHERE {\n?mainres a knora-api:Resource .\n?mainres a pou:' + this.selectedResourceType + ' .\n';
+    /*query += '} WHERE {\n?mainres a knora-api:Resource .\n?mainres a pou:' + this.selectedResourceType + ' .\n';
     // TODO: Add code to filter for values given here if equals.
     for (const property of this.propertiesChosen) {
       query += ('?mainres pou:' + property.originalName + ' ?' + property.originalName + ' .\n');
@@ -259,6 +275,9 @@ export class SearchPageComponent implements OnInit {
     const querystring = this.sparqlPrep.compile(query, params);
     console.log(querystring);
     this.fire(querystring);
+
+     */
+    this.formQueryString = query;
   }
 
 /*
@@ -267,6 +286,8 @@ export class SearchPageComponent implements OnInit {
 ?b pou:turkishName ?c .
  */
   createGravfieldQuery(enteredString: string) {
+    // TODO: When a property without ':' in it is entered, we would like to append pou:
+    console.log(enteredString.split('\n')); //could be used to go through line by line.
     const params = {ontology: this.appInitService.getSettings().ontologyPrefix};
     let query = 'PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>\n';
     const mainres = enteredString.substring(0, enteredString.indexOf(' '));
@@ -353,8 +374,6 @@ export class SearchPageComponent implements OnInit {
   }
 
   resultClicked(targetIri: string): void {
-    console.log('CLICKED: ', targetIri);
-    console.log('RESTYPE:', this.selectedResourceType);
     const url: string = 'details/' + encodeURIComponent(targetIri);
     this.router.navigateByUrl(url).then(e => {
       if (e) {
@@ -367,5 +386,43 @@ export class SearchPageComponent implements OnInit {
   getNextIdentifier() {
     const lastChar = this.currentIdentifier.substr(1);
     const num = Number(lastChar);
+  }
+  changePropOfLinkedRes(id: number, level: number, property: Property) {
+    if (level === 1) {
+      this.valuesChosen[id] = new PropertyValuePair(property, '');
+      return;
+    }
+    this.changeValueOfLinkedRes(id, level - 1,  new PropertyValuePair(property, ''));
+  }
+  changeValueOfLinkedRes(id: number, level: number, value: valueType) {
+    if (level === 0) {
+      this.valuesChosen[id] = value;
+      return;
+    }
+    let i = 1;
+    let curr = this.valuesChosen[id] as valueType;
+    while (i < level) {
+      if (!(curr instanceof PropertyValuePair)) {
+        this.changeValueOfLinkedRes(id, i, this.createEmptyPropValFromLevelWithValue(level - i, value));
+        return;
+      }
+      curr = curr as PropertyValuePair;
+      curr = curr.value;
+      i++;
+    }
+    if (!(curr instanceof PropertyValuePair)) {
+      curr = new PropertyValuePair(new Property('', '', ''), value);
+    }
+    curr = curr as PropertyValuePair;
+    curr.value = value;
+    this.changeValueOfLinkedRes(id, level - 1, curr);
+  }
+  createEmptyPropValFromLevelWithValue(levels: number, value: valueType): PropertyValuePair {
+    let toReturn: PropertyValuePair = new PropertyValuePair(new Property('', '', ''), value);
+    while (levels > 0) {
+      toReturn = new PropertyValuePair(new Property('', '', ''), toReturn);
+      levels --;
+    }
+    return toReturn;
   }
 }
