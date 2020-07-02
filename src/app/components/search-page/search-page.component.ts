@@ -242,12 +242,13 @@ export class SearchPageComponent implements OnInit {
   }*/
 
   dateValueChanged(index: number, event: MatDatepickerInputEvent<unknown>) {
+    console.log(event.value);
     const value: Date = event.value as Date;
-    this.valuesChosen[index] = new KnoraDate(value.getFullYear().toString() + '-' + (value.getMonth() + 1).toString() + '-' + value.getDate().toString());
+    this.valuesChosen[index] = new KnoraDate('GREGORIAN:' + value.getFullYear().toString() + '-' + (value.getMonth() + 1).toString() + '-' + value.getDate().toString());
   }
   dateValueChangeOnLinkedRes(id: number, level: number, event: MatDatepickerInputEvent<unknown>) {
     const value: Date  = event.value as Date;
-    const valstr = new KnoraDate(value.getFullYear().toString() + '-' + (value.getMonth() + 1).toString() + '-' + value.getDate().toString());
+    const valstr = new KnoraDate('GREGORIAN:' + value.getFullYear().toString() + '-' + (value.getMonth() + 1).toString() + '-' + value.getDate().toString());
     this.changeValueOfLinkedRes(id, level, valstr);
   }
 
@@ -272,7 +273,6 @@ export class SearchPageComponent implements OnInit {
         }
         if (curr !== '') {
           query += this.getFilterString(curr, currProp.originalName);
-          //query += ';
         }
         } else {
         if (value !== '') {
@@ -297,30 +297,61 @@ export class SearchPageComponent implements OnInit {
   }
   getFilterString(value: possibleValues, propOrigName: string) {
     if (typeof value === 'string') {
-      return 'FILTER regex(?' + propOrigName + ', "' + value + '", "i").\n';
+      return '?' + propOrigName + ' knora-api:valueAsString ?' + propOrigName + 'Str .\n' + 'FILTER regex(?' + propOrigName + 'Str, "' + value + '", "i") .\n';
     }
-    if (typeof value === 'boolean'){
-      
+    if (typeof value === 'boolean') {
+      return 'FILTER (?' + propOrigName + ' = ' + value + ') .\n';
+
     }
-    boolean | KnoraDate | PouListNode
+    if (value instanceof KnoraDate) {
+      return 'FILTER (?' + propOrigName + '= "' + value.date + '"^^knora-api:Date) .\n';
+    }
+    if (value instanceof PouListNode) {
+      return '?' + propOrigName + ' knora-api:listValueAsListNode <' + value.iri + '> .';
+    }
   }
   createGravfieldQuery(enteredString: string) {
     // TODO: When a property without ':' in it is entered, we would like to append pou:
     const filters: string[] = [];
-    enteredString = this.formQueryString + enteredString;
+    if (this.formQueryString) {
+      enteredString = this.formQueryString + enteredString;
+    }
     const params = {ontology: this.appInitService.getSettings().ontologyPrefix};
-    let query = 'PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>\n';
+    let query = 'PREFIX knora-api: <http://api.knora.org/ontology/knora-api/v2#>\n';
     const mainres = enteredString.substring(0, enteredString.indexOf(' '));
     const lines = enteredString.split('\n');
-    query += 'PREFIX pou: <{{ ontology }}/ontology/0827/pou/simple/v2#>\n';
+    query += 'PREFIX pou: <{{ ontology }}/ontology/0827/pou/v2#>\n';
     query += 'CONSTRUCT {\n' + mainres + ' knora-api:isMainResource true .';
-    for (const line of lines) {
+    for (let line of lines) {
       if (line.startsWith('FILTER')) {
         continue;
       }
+      if (line.indexOf('knora-api:valueAsString') !== -1) {
+        continue;
+      }
+      const arr = line.split(' ');
+      if (arr.length === 4) {
+        if (!(arr[2].startsWith('?'))) { // found listnode filter
+          continue;
+        }
+        if (arr[1].indexOf(':') === -1) { //pou: missing
+          line = arr[0] + ' pou:' + arr[1] + ' ' + arr[2] + ' ' + arr[3];
+        }
+      }
       query += '\n' + line;
     }
-    query += '} WHERE {\n' + mainres + ' a knora-api:Resource .\n' + mainres + ' a pou:' + this.selectedResourceType + ' .\n' + enteredString + '}';
+    query += '} WHERE {\n' + mainres + ' a knora-api:Resource .\n' + mainres + ' a pou:' + this.selectedResourceType + ' .';
+    for (let line of lines) {
+      console.log(line);
+      const arr = line.split(' ');
+      if (arr.length === 4) {
+        if (arr[1].indexOf(':') === -1) { //pou: missing
+        line = arr[0] + ' pou:' + arr[1] + ' ' + arr[2] + ' ' + arr[3];
+        }
+      }
+      query += '\n' + line;
+    }
+    query += '}';
     const querystring = this.sparqlPrep.compile(query, params);
     console.log(querystring);
     this.fire(querystring);

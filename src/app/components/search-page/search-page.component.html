@@ -18,7 +18,7 @@
       </mat-form-field>
       </div>
       <mat-form-field>
-        <mat-select #operatorfield [value]="operatorsChosen[no]" (selectionChange)="operatorsChosen[no] = operatorfield.value; createFormQuery()">
+        <mat-select #operatorfield [value]="operatorsChosen[no]" (selectionChange)="operatorsChosen[no] = operatorfield.value; valuesChosen[no] = ''; createFormQuery()">
           <mat-option value = "exists">Exists</mat-option>
           <mat-option value = "equals">Equals</mat-option>
         </mat-select>
@@ -66,10 +66,11 @@
       </mat-form-field>
       <div>
       <a mat-button (click)="createGravfieldQuery(gravField.value)"> Search</a>
-      <a mat-button (click)="gravField.value = ''; deleteAllProps()">Clear</a>
+      <a mat-button (click)="gravField.value = ''; deleteAllProps(); createFormQuery()">Clear</a>
       </div>
     </div>
   </div>
+  <div>
   <mat-divider></mat-divider>
   <div *ngIf = "countRes">
     <p>Count returned: {{countRes}}</p>
@@ -83,6 +84,7 @@
       </td>
     </tr>
   </table>
+  </div>
 </div> <!-- End wrapper -->
 
 <ng-template #resourcePropEquals let-type="type" let-id="id", let-level="level" >
@@ -92,7 +94,7 @@
   </mat-select>
 </mat-form-field>
   <mat-form-field>
-    <mat-select #operatorfield >
+    <mat-select #operatorfield (selectionChange)="changeValueOfLinkedRes(id, level, ''); createFormQuery()">
       <mat-option value = "exists">Exists</mat-option>
       <mat-option value = "equals">Equals</mat-option>
     </mat-select>
