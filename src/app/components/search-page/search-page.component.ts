@@ -21,7 +21,13 @@ class PropertyValuePair {
   constructor(public prop: Property, public value: valueType) {
   }
 }
-type valueType = (string | PropertyValuePair);
+class KnoraDate {
+  constructor(public date: string) {
+  }
+}
+
+type possibleValues = (string | boolean | KnoraDate | PouListNode);
+type valueType = (possibleValues | PropertyValuePair);
 
 @Component({
   selector: 'app-search-page',
@@ -237,11 +243,11 @@ export class SearchPageComponent implements OnInit {
 
   dateValueChanged(index: number, event: MatDatepickerInputEvent<unknown>) {
     const value: Date = event.value as Date;
-    this.valuesChosen[index] = value.getFullYear().toString() + '-' + (value.getMonth() + 1).toString() + '-' + value.getDate().toString();
+    this.valuesChosen[index] = new KnoraDate(value.getFullYear().toString() + '-' + (value.getMonth() + 1).toString() + '-' + value.getDate().toString());
   }
   dateValueChangeOnLinkedRes(id: number, level: number, event: MatDatepickerInputEvent<unknown>) {
     const value: Date  = event.value as Date;
-    const valstr = value.getFullYear().toString() + '-' + (value.getMonth() + 1).toString() + '-' + value.getDate().toString();
+    const valstr = new KnoraDate(value.getFullYear().toString() + '-' + (value.getMonth() + 1).toString() + '-' + value.getDate().toString());
     this.changeValueOfLinkedRes(id, level, valstr);
   }
 
@@ -264,12 +270,13 @@ export class SearchPageComponent implements OnInit {
           curr = curr.value;
           currProp = tmp.prop;
         }
-        if (curr !== ''){
-          query += 'FILTER regex(?' + currProp.originalName + ', "' + curr + '", "i").\n';
+        if (curr !== '') {
+          query += this.getFilterString(curr, currProp.originalName);
+          //query += ';
         }
         } else {
         if (value !== '') {
-          query += 'FILTER regex(?' + property.originalName + ', "' + value + '", "i").\n';
+          query += this.getFilterString(value, property.originalName);
         }
       }
     }
@@ -288,12 +295,15 @@ export class SearchPageComponent implements OnInit {
      */
     this.formQueryString = query;
   }
-
-/*
-?a pou:peopleOnPic ?b .
-?a pou:destination ?d .
-?b pou:turkishName ?c .
- */
+  getFilterString(value: possibleValues, propOrigName: string) {
+    if (typeof value === 'string') {
+      return 'FILTER regex(?' + propOrigName + ', "' + value + '", "i").\n';
+    }
+    if (typeof value === 'boolean'){
+      
+    }
+    boolean | KnoraDate | PouListNode
+  }
   createGravfieldQuery(enteredString: string) {
     // TODO: When a property without ':' in it is entered, we would like to append pou:
     const filters: string[] = [];
@@ -302,12 +312,15 @@ export class SearchPageComponent implements OnInit {
     let query = 'PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>\n';
     const mainres = enteredString.substring(0, enteredString.indexOf(' '));
     const lines = enteredString.split('\n');
-    for (const line of lines){
-      // TODO: refactor query that it goes through lines and add filters to filter and append them at the end and stuff. 
-    }
     query += 'PREFIX pou: <{{ ontology }}/ontology/0827/pou/simple/v2#>\n';
-    query += 'CONSTRUCT {\n' + mainres + ' knora-api:isMainResource true .\n';
-    query += enteredString + '\n} WHERE {\n' + mainres + ' a knora-api:Resource .\n' + mainres + ' a pou:' + this.selectedResourceType + ' .\n' + enteredString + '}';
+    query += 'CONSTRUCT {\n' + mainres + ' knora-api:isMainResource true .';
+    for (const line of lines) {
+      if (line.startsWith('FILTER')) {
+        continue;
+      }
+      query += '\n' + line;
+    }
+    query += '} WHERE {\n' + mainres + ' a knora-api:Resource .\n' + mainres + ' a pou:' + this.selectedResourceType + ' .\n' + enteredString + '}';
     const querystring = this.sparqlPrep.compile(query, params);
     console.log(querystring);
     this.fire(querystring);
@@ -396,10 +409,6 @@ export class SearchPageComponent implements OnInit {
         console.log("Navigation has failed!");
       }
     });
-  }
-  getNextIdentifier() {
-    const lastChar = this.currentIdentifier.substr(1);
-    const num = Number(lastChar);
   }
   changePropOfLinkedRes(id: number, level: number, property: Property) {
     if (level === 1) {

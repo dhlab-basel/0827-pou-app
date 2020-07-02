@@ -30,8 +30,8 @@
         </mat-form-field>
         <mat-form-field *ngSwitchCase="'BooleanValue'">
           <mat-select #valuefield [value]="valuesChosen[no]"  placeholder="Value {{no}}" (selectionChange)="valuesChosen[no] = valuefield.value; createFormQuery()">
-            <mat-option value="True">True</mat-option>
-            <mat-option value="False">False</mat-option>
+            <mat-option [value]="true">True</mat-option>
+            <mat-option [value]="false">False</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field *ngSwitchCase="'DateValue'">
@@ -41,7 +41,7 @@
         </mat-form-field>
         <mat-form-field *ngSwitchCase="'ListValue'">
           <mat-select #listfield [value] = "valuesChosen[no]" (selectionChange)="valuesChosen[no] = listfield.value; createFormQuery()">
-           <mat-option *ngFor="let node of lists[propertiesChosen[no].listiri]" [value]="node.label">{{node.label}}</mat-option>
+           <mat-option *ngFor="let node of lists[propertiesChosen[no].listiri]" [value]="node">{{node.label}}</mat-option>
           </mat-select>
         </mat-form-field>
         <ng-container *ngSwitchDefault>
@@ -104,8 +104,8 @@
       </mat-form-field>
       <mat-form-field *ngSwitchCase="'BooleanValue'">
         <mat-select #boolField (selectionChange)="changeValueOfLinkedRes(id, level, boolField.value); createFormQuery()">
-          <mat-option value="True">True</mat-option>
-          <mat-option value="False">False</mat-option>
+          <mat-option [value]="true">True</mat-option>
+          <mat-option [value]="false">False</mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field *ngSwitchCase="'DateValue'">
@@ -115,7 +115,7 @@
       </mat-form-field>
       <mat-form-field *ngSwitchCase="'ListValue'">
         <mat-select #listfield (selectionChange)="changeValueOfLinkedRes(id, level, listfield.value); createFormQuery()">
-          <mat-option *ngFor="let node of lists[propfield.value.listiri]" [value]="node.label">{{node.label}}</mat-option> <!-- not so dangerous ducktyping -->
+          <mat-option *ngFor="let node of lists[propfield.value.listiri]" [value]="node">{{node.label}}</mat-option> <!-- not so dangerous ducktyping -->
         </mat-select>
       </mat-form-field>
       <ng-container *ngSwitchDefault>
