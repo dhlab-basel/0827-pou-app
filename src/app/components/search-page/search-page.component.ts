@@ -35,6 +35,7 @@ type valueType = (possibleValues | PropertyValuePair);
   styleUrls: ['./search-page.component.css']
 })
 export class SearchPageComponent implements OnInit {
+  result_page: number = 0;
   arr: number[];
   propertiesChosen: Property[];
   valuesChosen: valueType[];
@@ -300,11 +301,11 @@ export class SearchPageComponent implements OnInit {
       return '?' + propOrigName + ' knora-api:valueAsString ?' + propOrigName + 'Str .\n' + 'FILTER regex(?' + propOrigName + 'Str, "' + value + '", "i") .\n';
     }
     if (typeof value === 'boolean') {
-      return 'FILTER (?' + propOrigName + ' = ' + value + ') .\n';
+      return '?' + propOrigName + ' knora-api:booleanValueAsBoolean ?' + propOrigName + 'Bool .\n' + 'FILTER (?' + propOrigName + 'Bool = ' + value + ') .\n';
 
     }
     if (value instanceof KnoraDate) {
-      return 'FILTER (?' + propOrigName + '= "' + value.date + '"^^knora-api:Date) .\n';
+      return 'FILTER (knora-api:toSimpleDate(?' + propOrigName + ') = "' + value.date + '"^^knora-api-simple:Date) .\n';
     }
     if (value instanceof PouListNode) {
       return '?' + propOrigName + ' knora-api:listValueAsListNode <' + value.iri + '> .';
@@ -320,13 +321,13 @@ export class SearchPageComponent implements OnInit {
     let query = 'PREFIX knora-api: <http://api.knora.org/ontology/knora-api/v2#>\n';
     const mainres = enteredString.substring(0, enteredString.indexOf(' '));
     const lines = enteredString.split('\n');
-    query += 'PREFIX pou: <{{ ontology }}/ontology/0827/pou/v2#>\n';
+    query += 'PREFIX pou: <{{ ontology }}/ontology/0827/pou/v2#>\nPREFIX knora-api-simple: <http://api.knora.org/ontology/knora-api/simple/v2#>\n';
     query += 'CONSTRUCT {\n' + mainres + ' knora-api:isMainResource true .';
     for (let line of lines) {
       if (line.startsWith('FILTER')) {
         continue;
       }
-      if (line.indexOf('knora-api:valueAsString') !== -1) {
+      if (line.indexOf('knora-api:valueAsString') !== -1 || line.indexOf('knora-api:booleanValueAsBoolean')) {
         continue;
       }
       const arr = line.split(' ');
@@ -357,12 +358,12 @@ export class SearchPageComponent implements OnInit {
     this.fire(querystring);
   }
   fire(querystring) {
+    this.knoraService.gravsearchQueryByStringCount(querystring).subscribe(
+      (no: number) => {
+        this.countRes = no;
+      }
+    );
     if (this.onlyCount) {
-      this.knoraService.gravsearchQueryByStringCount(querystring).subscribe(
-        (no: number) => {
-          this.countRes = no;
-        }
-      );
       return;
     }
     this.knoraService.gravsearchQueryByString(querystring).subscribe(

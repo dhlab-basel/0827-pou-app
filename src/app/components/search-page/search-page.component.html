@@ -70,8 +70,8 @@
       </div>
     </div>
   </div>
-  <div>
   <mat-divider></mat-divider>
+  <div>
   <div *ngIf = "countRes">
     <p>Count returned: {{countRes}}</p>
   </div>
@@ -84,6 +84,9 @@
       </td>
     </tr>
   </table>
+    <a mat-button (click) = "previousPage()">Previous</a>
+    <a mat-button (click) = "nextPage()">Next</a>
+
   </div>
 </div> <!-- End wrapper -->
 
