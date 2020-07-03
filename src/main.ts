@@ -17,7 +17,7 @@ function bootstrapFailed(result: any) {
 }
 
 fetch(`config/config.json`)
-  .then(response => { console.log('MAIN:', response); return response.json(); })
+  .then(response => response.json())
   .then(config => {
     if (!config || !config['server']) {
       bootstrapFailed(config);
@@ -34,7 +34,3 @@ fetch(`config/config.json`)
       .catch(err => bootstrapFailed(err));
   })
   .catch(bootstrapFailed);
-
-
-platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.error(err));
