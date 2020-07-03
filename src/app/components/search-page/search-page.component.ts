@@ -314,52 +314,58 @@ export class SearchPageComponent implements OnInit {
   }
   createGravfieldQuery(enteredString: string) {
     // TODO: When a property without ':' in it is entered, we would like to append pou:
-    const filters: string[] = [];
+    this.resultPage = 0;
     if (this.formQueryString) {
       enteredString = this.formQueryString + enteredString;
     }
     const params = {ontology: this.appInitService.getSettings().ontologyPrefix};
-    let query = 'PREFIX knora-api: <http://api.knora.org/ontology/knora-api/v2#>\n';
-    const mainres = enteredString.substring(0, enteredString.indexOf(' '));
-    const lines = enteredString.split('\n');
-    query += 'PREFIX pou: <{{ ontology }}/ontology/0827/pou/v2#>\nPREFIX knora-api-simple: <http://api.knora.org/ontology/knora-api/simple/v2#>\n';
-    query += 'CONSTRUCT {\n' + mainres + ' knora-api:isMainResource true .';
-    for (let line of lines) {
-      if (line.startsWith('FILTER')) {
-        continue;
-      }
-      if (line.indexOf('knora-api:valueAsString') !== -1 || line.indexOf('knora-api:booleanValueAsBoolean')) {
-        continue;
-      }
-      const arr = line.split(' ');
-      if (arr.length === 4) {
-        if (!(arr[2].startsWith('?'))) { // found listnode filter
+    let query = 'PREFIX knora-api: <http://api.knora.org/ontology/knora-api/v2#>\nPREFIX pou: <{{ ontology }}/ontology/0827/pou/v2#>\nPREFIX knora-api-simple: <http://api.knora.org/ontology/knora-api/simple/v2#>\nCONSTRUCT {\n';
+    if (enteredString === '') {
+      query +=  '?mainres knora-api:isMainResource true .} WHERE {\n ?mainres a knora-api:Resource .\n?mainres a pou:' + this.selectedResourceType + ' .}';
+    } else {
+      const mainres = enteredString.substring(0, enteredString.indexOf(' '));
+      const lines = enteredString.split('\n');
+      query += mainres + ' knora-api:isMainResource true .';
+      for (let line of lines) {
+        console.log(line);
+        if (line.startsWith('FILTER')) {
+          console.log('Detected FILTER');
           continue;
         }
-        if (arr[1].indexOf(':') === -1) { //pou: missing
-          line = arr[0] + ' pou:' + arr[1] + ' ' + arr[2] + ' ' + arr[3];
+        if (line.indexOf('knora-api:valueAsString') !== -1 || line.indexOf('knora-api:booleanValueAsBoolean') !== -1) {
+          console.log('Detected forbidden string');
+          continue;
         }
-      }
-      query += '\n' + line;
-    }
-    query += '} WHERE {\n' + mainres + ' a knora-api:Resource .\n' + mainres + ' a pou:' + this.selectedResourceType + ' .';
-    for (let line of lines) {
-      console.log(line);
-      const arr = line.split(' ');
-      if (arr.length === 4) {
-        if (arr[1].indexOf(':') === -1) { //pou: missing
-        line = arr[0] + ' pou:' + arr[1] + ' ' + arr[2] + ' ' + arr[3];
+        const arr = line.split(' ');
+        if (arr.length === 4) {
+          if (!(arr[2].startsWith('?'))) { // found listnode filter
+            continue;
+          }
+          if (arr[1].indexOf(':') === -1) { //pou: missing
+            line = arr[0] + ' pou:' + arr[1] + ' ' + arr[2] + ' ' + arr[3];
+          }
         }
+        query += '\n' + line;
       }
-      query += '\n' + line;
+      query += '} WHERE {\n' + mainres + ' a knora-api:Resource .\n' + mainres + ' a pou:' + this.selectedResourceType + ' .';
+      for (let line of lines) {
+        const arr = line.split(' ');
+        if (arr.length === 4) {
+          if (arr[1].indexOf(':') === -1) { //pou: missing
+            line = arr[0] + ' pou:' + arr[1] + ' ' + arr[2] + ' ' + arr[3];
+          }
+        }
+        query += '\n' + line;
+      }
+      query += '}';
     }
-    query += '}';
     const querystring = this.sparqlPrep.compile(query, params);
     this.lastQuery = querystring;
     console.log(querystring);
     this.fire(querystring);
   }
   fire(querystring) {
+    querystring += '\n OFFSET ' + String(this.resultPage);
     this.knoraService.gravsearchQueryByStringCount(querystring).subscribe(
       (no: number) => {
         this.countRes = no;
@@ -475,15 +481,13 @@ export class SearchPageComponent implements OnInit {
     this.changeValueOfLinkedRes(id, level - 1, curr);
   }
   changePage(increment: number) {
-    if (!this.lastQuery) {
+    /*if (!this.lastQuery) {
       return;
     }
     if (this.resultPage + increment > 0) {
       this.resultPage += increment;
-      this.lastQuery += '\nOFFSET ' + this.resultPage;
-      console.log('Firing with:', this.lastQuery);
       this.fire(this.lastQuery);
-    }
+    }*/
   }
   createEmptyPropValFromLevelWithValue(levels: number, value: valueType): PropertyValuePair {
     let toReturn: PropertyValuePair = new PropertyValuePair(new Property('', '', ''), value);
