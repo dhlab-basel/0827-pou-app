@@ -35,7 +35,8 @@ type valueType = (possibleValues | PropertyValuePair);
   styleUrls: ['./search-page.component.css']
 })
 export class SearchPageComponent implements OnInit {
-  result_page: number = 0;
+  resultPage: number = 0;
+  lastQuery: string;
   arr: number[];
   propertiesChosen: Property[];
   valuesChosen: valueType[];
@@ -354,6 +355,7 @@ export class SearchPageComponent implements OnInit {
     }
     query += '}';
     const querystring = this.sparqlPrep.compile(query, params);
+    this.lastQuery = querystring;
     console.log(querystring);
     this.fire(querystring);
   }
@@ -471,6 +473,17 @@ export class SearchPageComponent implements OnInit {
     curr = curr as PropertyValuePair;
     curr.value = value;
     this.changeValueOfLinkedRes(id, level - 1, curr);
+  }
+  changePage(increment: number) {
+    if (!this.lastQuery) {
+      return;
+    }
+    if (this.resultPage + increment > 0) {
+      this.resultPage += increment;
+      this.lastQuery += '\nOFFSET ' + this.resultPage;
+      console.log('Firing with:', this.lastQuery);
+      this.fire(this.lastQuery);
+    }
   }
   createEmptyPropValFromLevelWithValue(levels: number, value: valueType): PropertyValuePair {
     let toReturn: PropertyValuePair = new PropertyValuePair(new Property('', '', ''), value);
