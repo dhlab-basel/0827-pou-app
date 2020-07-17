@@ -1,13 +1,16 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {ActivatedRoute} from '@angular/router';
-import {catchError, finalize, map, take, tap} from 'rxjs/operators';
 
 import {KnoraService} from '../../services/knora.service';
-import {ReadResource, ReadValue, ReadLinkValue, ReadStillImageFileValue, ReadDateValue, ReadTextValueAsString} from '@knora/api';
+import {ReadResource, ReadLinkValue, ReadDateValue} from '@knora/api';
 import {Constants} from '@knora/api/src/models/v2/Constants';
 import {Helpers} from '../../classes/helpers';
+import {PageEvent} from '@angular/material';
 
+/**
+ * This class is used to store data for the objects to be displayed. The html basically displays the properties of PhotoData objects.
+ */
 class PhotoData {
   constructor(public photoIri: string,
               public label: string,
@@ -21,9 +24,13 @@ class PhotoData {
               public originMahalle: string,
               public originHouse: string,
               public photographer: string
-  ) {
-  }
-getOrigin(){
+  ) {}
+
+  /**
+   * Asks a PhotoData to create a readable string out of the different originProperties
+   * @return The readable origin string
+   */
+  getOrigin(): string {
     let toReturn = '';
     if (this.originTown !== undefined) {
       toReturn += this.originTown + ' - ';
@@ -55,16 +62,18 @@ getOrigin(){
     <p>
       Number of Photos: {{ nPhotos }}
     </p>
+    <!-- Creates Grid of all PhotoData objects and prints their properties -->
     <mat-grid-list cols="5" rowHeight="1:2.5">
       <mat-grid-tile *ngFor="let x of photos">
-        <mat-card (click)="photoClicked(x)">
+        <mat-card (click)="photoClicked(x.photoIri)">
           <mat-card-title>
             <h3 *ngIf="x.turkishName">{{ x.turkishName }}</h3>
             <h3 *ngIf="!x.turkishName">No last name</h3>
           </mat-card-title>
           <mat-card-content>
             <p>
-              <img class="newimg" mat-card-image src="{{x.imageBaseURL}}/{{x.imageFileName}}/full/200,/0/default.jpg"/>
+              <img class="newimg" mat-card-image src="{{x.imageBaseURL}}/{{x.imageFileName}}/full/200,/0/default.jpg"
+                   alt="Photo with iri {{x.photoIri}}"/>
             </p>
             <table>
               <tr *ngIf = "x.getOrigin().length>0">
@@ -79,13 +88,6 @@ getOrigin(){
                 <td>Photographer:</td>
                 <td>{{x.photographer}}</td>
               </tr>
-              <!--
-              <tr *ngFor="let ap of x.firstNamesOnPic">
-                <td>on picture:</td>
-                <td  *ngIf= "x.anchorPersonFirstNames[0][0][0] ===  ap[0][0]"><strong>{{ ap[0] }}</strong></td>
-                <td *ngIf="ap[0][0] != x.anchorPersonFirstNames[0][0][0]">{{ ap[0] }}</td>
-              </tr>
-              -->
             </table>
           </mat-card-content>
         </mat-card>
@@ -110,8 +112,7 @@ export class HomeComponent implements OnInit {
   page: number;
   nPhotos: number;
   photos: Array<PhotoData> = [];
-
-  showProgbar: boolean = false;
+  showProgbar = false;
 
 
   constructor(private router: Router,
@@ -121,12 +122,18 @@ export class HomeComponent implements OnInit {
     this.page = 0;
   }
 
+  /**
+   * Stores all physical copies found in PhotoData format in this.photos
+   */
   getPhotos(): void {
     this.showProgbar = true;
     const paramsCnt = {
       page: '0',
     };
 
+    /**
+     * Do the count search, stores the number of found elements to this.nPhotos
+     */
     this.knoraService.gravsearchQueryCount('photos_query', paramsCnt).subscribe(
       n => this.nPhotos = n
     );
@@ -135,13 +142,22 @@ export class HomeComponent implements OnInit {
       page: String(this.page)
     };
     this.knoraService.gravsearchQuery('physical_copy_query', params).subscribe((physicalCopy: ReadResource[]) => {
+      /**
+       * The map function creates and prepares a PhotoData object for every PhysicalCopy found.
+       * @return {PhotoData}: The PhotoData for a found PhysicalCopy.
+       */
         this.photos = physicalCopy.map((onePhoto: ReadResource) => {
           const label: string = onePhoto.label;
-          let imageBaseURL: string = '-';
-          let imageFileName: string = '';
-          let dateOnPhoto: string = '';
-          let photographer: string = '';
-          let turkishName: string = undefined;
+          let imageBaseURL = '-';
+          let imageFileName = '';
+          let dateOnPhoto = '';
+          let photographer = '';
+          let turkishName: string;
+          let originTown: string;
+          let originKaza: string;
+          let originKarye: string;
+          let originMahalle: string;
+          let originHouse: string;
           const image = this.helpers.getStillImage(onePhoto);
           imageBaseURL = image.iiifBaseUrl;
           imageFileName = image.filename;
@@ -153,14 +169,13 @@ export class HomeComponent implements OnInit {
           const originMahalleProp = this.knoraService.pouOntology + 'originMahalle';
           const originHouseProp = this.knoraService.pouOntology + 'house';
           const turkishNameProp = this.knoraService.pouOntology + 'turkishName';
-          let originTown: string = undefined;
-          let originKaza: string = undefined;
-          let originKarye: string = undefined;
-          let originMahalle: string = undefined;
-          let originHouse: string = undefined;
+          const photographerProp = this.knoraService.pouOntology + 'photographer';
           const photo = onePhoto.getValuesAs(photoProp, ReadLinkValue);
           const photoRead = photo[0].linkedResource;
           const photoIri: string = photoRead.id;
+          /*
+          Get information stored on the Photograph object that has a link to this PhysicalCopy
+           */
           if (photoRead.properties.hasOwnProperty(peopleOnPicProp)) {
             const people = photoRead.getValuesAs(peopleOnPicProp, ReadLinkValue);
             if (people.length > 0) {
@@ -175,13 +190,16 @@ export class HomeComponent implements OnInit {
                 const originKaryeValue = peopleRead.getValuesAsStringArray(originKaryeProp);
                 const originMahalleValue = peopleRead.getValuesAsStringArray(originMahalleProp);
                 const originHouseValue = peopleRead.getValuesAsStringArray(originHouseProp);
+                /*
+                Get origin information. As it could be available for multiple people, we disable overwriting.
+                 */
                 if (originTownValue.length > 0 && !originTown) {
                   originTown = originTownValue[0];
                 }
                 if (originKazaValue.length > 0 && !originKaza) {
                   originKaza = originKazaValue[0];
                 }
-                if (originKaryeValue.length > 0 && !originKarye){
+                if (originKaryeValue.length > 0 && !originKarye) {
                   originKarye = originKaryeValue[0];
                 }
                 if (originMahalleValue.length > 0 && !originMahalle) {
@@ -196,148 +214,39 @@ export class HomeComponent implements OnInit {
 
 
           const dateOnPhotoProp = this.knoraService.pouOntology + 'dateOnPhotograph';
-          const datesOnPhoto = onePhoto.getValuesAs(dateOnPhotoProp, ReadDateValue)
+          const datesOnPhoto = onePhoto.getValuesAs(dateOnPhotoProp, ReadDateValue);
           if (datesOnPhoto.length > 0) {
             dateOnPhoto = datesOnPhoto[0].strval.substr(10, 10);
+            /* here we only consider first entry of dateOnPhotograph property. If multiple entries are interesting,
+                         we should change this to an array. */
           }
-          const photographerProp = this.knoraService.pouOntology + 'photographer';
           const photographerArray = onePhoto.getValuesAsStringArray(photographerProp);
           if (photographerArray.length > 0) {
-            photographer = photographerArray[0];
+            photographer = photographerArray[0]; // same as above, discarding further entries.
           }
-          const res = new PhotoData(photoIri, label, imageBaseURL, imageFileName, dateOnPhoto, turkishName, originTown, originKaza, originKarye, originMahalle, originHouse, photographer);
-          return res;
-        });
-        this.showProgbar = false;
-      }
-    );
-    /*
-    this.knoraService.gravsearchQuery('photos_query', params).subscribe(
-      (photos: ReadResource[]) => {
-        this.photos = photos.map((onePhoto: ReadResource) => {
-          const label: string = onePhoto.label;
-          const photoIri: string = onePhoto.id;
-          let imageBaseURL: string = '-';
-          let imageFileName: string = '';
-          let dateOnPhoto: string = '';
-          let photographer: string = '';
-          let destination: Array<string> = [];
-          let fileName: Array<string> = [];
-          let firstNamesOnPic: Array<Array<Array<string>>> = [];
-          let anchorPersonFirstNames: Array<Array<Array<string>>> = [];
-
-          const destinationProp = this.knoraService.pouOntology + 'destination';
-          if (onePhoto.properties.hasOwnProperty(destinationProp)) {
-            const destinationVals: ReadTextValueAsString[] = onePhoto.getValuesAs(destinationProp, ReadTextValueAsString);
-            for (const dest of destinationVals) {
-              destination.push(dest.strval);
-            }
-          }
-
-          const physicalCopyProp = this.knoraService.pouOntology + 'physicalCopyValue';
-          const physcop = this.helpers.getLinkedStillImage(onePhoto, physicalCopyProp);
-          imageBaseURL = physcop[0].iiifBaseUrl;
-          imageFileName = physcop[0].filename;
-
-          const firstNameObjectProp = this.knoraService.pouOntology + 'nameOfPersonValue';
-          const firstNameProp = this.knoraService.pouOntology + 'text';
-          const peopleOnPicProp = this.knoraService.pouOntology + 'peopleOnPicValue';
-          const anchorPersProp = this.knoraService.pouOntology + 'anchorPersonValue';
-          const originTownProp = this.knoraService.pouOntology + 'originTown';
-          const originKazaProp = this.knoraService.pouOntology + 'originKaza';
-          const originKaryeProp = this.knoraService.pouOntology + 'originKarye';
-          const originMahalleProp = this.knoraService.pouOntology + 'originMahalle';
-          const originHouseProp = this.knoraService.pouOntology + 'house';
-          let originTown: string = undefined;
-          let originKaza: string = undefined;
-          let originKarye: string = undefined;
-          let originMahalle: string = undefined;
-          let originHouse: string = undefined;
-          if (onePhoto.properties.hasOwnProperty(peopleOnPicProp)) {
-            const people = onePhoto.getValuesAs(peopleOnPicProp, ReadLinkValue);
-            if (people.length > 0) {
-              for (let pers of people) {
-                const peopleRead: ReadResource = pers.linkedResource;
-                firstNamesOnPic.push(this.helpers.getLinkedTextValueAsString(peopleRead, firstNameObjectProp, firstNameProp));
-              }
-            }
-          }
-          if (onePhoto.properties.hasOwnProperty(anchorPersProp)) {
-            const people = onePhoto.getValuesAs(anchorPersProp, ReadLinkValue);
-            if (people.length > 0) {
-              for (let pers of people) {
-                const peopleRead: ReadResource = pers.linkedResource;
-                anchorPersonFirstNames.push(this.helpers.getLinkedTextValueAsString(peopleRead, firstNameObjectProp, firstNameProp));
-                const originTownValue = peopleRead.getValuesAsStringArray(originTownProp);
-                const originKazaValue = peopleRead.getValuesAsStringArray(originKazaProp);
-                const originKaryeValue = peopleRead.getValuesAsStringArray(originKaryeProp);
-                const originMahalleValue = peopleRead.getValuesAsStringArray(originMahalleProp);
-                const originHouseValue = peopleRead.getValuesAsStringArray(originHouseProp);
-               if (originTownValue.length>0 && !originTown){
-                 originTown = originTownValue[0];
-               }
-                if (originKazaValue.length>0 && !originKaza){
-                  originKaza = originKazaValue[0];
-                }
-                if (originKaryeValue.length>0 && !originKarye){
-                  originKarye = originKaryeValue[0];
-                }
-                if (originMahalleValue.length>0 && !originMahalle){
-                  originMahalle = originMahalleValue[0];
-                }
-                if (originHouseValue.length>0 && !originHouse){
-                  originHouse = originHouseValue[0];
-                }
-              }
-            }
-          }
-
-          const turkishNameProp = this.knoraService.pouOntology + 'turkishName';
-          const lastNamesOnPic = this.helpers.getLinkedTextValueAsString(onePhoto, peopleOnPicProp, turkishNameProp);
-
-
-          const dateOnPhotoProp = this.knoraService.pouOntology + 'dateOnPhotograph';
-
-          const dateOnPhotos = this.helpers.getLinkedDateValueAsString(onePhoto, physicalCopyProp, dateOnPhotoProp);
-          if (dateOnPhotos.length > 0 && dateOnPhotos[0].length > 0){
-            dateOnPhoto = dateOnPhotos[0][0];
-            dateOnPhoto = dateOnPhoto.substr(10, 10);
-          }
-          const fileNameProp = this.knoraService.pouOntology + 'fileName';
-          fileName = this.helpers.getLinkedTextValueAsString(onePhoto, physicalCopyProp, fileNameProp)[0];
-          const photographerProp = this.knoraService.pouOntology + 'photographer';
-          const photographerArray = this.helpers.getLinkedTextValueAsString(onePhoto, physicalCopyProp, photographerProp)
-          if (photographerArray.length > 0) {
-            photographer = photographerArray[0][0];
-          }
-          const res = new PhotoData(
-            photoIri,
+          return new PhotoData(photoIri,
             label,
             imageBaseURL,
             imageFileName,
-            destination,
             dateOnPhoto,
-            fileName[0],
-            anchorPersonFirstNames,
-            lastNamesOnPic,
-            firstNamesOnPic,
+            turkishName,
             originTown,
             originKaza,
             originKarye,
             originMahalle,
             originHouse,
             photographer);
-          if (res.anchorPersonFirstNames.length === 0 || res.anchorPersonFirstNames[0].length === 0 || res.anchorPersonFirstNames[0][0].length === 0) {
-            res.anchorPersonFirstNames = [[['']]]; // ugly fix if no anchorperson is given. Should be obsolete when data is cleaned.
-          }
-          return res;
         });
         this.showProgbar = false;
       }
-    );*/
+    );
   }
 
-  pageChanged(event): void {
+  /**
+   * Gets the new 25 photos to display, when the user changes the result page.
+   * @param event The event created by click on mat-paginator
+   */
+  pageChanged(event: PageEvent): void {
     this.page = event.pageIndex;
     this.router.navigate(
       [],
@@ -349,9 +258,12 @@ export class HomeComponent implements OnInit {
     this.getPhotos();
   }
 
-  photoClicked(photoData: PhotoData): void {
-    // console.log('CLICK DETECTED', photoData);
-    const url = 'photo/' + encodeURIComponent(photoData.photoIri);
+  /**
+   * Reroutes user to the photo page of a clicked photo
+   * @param iri The iri of the photograph clicked, used to pass iri as url component.
+   */
+  photoClicked(iri: string): void {
+    const url = 'photo/' + encodeURIComponent(iri);
     this.router.navigateByUrl(url).then(e => {
       if (e) {
         console.log('Navigation is successful!');

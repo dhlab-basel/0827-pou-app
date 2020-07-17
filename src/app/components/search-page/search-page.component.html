@@ -26,7 +26,7 @@
       <div style="display: inline-block" *ngIf="operatorsChosen[no] === 'equals'">
       <div style="display: inline-block" [ngSwitch]="propertiesChosen[no].type">
         <mat-form-field *ngSwitchCase="'TextValue'">
-          <textarea #valuefield matInput [value]="valuesChosen[no]"  placeholder="Value {{no}}" (keyup)="valuesChosen[no] = valuefield.value; createFormQuery()"></textarea>
+          <textarea #valuefield matInput [value]="valuesChosen[no]"  placeholder="Value {{no}}" (keyup)="valuesChosen[no] = valuefield.value; createFormQuery()"></textarea> <!-- valuesChosen[] is of type valueType, which is fulfilled by string, so no type issues here. -->
         </mat-form-field>
         <mat-form-field *ngSwitchCase="'BooleanValue'">
           <mat-select #valuefield [value]="valuesChosen[no]"  placeholder="Value {{no}}" (selectionChange)="valuesChosen[no] = valuefield.value; createFormQuery()">
@@ -34,11 +34,24 @@
             <mat-option [value]="false">False</mat-option>
           </mat-select>
         </mat-form-field>
-        <mat-form-field *ngSwitchCase="'DateValue'">
-          <input matInput [matDatepicker]="myDatepicker" (dateInput) = "dateValueChanged(no, $event); createFormQuery()">
-          <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
-          <mat-datepicker #myDatepicker startView="multi-year" [startAt]="startDateForCalendars"></mat-datepicker>
-        </mat-form-field>
+        <div *ngSwitchCase="'DateValue'">
+          <mat-form-field>
+            <mat-select #dateDepth>
+              <mat-option value = 'year'>Year</mat-option>
+              <mat-option value = 'month'>Month</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field *ngIf="dateDepth.value === 'year'">
+              <input matInput [matDatepicker]="yearDatepicker" [min] = "minDate" [max] = "maxDate" (dateInput) = "dateValueChanged(no, 'year', $event); createFormQuery()">
+              <mat-datepicker-toggle matSuffix [for]="yearDatepicker"></mat-datepicker-toggle>
+              <mat-datepicker #yearDatepicker (yearSelected)="yearSelected(yearDatepicker, $event)" startView="multi-year" [startAt]="startDateForCalendars"></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field *ngIf="dateDepth.value === 'month'">
+              <input matInput [matDatepicker]="monthDatepicker" [min] = "minDate" [max] = "maxDate" (dateInput) = "dateValueChanged(no, 'month', $event); createFormQuery()">
+              <mat-datepicker-toggle matSuffix [for]="monthDatepicker"></mat-datepicker-toggle>
+              <mat-datepicker #monthDatepicker (monthSelected)="monthSelected(monthDatepicker, $event)" startView="multi-year" [startAt]="startDateForCalendars"></mat-datepicker>
+          </mat-form-field>
+        </div>
         <mat-form-field *ngSwitchCase="'ListValue'">
           <mat-select #listfield [value] = "valuesChosen[no]" (selectionChange)="valuesChosen[no] = listfield.value; createFormQuery()">
            <mat-option *ngFor="let node of lists[propertiesChosen[no].listiri]" [value]="node">{{node.label}}</mat-option>
@@ -72,7 +85,7 @@
   </div>
   <mat-divider></mat-divider>
   <div>
-  <div *ngIf = "countRes">
+  <div *ngIf = "countRes !== undefined">
     <p>Count returned: {{countRes}}</p>
   </div>
   <table>
@@ -84,15 +97,13 @@
       </td>
     </tr>
   </table>
-    <!--
     <a mat-button (click) = "changePage(-1)">Previous</a>
     <a mat-button (click) = "changePage(1)">Next</a>
-    -->
 
   </div>
 </div> <!-- End wrapper -->
 
-<ng-template #resourcePropEquals let-type="type" let-id="id", let-level="level" >
+<ng-template #resourcePropEquals let-type="type" let-id="id" let-level="level" >
   <mat-form-field>
   <mat-select #propfield (selectionChange)="changePropOfLinkedRes(id, level, propfield.value); createFormQuery()">
     <mat-option *ngFor="let property of getPropsOfResclass(type)" [value]="property">{{property.prop}}</mat-option>
@@ -115,11 +126,24 @@
           <mat-option [value]="false">False</mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-form-field *ngSwitchCase="'DateValue'">
-        <input matInput [matDatepicker]="myDatepicker" (dateInput)="dateValueChangeOnLinkedRes(id, level, $event); createFormQuery()">
-        <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
-        <mat-datepicker #myDatepicker startView="multi-year" [startAt]="startDateForCalendars"></mat-datepicker>
-      </mat-form-field>
+      <div *ngSwitchCase="'DateValue'">
+        <mat-form-field>
+          <mat-select #dateDepth>
+            <mat-option value = 'year'>Year</mat-option>
+            <mat-option value = 'month'>Month</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field *ngIf="dateDepth.value === 'year'">
+          <input matInput [matDatepicker]="yearDatepicker" [min] = "minDate" [max] = "maxDate" (dateInput) = "dateValueChangeOnLinkedRes(id, level, 'year', $event); createFormQuery()">
+          <mat-datepicker-toggle matSuffix [for]="yearDatepicker"></mat-datepicker-toggle>
+          <mat-datepicker #yearDatepicker (yearSelected)="yearSelected(yearDatepicker, $event)" startView="multi-year" [startAt]="startDateForCalendars"></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field *ngIf="dateDepth.value === 'month'">
+          <input matInput [matDatepicker]="monthDatepicker" [min] = "minDate" [max] = "maxDate" (dateInput) = "dateValueChangeOnLinkedRes(id, level, 'month', $event); createFormQuery()">
+          <mat-datepicker-toggle matSuffix [for]="monthDatepicker"></mat-datepicker-toggle>
+          <mat-datepicker #monthDatepicker (monthSelected)="monthSelected(monthDatepicker, $event)" startView="multi-year" [startAt]="startDateForCalendars"></mat-datepicker>
+        </mat-form-field>
+      </div>
       <mat-form-field *ngSwitchCase="'ListValue'">
         <mat-select #listfield (selectionChange)="changeValueOfLinkedRes(id, level, listfield.value); createFormQuery()">
           <mat-option *ngFor="let node of lists[propfield.value.listiri]" [value]="node">{{node.label}}</mat-option> <!-- not so dangerous ducktyping -->

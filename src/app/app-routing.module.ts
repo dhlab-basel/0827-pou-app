@@ -17,15 +17,15 @@ const routes: Routes = [
     component: PhotoPageComponent
   },
   {
-    path: 'tree',
-    component: FamilyTreeComponent
-  },
-  {
     path: 'search',
     component: SearchPageComponent
   }, {
     path: 'details/:iri',
     component: DetailsPageComponent
+  },
+  {
+    path: '**',
+    component: HomeComponent
   }
 ];
 

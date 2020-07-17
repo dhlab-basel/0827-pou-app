@@ -1,77 +1,12 @@
-<!---<h1>Portraits of Unbelonging</h1>
-<input #searchTerm
-       class="form-control"
-/>
-<button (click)="searchEvent($event)">Search</button>
-<table>
-  <tr *ngFor="let sr of searchres">
-    <td>{{sr.label}}</td>
-  </tr>
-</table>
-
-<table>
-  <thead>
-  <tr>
-    <th>Name</th>
-    <th>Value</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr>
-    <td>Label</td>
-    <td>{{resdata.label}}</td>
-  </tr>
-  <tr>
-    <td>ID</td>
-    <td>{{resdata.id}}</td>
-  </tr>
-  <tr>
-    <td>Type</td>
-    <td>{{resdata.type}}</td>
-  </tr>
-  <tr>
-    <td>ARK-URL</td>
-    <td>{{resdata.arkUrl}}</td>
-  </tr>
-  <tr>
-    <td>Version-ARK-URL</td>
-    <td>{{resdata.versionArkUrl}}</td>
-  </tr>
-  <tr>
-    <td>Creation date</td>
-    <td>{{resdata.creationDate}}</td>
-  </tr>
-  </tbody>
-</table>
-<h2>Properties</h2>
-<table>
-  <thead>
-  <tr>
-    <th>Name</th>
-    <th>Value</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let items of properties">
-    <td>{{items[0]}}</td>
-    <td>{{items[1]}}</td>
-  </tr>
-  </tbody>
-</table>-->
 <mat-toolbar>
   <button mat-button routerLink="home">
     <img src="../assets/PoU.png" style="max-height: 64px;" matTooltip="Portraits of Unbelonging">
   </button>
   <a mat-button *ngIf="knoraService.loggedin" (click)="logout()">{{ knoraService.useremail }}</a>
   <span class="fill-remaining-space"></span>
-  <mat-icon appBackButton matTooltip="zurück" class="clickable">arrow_back</mat-icon>
-  <a mat-button routerLink="lexica">Persons</a>
-  <a mat-button routerLink="lemmata">Photographs</a>
   <a mat-button routerLink="search">Search</a>
-  <a mat-button routerLink="theproject">The Project</a>
-  <a mat-button routerLink="about">About</a>
+  <a mat-button routerLink="home">Photo Wall</a>
   <button mat-icon-button matTooltip="Benutzer an- und abmelden" (click)="account()"><mat-icon >account_box</mat-icon></button>
-  <button mat-icon-button matTooltip="Zurück zum Startbildschirm" routerLink="home"><mat-icon>home</mat-icon></button>
 </mat-toolbar>
 <router-outlet>
 

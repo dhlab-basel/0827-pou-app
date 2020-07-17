@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import {KnoraService} from '../../services/knora.service';
-import {MatDatepickerInputEvent, MatDatepickerModule} from '@angular/material/datepicker';
+import {MatDatepicker, MatDatepickerInputEvent, MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material';
 import {stringify} from 'querystring';
+import {FormControl} from '@angular/forms';
 import {SparqlPrep} from '../../classes/sparql-prep';
 import {AppInitService} from '../../app-init.service';
 import {ReadDateValue, ReadLinkValue, ReadResource, ReadTextValueAsString, ReadValue, ResourcePropertyDefinition} from '@knora/api';
 import {Router} from '@angular/router';
+import set = Reflect.set;
 
 class PouListNode {
   constructor(public iri: string, public label: string) {}
@@ -22,7 +24,7 @@ class PropertyValuePair {
   }
 }
 class KnoraDate {
-  constructor(public date: string) {
+  constructor(public dateBefore: string, public dateAfter: string) {
   }
 }
 
@@ -59,6 +61,8 @@ export class SearchPageComponent implements OnInit {
   currentIdentifier = 'a1';
   gravQueryFieldText = '';
   lists: {[index: string]: Array<PouListNode>} = {};
+  minDate: Date;
+  maxDate: Date;
 
 
   searchResults: Array<SearchResult>;
@@ -72,6 +76,8 @@ export class SearchPageComponent implements OnInit {
     this.propertiesChosen = Array(1).fill(new Property('', '', ''));
     this.valuesChosen = Array(1).fill('');
     this.operatorsChosen = Array(1).fill('exists');
+    this.minDate = new Date(1850, 1 , 1);
+    this.maxDate = new Date(1907, 11 , 31);
   }
 
   ngOnInit() {
@@ -243,15 +249,34 @@ export class SearchPageComponent implements OnInit {
     }
   }*/
 
-  dateValueChanged(index: number, event: MatDatepickerInputEvent<unknown>) {
+  dateValueChanged(index: number, depth: string, event: MatDatepickerInputEvent<unknown>) {
     console.log(event.value);
     const value: Date = event.value as Date;
-    this.valuesChosen[index] = new KnoraDate('GREGORIAN:' + value.getFullYear().toString() + '-' + (value.getMonth() + 1).toString() + '-' + value.getDate().toString());
+    const bounds = this.getBoundsForDate(value, depth);
+    this.valuesChosen[index] = new KnoraDate(bounds[0], bounds[1]);
   }
-  dateValueChangeOnLinkedRes(id: number, level: number, event: MatDatepickerInputEvent<unknown>) {
-    const value: Date  = event.value as Date;
-    const valstr = new KnoraDate('GREGORIAN:' + value.getFullYear().toString() + '-' + (value.getMonth() + 1).toString() + '-' + value.getDate().toString());
+  dateValueChangeOnLinkedRes(id: number, level: number, dateDepth: string, event: MatDatepickerInputEvent<unknown>) {
+    const value: Date = event.value as Date;
+    const bounds = this.getBoundsForDate(value, dateDepth);
+    const valstr = new KnoraDate(bounds[0], bounds[1]);
     this.changeValueOfLinkedRes(id, level, valstr);
+  }
+  getBoundsForDate(value: Date, depth: string): Array<string> {
+    const toReturn: Array<string> = [];
+    const dateBeforeAsDate = new Date(value.getTime());
+    dateBeforeAsDate.setDate(value.getDate() - 1);
+    const dateBefore = 'GREGORIAN:' + dateBeforeAsDate.getFullYear().toString() + '-' + (dateBeforeAsDate.getMonth() + 1).toString() + '-' + dateBeforeAsDate.getDate().toString();
+    let dateAfter = '';
+    if (depth === 'year') {
+      dateAfter = 'GREGORIAN:' + (value.getFullYear()).toString() + '-12-31';
+    }
+    if (depth === 'month') {
+      const dateConst = new Date(value.getFullYear(), value.getMonth() + 1, 0); // set to last date of month
+      dateAfter = 'GREGORIAN:' + (dateConst.getFullYear()).toString() + '-' + (dateConst.getMonth() + 1).toString() + '-' + dateConst.getDate().toString();
+    }
+    toReturn.push(dateBefore);
+    toReturn.push(dateAfter);
+    return toReturn;
   }
 
   createFormQuery() {
@@ -306,14 +331,13 @@ export class SearchPageComponent implements OnInit {
 
     }
     if (value instanceof KnoraDate) {
-      return 'FILTER (knora-api:toSimpleDate(?' + propOrigName + ') = "' + value.date + '"^^knora-api-simple:Date) .\n';
+      return 'FILTER (knora-api:toSimpleDate(?' + propOrigName + ') <= "' + value.dateAfter + '"^^knora-api-simple:Date && knora-api:toSimpleDate(?' + propOrigName + ') > "' + value.dateBefore + '"^^knora-api-simple:Date) .\n';
     }
     if (value instanceof PouListNode) {
       return '?' + propOrigName + ' knora-api:listValueAsListNode <' + value.iri + '> .';
     }
   }
   createGravfieldQuery(enteredString: string) {
-    // TODO: When a property without ':' in it is entered, we would like to append pou:
     this.resultPage = 0;
     if (this.formQueryString) {
       enteredString = this.formQueryString + enteredString;
@@ -365,15 +389,16 @@ export class SearchPageComponent implements OnInit {
     this.fire(querystring);
   }
   fire(querystring) {
-    querystring += '\n OFFSET ' + String(this.resultPage);
     this.knoraService.gravsearchQueryByStringCount(querystring).subscribe(
       (no: number) => {
+        console.log('Found COUNT: ', no);
         this.countRes = no;
       }
     );
     if (this.onlyCount) {
       return;
     }
+    querystring += '\n OFFSET ' + String(this.resultPage);
     this.knoraService.gravsearchQueryByString(querystring).subscribe(
       (readResources: ReadResource[]) => {
         console.log('GAGA: (© by Lukas)', readResources);
@@ -481,13 +506,13 @@ export class SearchPageComponent implements OnInit {
     this.changeValueOfLinkedRes(id, level - 1, curr);
   }
   changePage(increment: number) {
-    /*if (!this.lastQuery) {
+    if (!this.lastQuery) {
       return;
     }
-    if (this.resultPage + increment > 0) {
+    if (this.resultPage + increment >= 0) {
       this.resultPage += increment;
-      this.fire(this.lastQuery);
-    }*/
+    }
+    this.fire(this.lastQuery);
   }
   createEmptyPropValFromLevelWithValue(levels: number, value: valueType): PropertyValuePair {
     let toReturn: PropertyValuePair = new PropertyValuePair(new Property('', '', ''), value);
@@ -496,5 +521,15 @@ export class SearchPageComponent implements OnInit {
       levels --;
     }
     return toReturn;
+  }
+ yearSelected(elem: MatDatepicker<any>, event: Date) {
+    console.log(event);
+    elem.close();
+    elem.select(event);
+    }
+  monthSelected(elem: MatDatepicker<any>, event: Date) {
+    console.log(event);
+    elem.close();
+    elem.select(event);
   }
 }
