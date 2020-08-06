@@ -8,6 +8,7 @@ import {Constants} from '@knora/api/src/models/v2/Constants';
 import {Helpers} from '../../classes/helpers';
 import {PageEvent} from '@angular/material';
 
+
 /**
  * This class is used to store data for the objects to be displayed. The html basically displays the properties of PhotoData objects.
  */
@@ -55,6 +56,7 @@ class PhotoData {
 }
 
 
+
 @Component({
   selector: 'app-home',
   template: `
@@ -62,6 +64,26 @@ class PhotoData {
     <p>
       Number of Photos: {{ nPhotos }}
     </p>
+    <div>
+      <mat-form-field>
+        <mat-select #peopleFilter (selectionChange)="setPeopleFilter(peopleFilter.value)" placeholder="People Details"multiple>
+          <mat-option value="man">Man Alone</mat-option>
+          <mat-option value="woman">Woman Alone</mat-option>
+          <mat-option value="elderly">Elderly</mat-option>
+          <mat-option value="children">Children</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select #photographerFilter (selectionChange)="setPhotographerFilter(photographerFilter.value)" placeholder="Photographer" multiple>
+          <mat-option *ngFor="let val of photographerList" [value]="val">{{val}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select #townFilter (selectionChange)="setTownFilter(townFilter.value)" placeholder="Town" multiple>
+          <mat-option *ngFor="let val of townList" [value]="val">{{val}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
     <!-- Creates Grid of all PhotoData objects and prints their properties -->
     <mat-grid-list cols="5" rowHeight="1:2.5">
       <mat-grid-tile *ngFor="let x of photos">
@@ -109,6 +131,31 @@ class PhotoData {
 })
 
 export class HomeComponent implements OnInit {
+  townFilters = [];
+  peopleFilters = [];
+  photographerFilters = [];
+  photographerList = [
+    'Ahmet Naci',
+    'Alexandre Papasian',
+    'Aroutyoun B. Encababian',
+    'Aroutyoun R. Encababian',
+    'Archak B. Jacoubian',
+    'Dildilian Bros.',
+    "Mamuretülaziz's Police Force",
+    'SH. M. Kalifa'
+    ];
+  // townListForCalculation = [];
+  townList =  [
+    'Adana',
+    'Bitlis',
+    'Diyarbakır',
+    'Erzurum',
+    'Haleb',
+    'Kayseriye',
+    'Mamüratülaziz',
+    'Sivas',
+    'Tokad'
+  ];
   page: number;
   nPhotos: number;
   photos: Array<PhotoData> = [];
@@ -134,14 +181,17 @@ export class HomeComponent implements OnInit {
     /**
      * Do the count search, stores the number of found elements to this.nPhotos
      */
-    this.knoraService.gravsearchQueryCount('photos_query', paramsCnt).subscribe(
+    let query = this.createQuery();
+    this.knoraService.gravsearchQueryByStringCount(query).subscribe(
       n => this.nPhotos = n
     );
 
     const params = {
       page: String(this.page)
     };
-    this.knoraService.gravsearchQuery('physical_copy_query', params).subscribe((physicalCopy: ReadResource[]) => {
+    query += '\nOFFSET ' + params.page;
+    console.log(query);
+    this.knoraService.gravsearchQueryByString(query).subscribe((physicalCopy: ReadResource[]) => {
       /**
        * The map function creates and prepares a PhotoData object for every PhysicalCopy found.
        * @return {PhotoData}: The PhotoData for a found PhysicalCopy.
@@ -271,6 +321,109 @@ export class HomeComponent implements OnInit {
         console.log('Navigation has failed!');
       }
     });
+  }
+  setTownFilter(arr: []) {
+    this.townFilters = arr;
+    this.getPhotos();
+  }
+  setPeopleFilter(arr: []) {
+    this.peopleFilters = arr;
+    this.getPhotos();
+  }
+  setPhotographerFilter(arr: []) {
+    this.photographerFilters = arr;
+    this.getPhotos();
+  }
+  /*getTownList() {
+    const toReturn = [];
+    let noOfTowns = 0;
+    const paramsCnt = {
+      page: '0',
+    };
+    this.knoraService.gravsearchQueryCount('person_query', paramsCnt).subscribe(
+      n => {
+        console.log(n);
+        const noOfOffsets = n / 25;
+        for (let i = 0; i <= noOfOffsets; i++) {
+          this.getTownListHelper(i);
+        }
+      }
+    );
+  }
+  getTownListHelper(offset: number){
+    console.log('Called with', offset);
+    const params = {
+      page: String(offset)
+    };
+    this.knoraService.gravsearchQuery('person_query', params).subscribe((persons: ReadResource[]) => {
+     const arrOfarr = persons.map((person: ReadResource) => {
+       const originTownProp = this.knoraService.pouOntology + 'originTown';
+       return person.getValuesAsStringArray(originTownProp);
+     });
+     const arr = [];
+     for (const a of arrOfarr) {
+       for (const b of a) {
+         arr.push(b);
+       }
+     }
+     this.getTownListHelperHelper(arr);
+    });
+  }
+  getTownListHelperHelper(arr: string[]) {
+    for (const s of arr) {
+      this.townListForCalculation.indexOf(s) === -1 ? this.townListForCalculation.push(s) : console.log('Already in Array: ', s);
+    }
+  }
+  logTownList() {
+    console.log(this.townListForCalculation);
+  } */
+  createQuery() {
+    let query = 'PREFIX knora-api: <http://api.knora.org/ontology/knora-api/v2#>\nPREFIX pou: <http://api.pou.test.dasch.swiss/ontology/0827/pou/v2#>\nCONSTRUCT {\n?physcop knora-api:isMainResource true .\n?physcop pou:dateOnPhotograph ?date .\n?photo pou:physicalCopy ?physcop .\n?physcop knora-api:hasStillImageFileValue ?imgfile .\n?physcop pou:photographer ?photographer .\n?photo pou:peopleOnPic ?people .\n?photo pou:dateOfPassport ?dateOfPassport .\n?people pou:originTown ?originTown .\n?people pou:originKaza ?originKaza .\n?people pou:originKarye ?originKarye .\n?people pou:originMahalle ?originMahalle .\n?people pou:house ?originHouse .\n?people pou:turkishName ?tname2 .\n} WHERE {\n?physcop a knora-api:Resource .\n?physcop a pou:PhysicalCopy .\nOPTIONAL{?physcop pou:dateOnPhotograph ?date .}\n?photo pou:physicalCopy ?physcop .\nOPTIONAL{?photo pou:dateOfPassport ?dateOfPassport . }\n?physcop knora-api:hasStillImageFileValue ?imgfile .\n?photo pou:peopleOnPic ?people .\n';
+    if (this.photographerFilters.length === 0) {
+        query += 'OPTIONAL{?physcop pou:photographer ?photographer .}\n';
+    } else {
+        query += '?physcop pou:photographer ?photographer .\n';
+      }
+    if (this.townFilters.length === 0) {
+      query += 'OPTIONAL{?people pou:originTown ?originTown .}\n';
+    } else {
+        query += '?people pou:originTown ?originTown .\n';
+    }
+    query +=  'OPTIONAL{?people pou:originKaza ?originKaza .}\nOPTIONAL{?people pou:originKarye ?originKarye .}\nOPTIONAL{?people pou:originMahalle ?originMahalle .}\nOPTIONAL{ ?people pou:house ?originHouse .}\nOPTIONAL{?people pou:turkishName ?tname2 .}';
+    if (this.townFilters.length > 0) {
+      query += '\n?originTown knora-api:valueAsString ?townStr .\nFILTER regex(?townStr, "(';
+      for (let town of this.townFilters) {
+        if (town === 'Mamüratülaziz') {
+          town = 'Mamüratülaziz|Mamüretülaziz';
+        }
+        if (town === 'Sivas') {
+          town = 'Sivas|Sivas-Şark-i Karaağaç Sancağı';
+        }
+        query += town + '|';
+      }
+      query = query.slice(0, -1); // remove last |
+      query += ')") .';
+    }
+    if (this.photographerFilters.length > 0) {
+      query += '\n?photographer knora-api:valueAsString ?photographerStr .\n FILTER regex(?photographerStr, "(';
+      for (let photographer of this.photographerFilters) {
+        if (photographer === 'Archak B. Jacoubian') {
+          photographer = 'Archak B. Jacoubian| Archak B. Jacoubian ';
+        }
+        if (photographer === 'Dildilian Bros.') {
+          photographer = 'Dildilian Bros.|Dildilian Bros. Art Photographer|Fz Dildilian|Tz Dildilian';
+        }
+        if (photographer === 'Mamuretülaziz\'s Police Force') {
+          photographer = 'Mamuretülaziz\'s Police Force|Mamuretülaziz\'s  Police Force';
+        }
+        query += photographer + '|';
+      }
+      query = query.slice(0, -1); // remove last |
+      query += ')") .';
+    }
+    query += '\n}\nORDER BY ?date';
+    console.log(query);
+    return query;
   }
 
   ngOnInit() {

@@ -16,14 +16,11 @@ export class GravsearchTemplatesService {
     PREFIX pou: <{{ ontology }}/ontology/0827/pou/simple/v2#>
     CONSTRUCT {
       ?person knora-api:isMainResource true .
-      ?person pou:LastName ?lastname .
-      ?person pou:Photograph ?photograph .
+      ?person pou:originTown ?originTown .
     } WHERE {
       ?person a knora-api:Resource .
       ?person a pou:Person .
-      ?person pou:LastName ?lastname .
-      FILTER regex(?lastname, "{{ lastname }}", "i") .
-      OPTIONAL { ?person pou:Photograph ?photograph . }
+      ?person pou:originTown ?originTown .
     }
     `, params);
     return result;
