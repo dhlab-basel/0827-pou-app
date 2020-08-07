@@ -1,14 +1,14 @@
 <div class="wrapper">
   <div class="form-container">
     <mat-form-field>
-      <mat-select [(ngModel)]="selectedResourceType" placeholder="Resource type">
+      <mat-select [(ngModel)]="selectedResourceType" (selectionChange)="storage.searchPageSelectedResType = selectedResourceType" placeholder="Resource type">
         <mat-option value="PhysicalCopy">Physical Copy</mat-option>
         <mat-option value="CoverLetter">Cover Letter</mat-option>
         <mat-option value="Person">Person</mat-option>
         <mat-option value="Photograph">Photograph</mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-slide-toggle (change)="onlyCount = !onlyCount">Return only count</mat-slide-toggle>
+    <mat-slide-toggle (change)="onlyCount = !onlyCount; storage.searchPageOnlyCount = onlyCount">Return only count</mat-slide-toggle>
     <div *ngFor="let no of arr">
       <div style="display: inline-block">
       <mat-form-field >
@@ -18,7 +18,7 @@
       </mat-form-field>
       </div>
       <mat-form-field>
-        <mat-select #operatorfield [value]="operatorsChosen[no]" (selectionChange)="operatorsChosen[no] = operatorfield.value; valuesChosen[no] = ''; createFormQuery()">
+        <mat-select #operatorfield [value]="operatorsChosen[no]" (selectionChange)="operatorsChosen[no] = operatorfield.value; valuesChosen[no] = ''; storage.searchPageOpsChosen = this.operatorsChosen; createFormQuery()">
           <mat-option value = "exists">Exists</mat-option>
           <mat-option value = "equals">Equals</mat-option>
         </mat-select>
@@ -26,10 +26,10 @@
       <div style="display: inline-block" *ngIf="operatorsChosen[no] === 'equals'">
       <div style="display: inline-block" [ngSwitch]="propertiesChosen[no].type">
         <mat-form-field *ngSwitchCase="'TextValue'">
-          <textarea #valuefield matInput [value]="valuesChosen[no]"  placeholder="Value {{no}}" (keyup)="valuesChosen[no] = valuefield.value; createFormQuery()"></textarea> <!-- valuesChosen[] is of type valueType, which is fulfilled by string, so no type issues here. -->
+          <textarea #valuefield matInput [value]="valuesChosen[no]"  placeholder="Value {{no}}" (keyup)="valuesChosen[no] = valuefield.value; storage.searchPageValsChosen = valuesChosen; createFormQuery()"></textarea> <!-- valuesChosen[] is of type valueType, which is fulfilled by string, so no type issues here. -->
         </mat-form-field>
         <mat-form-field *ngSwitchCase="'BooleanValue'">
-          <mat-select #valuefield [value]="valuesChosen[no]"  placeholder="Value {{no}}" (selectionChange)="valuesChosen[no] = valuefield.value; createFormQuery()">
+          <mat-select #valuefield [value]="valuesChosen[no]"  placeholder="Value {{no}}" (selectionChange)="valuesChosen[no] = valuefield.value; storage.searchPageValsChosen = valuesChosen; createFormQuery()">
             <mat-option [value]="true">True</mat-option>
             <mat-option [value]="false">False</mat-option>
           </mat-select>
@@ -53,7 +53,7 @@
           </mat-form-field>
         </div>
         <mat-form-field *ngSwitchCase="'ListValue'">
-          <mat-select #listfield [value] = "valuesChosen[no]" (selectionChange)="valuesChosen[no] = listfield.value; createFormQuery()">
+          <mat-select #listfield [value] = "valuesChosen[no]" (selectionChange)="valuesChosen[no] = listfield.value; storage.searchPageValsChosen = valuesChosen; createFormQuery()">
            <mat-option *ngFor="let node of lists[propertiesChosen[no].listiri]" [value]="node">{{node.label}}</mat-option>
           </mat-select>
         </mat-form-field>
@@ -74,7 +74,7 @@
     </mat-form-field>
     <div>
       <mat-form-field style="width: 100%" appearance="outline">
-        <textarea #gravField cdkTextareaAutosize cdkAutosizeMinRows="10" cdkAutosizeMaxRows="10" matInput  value = "{{gravQueryFieldText}}">
+        <textarea #gravField (keyup)="storage.searchPageGravField = gravQueryFieldText" cdkTextareaAutosize cdkAutosizeMinRows="10" cdkAutosizeMaxRows="10" matInput  value = "{{gravQueryFieldText}}">
     </textarea>
       </mat-form-field>
       <div>

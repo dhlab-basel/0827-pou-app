@@ -7,6 +7,7 @@ import {ReadResource, ReadLinkValue, ReadDateValue} from '@knora/api';
 import {Constants} from '@knora/api/src/models/v2/Constants';
 import {Helpers} from '../../classes/helpers';
 import {PageEvent} from '@angular/material';
+import {StorageService} from '../../services/storage.service';
 
 
 /**
@@ -66,7 +67,7 @@ class PhotoData {
     </p>
     <div>
       <mat-form-field>
-        <mat-select #peopleFilter (selectionChange)="setPeopleFilter(peopleFilter.value)" placeholder="People Details"multiple>
+        <mat-select #peopleFilter [value] = "peopleFilters" (selectionChange)="setPeopleFilter(peopleFilter.value)" placeholder="People Details" multiple>
           <mat-option value="man">Man Alone</mat-option>
           <mat-option value="woman">Woman Alone</mat-option>
           <mat-option value="elderly">Elderly</mat-option>
@@ -74,12 +75,12 @@ class PhotoData {
         </mat-select>
       </mat-form-field>
       <mat-form-field>
-        <mat-select #photographerFilter (selectionChange)="setPhotographerFilter(photographerFilter.value)" placeholder="Photographer" multiple>
+        <mat-select #photographerFilter [value] = "photographerFilters" (selectionChange)="setPhotographerFilter(photographerFilter.value)" placeholder="Photographer" multiple>
           <mat-option *ngFor="let val of photographerList" [value]="val">{{val}}</mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field>
-        <mat-select #townFilter (selectionChange)="setTownFilter(townFilter.value)" placeholder="Town" multiple>
+        <mat-select #townFilter [value] = "townFilters" (selectionChange)="setTownFilter(townFilter.value)" placeholder="Town" multiple>
           <mat-option *ngFor="let val of townList" [value]="val">{{val}}</mat-option>
         </mat-select>
       </mat-form-field>
@@ -165,7 +166,8 @@ export class HomeComponent implements OnInit {
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
               private knoraService: KnoraService,
-              private helpers: Helpers) {
+              private helpers: Helpers,
+              private storage: StorageService) {
     this.page = 0;
   }
 
@@ -174,9 +176,6 @@ export class HomeComponent implements OnInit {
    */
   getPhotos(): void {
     this.showProgbar = true;
-    const paramsCnt = {
-      page: '0',
-    };
 
     /**
      * Do the count search, stores the number of found elements to this.nPhotos
@@ -190,7 +189,6 @@ export class HomeComponent implements OnInit {
       page: String(this.page)
     };
     query += '\nOFFSET ' + params.page;
-    console.log(query);
     this.knoraService.gravsearchQueryByString(query).subscribe((physicalCopy: ReadResource[]) => {
       /**
        * The map function creates and prepares a PhotoData object for every PhysicalCopy found.
@@ -316,22 +314,23 @@ export class HomeComponent implements OnInit {
     const url = 'photo/' + encodeURIComponent(iri);
     this.router.navigateByUrl(url).then(e => {
       if (e) {
-        console.log('Navigation is successful!');
       } else {
-        console.log('Navigation has failed!');
       }
     });
   }
   setTownFilter(arr: []) {
     this.townFilters = arr;
+    this.storage.photowallFilters.town = arr;
     this.getPhotos();
   }
   setPeopleFilter(arr: []) {
     this.peopleFilters = arr;
+    this.storage.photowallFilters.people = arr;
     this.getPhotos();
   }
   setPhotographerFilter(arr: []) {
     this.photographerFilters = arr;
+    this.storage.photowallFilters.photographer = arr;
     this.getPhotos();
   }
   /*getTownList() {
@@ -422,11 +421,16 @@ export class HomeComponent implements OnInit {
       query += ')") .';
     }
     query += '\n}\nORDER BY ?date';
-    console.log(query);
     return query;
+  }
+  loadFilters() {
+    this.peopleFilters = this.storage.photowallFilters.people;
+    this.townFilters = this.storage.photowallFilters.town;
+    this.photographerFilters = this.storage.photowallFilters.photographer;
   }
 
   ngOnInit() {
+    this.loadFilters();
     this.getPhotos();
   }
 

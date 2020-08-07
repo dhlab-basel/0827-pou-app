@@ -9,10 +9,15 @@ import {AppInitService} from '../../app-init.service';
 import {ReadDateValue, ReadLinkValue, ReadResource, ReadTextValueAsString, ReadValue, ResourcePropertyDefinition} from '@knora/api';
 import {Router} from '@angular/router';
 import set = Reflect.set;
+import {StorageService} from '../../services/storage.service';
 
+/**
+ * Class to store knora list nodes with their iri and label.
+ */
 class PouListNode {
   constructor(public iri: string, public label: string) {}
 }
+
 class Property {
   constructor(public prop: string, public type: string, public originalName: string, public listiri?: string) {}
 }
@@ -58,7 +63,6 @@ export class SearchPageComponent implements OnInit {
   onlyCount: boolean = false;
   countRes: number;
   formQueryString: string;
-  currentIdentifier = 'a1';
   gravQueryFieldText = '';
   lists: {[index: string]: Array<PouListNode>} = {};
   minDate: Date;
@@ -71,7 +75,8 @@ export class SearchPageComponent implements OnInit {
   constructor(private appInitService: AppInitService,
               private knoraService: KnoraService,
               private sparqlPrep: SparqlPrep,
-              private router: Router) {
+              private router: Router,
+              public storage: StorageService) {
     this.arr = Array(1).fill(0).map((x, i) => i);
     this.propertiesChosen = Array(1).fill(new Property('', '', ''));
     this.valuesChosen = Array(1).fill('');
@@ -82,8 +87,23 @@ export class SearchPageComponent implements OnInit {
 
   ngOnInit() {
     this.getOnto();
+    this.loadFromStorage();
   }
-
+  loadFromStorage() {
+    console.log(this.storage);
+    this.lastQuery = this.storage.searchPageQuery;
+    this.resultPage = this.storage.searchPageOffset;
+    this.propertiesChosen = this.storage.searchPagePropsChosen;
+    this.valuesChosen = this.storage.searchPageValsChosen;
+    this.operatorsChosen = this.storage.searchPageOpsChosen;
+    this.selectedResourceType = this.storage.searchPageSelectedResType;
+    this.onlyCount = this.storage.searchPageOnlyCount;
+    this.gravQueryFieldText = this.storage.searchPageGravField;
+    this.createFormQuery();
+    if (this.lastQuery !== '') {
+      this.fire(this.lastQuery);
+    }
+  }
   getOnto() {
     const onto = this.knoraService.getOntology(this.knoraService.pouOntology.slice(0, -1));
     onto.subscribe( ontoValue => {
@@ -212,14 +232,19 @@ export class SearchPageComponent implements OnInit {
   }
   changeProp(index: number, value: Property) {
     this.propertiesChosen[index] = value;
+    this.storage.searchPagePropsChosen = this.propertiesChosen;
     this.valuesChosen[index] = '';
+    this.storage.searchPageValsChosen = this.valuesChosen;
   }
 
   addProperty() {
     this.arr = Array(this.arr.length + 1).fill(0).map((x, i) => i);
     this.propertiesChosen.push(new Property('', '', ''));
+    this.storage.searchPagePropsChosen = this.propertiesChosen;
     this.valuesChosen.push('');
+    this.storage.searchPageValsChosen = this.valuesChosen;
     this.operatorsChosen.push('exists');
+    this.storage.searchPageOpsChosen = this.operatorsChosen;
   }
 
   removeProperty(no: number) {
@@ -227,8 +252,11 @@ export class SearchPageComponent implements OnInit {
       return;
     }
     this.propertiesChosen.splice(no, 1);
+    this.storage.searchPagePropsChosen = this.propertiesChosen;
     this.valuesChosen.splice(no, 1);
+    this.storage.searchPageValsChosen = this.valuesChosen;
     this.operatorsChosen.splice(no, 1);
+    this.storage.searchPageOpsChosen = this.operatorsChosen;
     this.arr.pop();
   }
   deleteAllProps(){
@@ -385,6 +413,7 @@ export class SearchPageComponent implements OnInit {
     }
     const querystring = this.sparqlPrep.compile(query, params);
     this.lastQuery = querystring;
+    this.storage.searchPageQuery = querystring;
     console.log(querystring);
     this.fire(querystring);
   }
@@ -478,6 +507,7 @@ export class SearchPageComponent implements OnInit {
   changePropOfLinkedRes(id: number, level: number, property: Property) {
     if (level === 1) {
       this.valuesChosen[id] = new PropertyValuePair(property, '');
+      this.storage.searchPageValsChosen = this.valuesChosen;
       return;
     }
     this.changeValueOfLinkedRes(id, level - 1,  new PropertyValuePair(property, ''));
@@ -485,6 +515,7 @@ export class SearchPageComponent implements OnInit {
   changeValueOfLinkedRes(id: number, level: number, value: valueType) {
     if (level === 0) {
       this.valuesChosen[id] = value;
+      this.storage.searchPageValsChosen = this.valuesChosen;
       return;
     }
     let i = 1;
@@ -511,6 +542,7 @@ export class SearchPageComponent implements OnInit {
     }
     if (this.resultPage + increment >= 0) {
       this.resultPage += increment;
+      this.storage.searchPageOffset = this.resultPage;
     }
     this.fire(this.lastQuery);
   }
