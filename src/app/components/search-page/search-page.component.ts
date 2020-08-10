@@ -99,6 +99,7 @@ export class SearchPageComponent implements OnInit {
     this.selectedResourceType = this.storage.searchPageSelectedResType;
     this.onlyCount = this.storage.searchPageOnlyCount;
     this.gravQueryFieldText = this.storage.searchPageGravField;
+    console.log(this.arr);
     this.createFormQuery();
     if (this.lastQuery !== '') {
       this.fire(this.lastQuery);
