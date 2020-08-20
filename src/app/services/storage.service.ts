@@ -13,5 +13,12 @@ export class StorageService {
   searchPageSelectedResType = '';
   searchPageOnlyCount = false;
   searchPageGravField = '';
+  simpleNameInput = '';
+  simpleFathersNameInput = '';
+  simpleTownInput = '';
+  simpleArrivalInput = -1;
+  simplePrecisionInput = '';
+  simpleSpouseInput = '';
+  simpleChildrenInput = [''];
   constructor() { }
 }

@@ -38,6 +38,7 @@ import { PhotoPageComponent } from './components/photo-page/photo-page.component
 import { FamilyTreeComponent } from './components/family-tree/family-tree.component';
 import { SearchPageComponent } from './components/search-page/search-page.component';
 import { DetailsPageComponent } from './components/details-page/details-page.component';
+import { SimpleSearchComponent } from './components/simple-search/simple-search.component';
 
 export function initializeApp(appInitService: AppInitService) {
   return (): Promise<any> => {
@@ -54,7 +55,8 @@ export function initializeApp(appInitService: AppInitService) {
     PhotoPageComponent,
     FamilyTreeComponent,
     SearchPageComponent,
-    DetailsPageComponent
+    DetailsPageComponent,
+    SimpleSearchComponent
   ],
   entryComponents: [
     LoginComponent

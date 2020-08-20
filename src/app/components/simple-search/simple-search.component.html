@@ -1,0 +1,45 @@
+<mat-form-field>
+  <textarea #nameField matInput [(ngModel)] = "nameInput" placeholder="Name"></textarea>
+</mat-form-field>
+<br>
+<mat-form-field>
+  <textarea #fathersField matInput [(ngModel)] = "fathersNameInput" placeholder="Father's Name"></textarea>
+</mat-form-field>
+<br>
+<mat-form-field>
+  <mat-select #townField [(ngModel)] = "townInput" placeholder="Origin">
+    <mat-option *ngFor="let val of townList" [value]="val">{{val}}</mat-option>
+  </mat-select>
+</mat-form-field>
+<br>
+<mat-form-field>
+  <input #arrivalField matInput type = "number" [ngModel] = "arrivalInput > 0 ? arrivalInput : ''" (ngModelChange)="arrivalInput = $event" placeholder="Arrival Year">
+</mat-form-field>
+<mat-form-field>
+  <mat-select #precisionField [(ngModel)] = "precisionInput" placeholder="Precision">
+    <mat-option value = "0">Exact</mat-option>
+    <mat-option value = "1">+/- 1 year</mat-option>
+    <mat-option value = "2">+/- 2 years</mat-option>
+    <mat-option value = "5">+/- 5 years</mat-option>
+  </mat-select>
+</mat-form-field>
+<br>
+<mat-form-field>
+  <textarea #spouseField matInput [(ngModel)] = "spouseInput" placeholder="Spouse name"></textarea>
+</mat-form-field>
+<div *ngFor ="let child of childrenInput; let i = index; trackBy: trackByFn">
+  <ng-container *ngTemplateOutlet="childName; context: {id: i}">
+
+  </ng-container>
+
+</div>
+<a mat-button (click)="addChild()">Add Child</a>
+<br>
+<a mat-button (click)="fireSearch()">Search</a>
+
+<ng-template #childName let-id="id">
+  <mat-form-field>
+    <textarea matInput [(ngModel)] = "childrenInput[id]" placeholder="Child name"></textarea>
+  </mat-form-field>
+  <a mat-button #removeChildButton (click) = "removeChild(id)">Remove child</a>
+</ng-template>

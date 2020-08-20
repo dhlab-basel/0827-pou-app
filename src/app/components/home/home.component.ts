@@ -421,6 +421,7 @@ export class HomeComponent implements OnInit {
       query += ')") .';
     }
     query += '\n}\nORDER BY ?date';
+    console.log(query);
     return query;
   }
   loadFilters() {
