@@ -14,11 +14,13 @@ export class StorageService {
   searchPageOnlyCount = false;
   searchPageGravField = '';
   simpleNameInput = '';
+  simpleLastNameInput = '';
   simpleFathersNameInput = '';
   simpleTownInput = '';
   simpleArrivalInput = -1;
-  simplePrecisionInput = '';
-  simpleSpouseInput = '';
-  simpleChildrenInput = [''];
+  simplePrecisionInput = '0';
+  // simpleSpouseInput = '';
+  simpleRelativeInput = [''];
+  simplePage = 0;
   constructor() { }
 }

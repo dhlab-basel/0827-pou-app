@@ -3,6 +3,10 @@
 </mat-form-field>
 <br>
 <mat-form-field>
+  <textarea #lastNameField matInput [(ngModel)] = "lastNameInput" placeholder="Last Name"></textarea>
+</mat-form-field>
+<br>
+<mat-form-field>
   <textarea #fathersField matInput [(ngModel)] = "fathersNameInput" placeholder="Father's Name"></textarea>
 </mat-form-field>
 <br>
@@ -24,22 +28,38 @@
   </mat-select>
 </mat-form-field>
 <br>
-<mat-form-field>
-  <textarea #spouseField matInput [(ngModel)] = "spouseInput" placeholder="Spouse name"></textarea>
-</mat-form-field>
-<div *ngFor ="let child of childrenInput; let i = index; trackBy: trackByFn">
-  <ng-container *ngTemplateOutlet="childName; context: {id: i}">
+<div *ngFor ="let relative of relativeInput; let i = index; trackBy: trackByFn">
+  <ng-container *ngTemplateOutlet="relativeName; context: {id: i}">
 
   </ng-container>
 
 </div>
-<a mat-button (click)="addChild()">Add Child</a>
+<a mat-button (click)="addRelative()">Add Relative</a>
 <br>
 <a mat-button (click)="fireSearch()">Search</a>
-
-<ng-template #childName let-id="id">
+<br>
+<div *ngIf = "this.countRes >= 0">
+  <p>Count found: {{this.countRes}}</p>
+</div>
+<table>
+  <tr *ngIf ="results.length > 0">
+    <td>Name</td>
+    <td>Last Name</td>
+    <td>Town</td>
+    <td>Father's Name</td>
+  </tr>
+  <tr *ngFor="let result of results" (click)="resultClicked(result.iri)">
+    <td>{{getString(result.names)}}</td>
+    <td>{{getString(result.lastNames)}}</td>
+    <td>{{getString(result.towns)}}</td>
+    <td>{{getString(result.fathersNames)}}</td>
+  </tr>
+</table>
+<a mat-button (click) = "changePage(-1)">Previous</a>
+<a mat-button (click) = "changePage(1)">Next</a>
+<ng-template #relativeName let-id="id">
   <mat-form-field>
-    <textarea matInput [(ngModel)] = "childrenInput[id]" placeholder="Child name"></textarea>
+    <textarea matInput [(ngModel)] = "relativeInput[id]" placeholder="Relative name"></textarea>
   </mat-form-field>
-  <a mat-button #removeChildButton (click) = "removeChild(id)">Remove child</a>
+  <a mat-button #removeRelativeButton (click) = "removeRelative(id)">Remove Relative</a>
 </ng-template>

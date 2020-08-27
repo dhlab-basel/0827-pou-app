@@ -421,7 +421,6 @@ export class SearchPageComponent implements OnInit {
   fire(querystring) {
     this.knoraService.gravsearchQueryByStringCount(querystring).subscribe(
       (no: number) => {
-        console.log('Found COUNT: ', no);
         this.countRes = no;
       }
     );
