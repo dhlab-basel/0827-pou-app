@@ -1,0 +1,10 @@
+.leftside {display: flex; flex-flow: wrap; width: 50%; position: absolute; left: 0;}
+.rightside {display: flex; flex-flow: wrap; width: 50%; position: absolute; right: 0;}
+.container hr {
+  width: 100%;
+  height: 0;
+  border: none;
+}
+.container {background-color: rgba(241, 231, 256, 0.4); width: 100%; height: 100%;}
+.mat-form-field {padding: 10px 10px;}
+.button-div {padding: 10px 10px;}

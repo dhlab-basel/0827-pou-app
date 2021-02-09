@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {ReadDateValue, ReadLinkValue, ReadResource, ReadStillImageFileValue, ReadTextValueAsString} from '@knora/api';
 import {Constants} from '@knora/api/src/models/v2/Constants';
 import {KnoraService} from '../../services/knora.service';
@@ -181,7 +181,8 @@ export class PhotoPageComponent implements OnInit {
 
   constructor(public route: ActivatedRoute,
               private knoraService: KnoraService,
-              private helpers: Helpers) {
+              private helpers: Helpers,
+              private router: Router) {
     this.photo = new PhotoPageData('', '','','','','','',new Person(),[]);
   }
 
@@ -345,6 +346,9 @@ export class PhotoPageComponent implements OnInit {
     return relations[s];
   }
   ngOnInit() {
+    if (!this.knoraService.loggedin) {
+      this.router.navigateByUrl('/login');
+    }
     this.getPhoto();
   }
 

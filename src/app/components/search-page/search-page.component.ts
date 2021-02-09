@@ -86,6 +86,9 @@ export class SearchPageComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (!this.knoraService.loggedin) {
+      this.router.navigateByUrl('/login');
+    }
     this.getOnto();
     this.loadFromStorage();
   }
@@ -117,7 +120,7 @@ export class SearchPageComponent implements OnInit {
         }
         let listIri: string;
         if (objValue === 'ListValue') {
-          const tmp = prop.guiAttributes[0].split('=');
+            const tmp = prop.guiAttributes[0].split('=');
           listIri = tmp[1].slice(1, -1);
           if (this.lists[listIri] === undefined) {
             this.lists[listIri] = []; // empty list to prevent double loading! getList is asynchronous!!!

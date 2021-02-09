@@ -4,7 +4,7 @@ import { MatButton } from "@angular/material/button";
 import { LoginComponent, LoginData } from "./components/login/login.component";
 import { KnoraService } from "./services/knora.service";
 import { catchError } from "rxjs/operators";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +19,9 @@ export class AppComponent {
   loggedin = false;
 
   constructor(public dialog: MatDialog,
-              public knoraService: KnoraService) {}
+              public knoraService: KnoraService,
+              private router: Router
+              ) {}
 
   private openLoginDialog(): void {
     const loginConfig = new MatDialogConfig();
@@ -50,6 +52,7 @@ export class AppComponent {
     this.knoraService.logout().subscribe(data => {
       this.loggedin = false;
     });
+    this.router.navigateByUrl('/login');
   }
 
   account(): void {

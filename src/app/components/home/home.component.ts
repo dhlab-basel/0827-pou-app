@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {ActivatedRoute} from '@angular/router';
 
@@ -13,6 +13,7 @@ import {StorageService} from '../../services/storage.service';
 /**
  * This class is used to store data for the objects to be displayed. The html basically displays the properties of PhotoData objects.
  */
+
 class PhotoData {
   constructor(public photoIri: string,
               public label: string,
@@ -61,79 +62,102 @@ class PhotoData {
 @Component({
   selector: 'app-home',
   template: `
-    <mat-progress-bar mode="indeterminate" *ngIf="showProgbar"></mat-progress-bar>
-    <p>
-      Number of Photos: {{ nPhotos }}
-    </p>
-    <div>
-      <mat-form-field>
-        <mat-select #peopleFilter [value] = "peopleFilters" (selectionChange)="setPeopleFilter(peopleFilter.value)" placeholder="People Details" multiple>
-          <mat-option value="man">Man Alone</mat-option>
-          <mat-option value="woman">Woman Alone</mat-option>
-          <mat-option value="elderly">Elderly</mat-option>
-          <mat-option value="children">Children</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-select #photographerFilter [value] = "photographerFilters" (selectionChange)="setPhotographerFilter(photographerFilter.value)" placeholder="Photographer" multiple>
-          <mat-option *ngFor="let val of photographerList" [value]="val">{{val}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-select #townFilter [value] = "townFilters" (selectionChange)="setTownFilter(townFilter.value)" placeholder="Town" multiple>
-          <mat-option *ngFor="let val of townList" [value]="val">{{val}}</mat-option>
-        </mat-select>
-      </mat-form-field>
+    <div class="container">
+      <mat-progress-bar mode="indeterminate" *ngIf="showProgbar"></mat-progress-bar>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Filters
+          </mat-panel-title>
+          <mat-panel-description>
+            {{getDescription()}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <h3>Photographer</h3>
+        <div *ngFor="let val of photographerList">
+          <mat-checkbox [checked]="photographerFilters.indexOf(val) > -1" (change)="addPhotographerFilter(val)" color="primary">
+            {{val}}
+          </mat-checkbox>
+        </div>
+        <h3>Town</h3>
+        <div *ngFor="let val of townList">
+          <mat-checkbox [checked]="townFilters.indexOf(val) > -1" (change)="addTownFilter(val)" color="primary">
+            {{val}}
+          </mat-checkbox>
+        </div>
+        <button mat-raised-button color="primary" (click)="clearFilters()">Clear all</button>
+      </mat-expansion-panel>
+      <!-- Creates Grid of all PhotoData objects and prints their properties -->
+    <div class="imageBand">
+      <div *ngFor="let x of photos | slice:(page%5 *5):(page%5 *5) + 5;">
+              <mat-card (click)="photoClicked(x.imageBaseURL + '/' + x.imageFileName + '/full/max/0/default.jpg', x.photoIri)">
+                <mat-card-title>
+                  <h3 *ngIf="x.turkishName">{{ x.turkishName }}</h3>
+                  <h3 *ngIf="!x.turkishName">No last name</h3>
+                </mat-card-title>
+                <img class="newimg" mat-card-image src="{{x.imageBaseURL}}/{{x.imageFileName}}/full/{{calcImageBound()}},/0/default.jpg"
+                     alt="Photo with iri {{x.photoIri}}"/>
+                <mat-card-content>
+                  <table>
+                    <tr *ngIf = "x.getOrigin().length>0">
+                      <td>Origin:</td>
+                      <td>{{ x.getOrigin()}}</td>
+                    </tr>
+                    <tr *ngIf="x.dateOnPhoto.length>0" >
+                      <td>Date on Photo:</td>
+                      <td> {{x.dateOnPhoto}}</td>
+                    </tr>
+                    <tr *ngIf = "x.photographer.length>0">
+                      <td>Photographer:</td>
+                      <td>{{x.photographer}}</td>
+                    </tr>
+                  </table>
+                </mat-card-content>
+              </mat-card>
+      </div>
     </div>
-    <!-- Creates Grid of all PhotoData objects and prints their properties -->
-    <mat-grid-list cols="5" rowHeight="1:2.5">
-      <mat-grid-tile *ngFor="let x of photos">
-        <mat-card (click)="photoClicked(x.photoIri)">
-          <mat-card-title>
-            <h3 *ngIf="x.turkishName">{{ x.turkishName }}</h3>
-            <h3 *ngIf="!x.turkishName">No last name</h3>
-          </mat-card-title>
-          <mat-card-content>
-            <p>
-              <img class="newimg" mat-card-image src="{{x.imageBaseURL}}/{{x.imageFileName}}/full/200,/0/default.jpg"
-                   alt="Photo with iri {{x.photoIri}}"/>
-            </p>
-            <table>
-              <tr *ngIf = "x.getOrigin().length>0">
-                <td>Origin:</td>
-                <td>{{ x.getOrigin()}}</td>
-              </tr>
-              <tr *ngIf="x.dateOnPhoto.length>0" >
-                <td>Date on Photo:</td>
-                <td> {{x.dateOnPhoto}}</td>
-              </tr>
-              <tr *ngIf = "x.photographer.length>0">
-                <td>Photographer:</td>
-                <td>{{x.photographer}}</td>
-              </tr>
-            </table>
-          </mat-card-content>
-        </mat-card>
-      </mat-grid-tile>
-    </mat-grid-list>
-    <mat-paginator *ngIf="nPhotos > 25" [length]="nPhotos"
-                   [pageIndex]="page"
-                   [pageSize]="25"
-                   [pageSizeOptions]="[25]"
-                   (page)="pageChanged($event)" showFirstLastButtons>
-    </mat-paginator>
-
+        <mat-paginator *ngIf="nPhotos > 5" [length]="nPhotos"
+                       [pageIndex]="page"
+                       [pageSize]="5"
+                       [pageSizeOptions]="[5]"
+                       (page)="pageChanged($event)" showFirstLastButtons>
+        </mat-paginator>
+      <div (click)="closeOverlay()" id="clickedBG" class="clicked">
+        <span class="close" (click)="closeOverlay()">&times;</span>
+        <img class="clicked-content" id="img01" (click)="photoConfirmed()">
+        <div class="caption" (click)="photoConfirmed()">Click for details</div>
+      </div>
+    </div>
   `,
   styles: [
-    '.mat-grid-list {margin-left: 10px; margin-right: 10px;}',
+    '.container {background-color: rgba(241, 231, 256, 0.4); height: 100%; width: 100%;}',
+    '.mat-grid-list {}',
     '.mat-card-title {font-size: 12pt;}',
-    '.newimg {max-width: 200px;}'
+    '.mat-card {cursor: pointer; margin-left: 10px; margin-right: 10px;}',
+    '.mat-card:hover {opacity: 0.7;}',
+    '.clicked {display: none; position: fixed; z-index: 1; padding: 5%; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0, 0, 0, 0.9);}',
+    '.clicked-content {margin: auto; display: block; max-width: 80%; max-height: 80%;}',
+    '.clicked-content:hover {cursor: pointer;}',
+    '.close {position:absolute; top: 15px; right: 240px; color: #f1f1f1; font-size: 40px; font-weight: bold; transition: 0.3s;}',
+    '.close:hover, .close:focus {color: #bbb; text-decoration: none; cursor: pointer} ',
+    '.caption {margin: auto; display: block; width: 80%; text-align: center; color: #ccc; padding: 10px 0; height: 150px}',
+    '.caption:hover {cursor: pointer;}',
+    '.mat-card img{ object-fit: cover; width: 100%; height: 80%;}',
+    '.button {margin: 30px 30px}',
+    '.mat-expansion-panel-header {background-color: rgba(103, 58, 183, 0.75);}',
+    '.mat-expansion-panel {width: 30%}',
+    '.imageBand {display: flex; align-items: center;}',
+    '.mat-paginator {position: fixed; left: 0; bottom: 0; width: 100%; background-color:  rgba(103, 58, 183, 0.75);}'
   ]
 })
 
 export class HomeComponent implements OnInit {
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.innerWidth = window.innerWidth;
+  }
+  innerWidth: number;
   townFilters = [];
-  peopleFilters = [];
   photographerFilters = [];
   photographerList = [
     'Ahmet Naci',
@@ -145,7 +169,6 @@ export class HomeComponent implements OnInit {
     "Mamuretülaziz's Police Force",
     'SH. M. Kalifa'
     ];
-  // townListForCalculation = [];
   townList =  [
     'Adana',
     'Bitlis',
@@ -161,7 +184,7 @@ export class HomeComponent implements OnInit {
   nPhotos: number;
   photos: Array<PhotoData> = [];
   showProgbar = false;
-
+  currentClickedImage: string;
 
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
@@ -186,7 +209,7 @@ export class HomeComponent implements OnInit {
     );
 
     const params = {
-      page: String(this.page)
+      page: String(Math.floor(this.page / 5))
     };
     query += '\nOFFSET ' + params.page;
     this.knoraService.gravsearchQueryByString(query).subscribe((physicalCopy: ReadResource[]) => {
@@ -295,6 +318,7 @@ export class HomeComponent implements OnInit {
    * @param event The event created by click on mat-paginator
    */
   pageChanged(event: PageEvent): void {
+    const oldVal = this.page;
     this.page = event.pageIndex;
     this.router.navigate(
       [],
@@ -303,79 +327,88 @@ export class HomeComponent implements OnInit {
         queryParams: {page: this.page},
         queryParamsHandling: 'merge', // remove to replace all query params by provided
       });
-    this.getPhotos();
+    if (Math.floor(oldVal / 5) !== Math.floor(this.page / 5)) {
+      this.getPhotos();
+    }
   }
-
+  photoClicked(img: string, iri: string): void {
+    const clicked = document.getElementById('clickedBG');
+    const imgDisplay = document.getElementById('img01') as HTMLImageElement;
+    clicked.style.display = 'block';
+    imgDisplay.src = img;
+    this.currentClickedImage = iri;
+  }
+  closeOverlay() {
+    const clicked = document.getElementById('clickedBG');
+    clicked.style.display = 'none';
+    this.currentClickedImage = undefined;
+  }
   /**
    * Reroutes user to the photo page of a clicked photo
    * @param iri The iri of the photograph clicked, used to pass iri as url component.
    */
-  photoClicked(iri: string): void {
-    const url = 'photo/' + encodeURIComponent(iri);
+  photoConfirmed(): void {
+    const url = 'photo/' + encodeURIComponent(this.currentClickedImage);
     this.router.navigateByUrl(url).then(e => {
       if (e) {
       } else {
       }
     });
   }
-  setTownFilter(arr: []) {
-    this.townFilters = arr;
-    this.storage.photowallFilters.town = arr;
-    this.getPhotos();
+  calcImageBound(): number {
+    return Math.floor(this.innerWidth /5);
   }
-  setPeopleFilter(arr: []) {
-    this.peopleFilters = arr;
-    this.storage.photowallFilters.people = arr;
-    this.getPhotos();
-  }
-  setPhotographerFilter(arr: []) {
-    this.photographerFilters = arr;
-    this.storage.photowallFilters.photographer = arr;
-    this.getPhotos();
-  }
-  /*getTownList() {
-    const toReturn = [];
-    let noOfTowns = 0;
-    const paramsCnt = {
-      page: '0',
-    };
-    this.knoraService.gravsearchQueryCount('person_query', paramsCnt).subscribe(
-      n => {
-        console.log(n);
-        const noOfOffsets = n / 25;
-        for (let i = 0; i <= noOfOffsets; i++) {
-          this.getTownListHelper(i);
-        }
-      }
-    );
-  }
-  getTownListHelper(offset: number){
-    console.log('Called with', offset);
-    const params = {
-      page: String(offset)
-    };
-    this.knoraService.gravsearchQuery('person_query', params).subscribe((persons: ReadResource[]) => {
-     const arrOfarr = persons.map((person: ReadResource) => {
-       const originTownProp = this.knoraService.pouOntology + 'originTown';
-       return person.getValuesAsStringArray(originTownProp);
-     });
-     const arr = [];
-     for (const a of arrOfarr) {
-       for (const b of a) {
-         arr.push(b);
-       }
-     }
-     this.getTownListHelperHelper(arr);
-    });
-  }
-  getTownListHelperHelper(arr: string[]) {
-    for (const s of arr) {
-      this.townListForCalculation.indexOf(s) === -1 ? this.townListForCalculation.push(s) : console.log('Already in Array: ', s);
+  addTownFilter(val: string) {
+    const index = this.townFilters.indexOf(val);
+    if (index > -1) {
+      this.townFilters.splice(index, 1);
+    } else {
+      this.townFilters.push(val);
     }
+    const event  = new PageEvent();
+    event.pageIndex = 0;
+    this.pageChanged(event);
+    this.getPhotos();
   }
-  logTownList() {
-    console.log(this.townListForCalculation);
-  } */
+
+
+
+
+
+  addPhotographerFilter(val: string) {
+    const index = this.photographerFilters.indexOf(val);
+    if (index > -1) {
+      this.photographerFilters.splice(index, 1);
+    } else {
+      this.photographerFilters.push(val);
+    }
+    const event  = new PageEvent();
+    event.pageIndex = 0;
+    this.pageChanged(event);
+    this.getPhotos();
+  }
+  getDescription() {
+    let toReturn = '';
+    if (this.townFilters.length > 0) {
+      toReturn += 'Towns: ';
+      for (const val of this.townFilters) {
+        toReturn += val + ', ';
+      }
+      toReturn = toReturn.slice(0, -2);
+    }
+    if (this.photographerFilters.length > 0) {
+      if (toReturn.length > 0){
+        toReturn += ' | ';
+      }
+      toReturn += 'Photographers: ';
+      for (const val of this.photographerFilters) {
+        toReturn += val + ', ';
+      }
+      toReturn = toReturn.slice(0, -2);
+    }
+    return toReturn;
+  }
+
   createQuery() {
     let query = 'PREFIX knora-api: <http://api.knora.org/ontology/knora-api/v2#>\nPREFIX pou: <http://api.pou.test.dasch.swiss/ontology/0827/pou/v2#>\nCONSTRUCT {\n?physcop knora-api:isMainResource true .\n?physcop pou:dateOnPhotograph ?date .\n?photo pou:physicalCopy ?physcop .\n?physcop knora-api:hasStillImageFileValue ?imgfile .\n?physcop pou:photographer ?photographer .\n?photo pou:peopleOnPic ?people .\n?photo pou:dateOfPassport ?dateOfPassport .\n?people pou:originTown ?originTown .\n?people pou:originKaza ?originKaza .\n?people pou:originKarye ?originKarye .\n?people pou:originMahalle ?originMahalle .\n?people pou:house ?originHouse .\n?people pou:turkishName ?tname2 .\n} WHERE {\n?physcop a knora-api:Resource .\n?physcop a pou:PhysicalCopy .\nOPTIONAL{?physcop pou:dateOnPhotograph ?date .}\n?photo pou:physicalCopy ?physcop .\nOPTIONAL{?photo pou:dateOfPassport ?dateOfPassport . }\n?physcop knora-api:hasStillImageFileValue ?imgfile .\n?photo pou:peopleOnPic ?people .\n';
     if (this.photographerFilters.length === 0) {
@@ -421,16 +454,27 @@ export class HomeComponent implements OnInit {
       query += ')") .';
     }
     query += '\n}\nORDER BY ?date';
-    console.log(query);
     return query;
   }
+
   loadFilters() {
-    this.peopleFilters = this.storage.photowallFilters.people;
     this.townFilters = this.storage.photowallFilters.town;
     this.photographerFilters = this.storage.photowallFilters.photographer;
   }
+  clearFilters() {
+    this.townFilters = [];
+    this.photographerFilters = [];
+    const event  = new PageEvent();
+    event.pageIndex = 0;
+    this.pageChanged(event);
+    this.getPhotos();
+  }
 
   ngOnInit() {
+    if (!this.knoraService.loggedin) {
+      this.router.navigateByUrl('/login');
+    }
+    this.innerWidth = window.innerWidth;
     this.loadFilters();
     this.getPhotos();
   }

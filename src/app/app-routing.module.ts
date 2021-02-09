@@ -7,6 +7,7 @@ import {FamilyTreeComponent} from './components/family-tree/family-tree.componen
 import {SearchPageComponent} from './components/search-page/search-page.component';
 import {DetailsPageComponent} from './components/details-page/details-page.component';
 import {SimpleSearchComponent} from './components/simple-search/simple-search.component';
+import {LoginPageComponent} from './login-page/login-page.component';
 
 
 const routes: Routes = [
@@ -26,6 +27,10 @@ const routes: Routes = [
   }, {
     path: 'simplesearch',
     component: SimpleSearchComponent
+  },
+  {
+    path: 'login',
+    component: LoginPageComponent
   },
   {
     path: '**',

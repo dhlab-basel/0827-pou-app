@@ -9,25 +9,25 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import {
-  MatButtonToggleModule,
-  MatExpansionModule,
-  MatGridListModule,
-  MatToolbarModule,
-  MatButtonModule,
-  MatIconModule,
-  MatCardModule,
-  MatDividerModule,
-  MatTableModule,
-  MatPaginatorModule,
-  MatProgressBarModule,
-  MatInputModule,
-  MatFormFieldModule,
-  MatMenuModule,
-  MatDialogModule,
-  MatFormFieldControl,
-  MatSelectModule,
-  MatTooltipModule,
-  MatAutocompleteModule, MatDatepickerModule, MatNativeDateModule, MatSlideToggleModule
+    MatButtonToggleModule,
+    MatExpansionModule,
+    MatGridListModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule,
+    MatDividerModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatProgressBarModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatMenuModule,
+    MatDialogModule,
+    MatFormFieldControl,
+    MatSelectModule,
+    MatTooltipModule,
+    MatAutocompleteModule, MatDatepickerModule, MatNativeDateModule, MatSlideToggleModule, MatCheckboxModule
 } from '@angular/material';
 
 import {SparqlPrep} from './classes/sparql-prep';
@@ -39,6 +39,7 @@ import { FamilyTreeComponent } from './components/family-tree/family-tree.compon
 import { SearchPageComponent } from './components/search-page/search-page.component';
 import { DetailsPageComponent } from './components/details-page/details-page.component';
 import { SimpleSearchComponent } from './components/simple-search/simple-search.component';
+import { LoginPageComponent } from './login-page/login-page.component';
 
 export function initializeApp(appInitService: AppInitService) {
   return (): Promise<any> => {
@@ -56,42 +57,44 @@ export function initializeApp(appInitService: AppInitService) {
     FamilyTreeComponent,
     SearchPageComponent,
     DetailsPageComponent,
-    SimpleSearchComponent
+    SimpleSearchComponent,
+    LoginPageComponent
   ],
   entryComponents: [
     LoginComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatIconModule,
-    MatCardModule,
-    MatDividerModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatProgressBarModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatMenuModule,
-    MatButtonToggleModule,
-    MatTooltipModule,
-    HttpClientModule,
-    MatExpansionModule,
-    MatGridListModule,
-    MatGridListModule,
-    MatDialogModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatSelectModule,
-    MatAutocompleteModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatSlideToggleModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatIconModule,
+        MatCardModule,
+        MatDividerModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatProgressBarModule,
+        MatInputModule,
+        MatFormFieldModule,
+        MatMenuModule,
+        MatButtonToggleModule,
+        MatTooltipModule,
+        HttpClientModule,
+        MatExpansionModule,
+        MatGridListModule,
+        MatGridListModule,
+        MatDialogModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatSelectModule,
+        MatAutocompleteModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatSlideToggleModule,
+        MatCheckboxModule
+    ],
   providers: [
     AppInitService,
     {

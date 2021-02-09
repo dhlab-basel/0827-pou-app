@@ -99,9 +99,11 @@ export class SimpleSearchComponent implements OnInit, OnDestroy {
       Sivas: 'Sivas|Sivas |Sivas-Amasya|Sivas-Karahisar-ı Şarki|Sivas-Şark-i Karaağaç Sancağı|Sivas-Şark-i Karaağaç sancağı',
       Tokad: 'Tokad|Tokat'
     };
-    if (townStrings[townFilter]) {
+    if (townFilter in townStrings) {
+      console.log('reached');
       townFilter = townStrings[townFilter];
     }
+    console.log(townFilter);
     let query = 'PREFIX knora-api: <http://api.knora.org/ontology/knora-api/v2#>\n' +
       'PREFIX pou: <http://api.pou.test.dasch.swiss/ontology/0827/pou/v2#>\n' +
       'PREFIX knora-api-simple: <http://api.knora.org/ontology/knora-api/simple/v2#>\n' +
@@ -155,9 +157,9 @@ export class SimpleSearchComponent implements OnInit, OnDestroy {
     } else {
       query += '?person pou:originTown ?originTown .\n' +
         '?originTown knora-api:valueAsString ?originTownStr .\n' +
-        'FILTER(regex(?originTownStr, "' + this.townInput + '", "i")) .\n';
+        'FILTER(regex(?originTownStr, "' + townFilter + '", "i")) .\n';
     }
-    if (this.arrivalInput !== -1) {
+    if (this.arrivalInput > 0) {
       const filterString = 'FILTER (knora-api:toSimpleDate(PROP) <= "GREGORIAN:' + (this.arrivalInput + Number(this.precisionInput)).toString() + '-12-31"^^knora-api-simple:Date && knora-api:toSimpleDate(PROP) > "GREGORIAN:' + (this.arrivalInput - Number(this.precisionInput) - 1).toString() + '-12-31"^^knora-api-simple:Date) .';
       const datePropsPerson = ['dateHRFile'];
       for (const prop of datePropsPerson) {
@@ -225,7 +227,8 @@ export class SimpleSearchComponent implements OnInit, OnDestroy {
     query += '}';
     this.fireQuery(query);
   }
-  fireQuery(query: string) {
+  fireQuery(query: string) { //TODO: catch double click on search
+    console.log(query);
     this.results = [];
     this.lastQuery = query;
     this.knoraService.gravsearchQueryByStringCount(query).subscribe(
@@ -291,6 +294,9 @@ export class SimpleSearchComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    if (!this.knoraService.loggedin) {
+      this.router.navigateByUrl('/login');
+    }
     this.nameInput = this.storage.simpleNameInput;
     this.lastNameInput = this.storage.simpleLastNameInput;
     this.fathersNameInput = this.storage.simpleFathersNameInput;

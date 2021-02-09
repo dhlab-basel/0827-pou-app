@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {KnoraService} from '../../services/knora.service';
 import {ReadLinkValue, ReadResource} from '@knora/api';
 import {first} from 'rxjs/operators';
@@ -18,9 +18,14 @@ export class DetailsPageComponent implements OnInit {
   iri: string;
   props: PropStore[];
   constructor(public route: ActivatedRoute,
-              private knoraService: KnoraService) { }
+              private knoraService: KnoraService,
+              private router: Router
+              ) { }
 
   async ngOnInit() {
+    if (!this.knoraService.loggedin) {
+      this.router.navigateByUrl('/login');
+    }
     this.route.params.subscribe(params => {
       this.iri = params.iri;
     });
