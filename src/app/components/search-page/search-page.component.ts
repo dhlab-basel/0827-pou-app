@@ -1,14 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {KnoraService} from '../../services/knora.service';
-import {MatDatepicker, MatDatepickerInputEvent, MatDatepickerModule} from '@angular/material/datepicker';
-import {MatNativeDateModule} from '@angular/material';
-import {stringify} from 'querystring';
-import {FormControl} from '@angular/forms';
+import {MatDatepicker, MatDatepickerInputEvent} from '@angular/material/datepicker';
 import {SparqlPrep} from '../../classes/sparql-prep';
 import {AppInitService} from '../../app-init.service';
 import {ReadDateValue, ReadLinkValue, ReadResource, ReadTextValueAsString, ReadValue, ResourcePropertyDefinition} from '@knora/api';
 import {Router} from '@angular/router';
-import set = Reflect.set;
 import {StorageService} from '../../services/storage.service';
 
 /**
@@ -39,7 +35,7 @@ type valueType = (possibleValues | PropertyValuePair);
 @Component({
   selector: 'app-search-page',
   templateUrl: './search-page.component.html',
-  styleUrls: ['./search-page.component.css']
+  styleUrls: ['./search-page.component.scss']
 })
 export class SearchPageComponent implements OnInit {
   resultPage: number = 0;
