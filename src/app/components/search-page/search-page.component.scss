@@ -15,10 +15,14 @@
       margin-top: 1rem;
 
       mat-form-field {
-        width: 400px;
+        width: 350px;
         flex-grow: 1;
         margin: 0 0.5rem;
       }
+    }
+
+    .search-buttons {
+      text-align: right;
     }
   }
 

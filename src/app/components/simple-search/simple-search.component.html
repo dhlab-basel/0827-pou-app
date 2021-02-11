@@ -1,80 +1,97 @@
-<div class="container">
-<div class="leftside">
-  <div>
-  <mat-form-field>
-    <textarea #nameField matInput [(ngModel)] = "nameInput" placeholder="Name"></textarea>
-  </mat-form-field>
-  <mat-form-field>
-    <textarea #lastNameField matInput [(ngModel)] = "lastNameInput" placeholder="Last Name"></textarea>
-  </mat-form-field>
-  </div>
-  <hr>
-  <mat-form-field>
-    <textarea #fathersField matInput [(ngModel)] = "fathersNameInput" placeholder="Father's Name"></textarea>
-  </mat-form-field>
+<div class="wrapper">
+  <mat-card>
 
-  <mat-form-field>
-    <mat-select #townField [(ngModel)] = "townInput" placeholder="Origin">
-      <mat-option *ngFor="let val of townList" [value]="val">{{val}}</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <hr>
-  <mat-form-field>
-    <input #arrivalField matInput type = "number" [ngModel] = "arrivalInput > 0 ? arrivalInput : ''" (ngModelChange)="arrivalInput = $event" placeholder="Arrival Year">
-  </mat-form-field>
-  <mat-form-field>
-    <mat-select #precisionField [(ngModel)] = "precisionInput" placeholder="Precision">
-      <mat-option value = "0">Exact</mat-option>
-      <mat-option value = "1">+/- 1 year</mat-option>
-      <mat-option value = "2">+/- 2 years</mat-option>
-      <mat-option value = "5">+/- 5 years</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <hr>
-  <div *ngFor ="let relative of relativeInput; let i = index; trackBy: trackByFn">
-    <ng-container *ngTemplateOutlet="relativeName; context: {id: i}">
+    <mat-card-content>
+      <mat-card-title>Simple Search</mat-card-title>
 
-    </ng-container>
-    <hr>
-  </div>
-  <hr>
-  <div class="button-div">
-    <button mat-raised-button color="primary" (click)="addRelative()" class="myButton">Add Relative</button>
-  </div>
-  <div class="button-div">
-    <button mat-raised-button color="primary" (click)="fireSearch()">Search</button>
+      <div class="input-row">
+        <mat-form-field>
+          <input #nameField matInput [(ngModel)]="nameInput" placeholder="Name">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input #lastNameField matInput [(ngModel)]="lastNameInput" placeholder="Last Name">
+        </mat-form-field>
+      </div>
+
+      <div class="input-row">
+        <mat-form-field>
+          <input #fathersField matInput [(ngModel)]="fathersNameInput" placeholder="Father's Name">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-select #townField [(ngModel)]="townInput" placeholder="Origin">
+            <mat-option *ngFor="let val of townList" [value]="val">{{val}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="input-row">
+        <mat-form-field>
+          <input #arrivalField matInput type="number" [ngModel]="arrivalInput > 0 ? arrivalInput : ''"
+                 (ngModelChange)="arrivalInput = $event" placeholder="Arrival Year">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-select #precisionField [(ngModel)]="precisionInput" placeholder="Precision">
+            <mat-option value="0">Exact</mat-option>
+            <mat-option value="1">+/- 1 year</mat-option>
+            <mat-option value="2">+/- 2 years</mat-option>
+            <mat-option value="5">+/- 5 years</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div *ngFor="let relative of relativeInput; let i = index; trackBy: trackByFn">
+        <ng-container *ngTemplateOutlet="relativeName; context: {id: i}"></ng-container>
+      </div>
+
+      <button mat-button (click)="addRelative()">
+        <mat-icon>add</mat-icon>Add Relative
+      </button>
+
+      <div class="search-button">
+        <button mat-raised-button color="primary" (click)="fireSearch()">Search</button>
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+  <div class="result" *ngIf="results.length > 0">
+    <div *ngIf="countRes !== undefined">
+      <p>Count returned: {{countRes}}</p>
+    </div>
+
+    <table>
+      <tr>
+        <td>Name</td>
+        <td>Last Name</td>
+        <td>Father's Name</td>
+        <td>Origin</td>
+      </tr>
+      <tr *ngFor="let result of results" (click)="resultClicked(result.iri)">
+        <td>{{getString(result.names)}}</td>
+        <td>{{getString(result.lastNames)}}</td>
+        <td>{{getString(result.fathersNames)}}</td>
+        <td>{{getString(result.towns)}}</td>
+      </tr>
+    </table>
+
+    <div class="nav-buttons">
+      <button mat-button (click)="changePage(-1)">< Previous</button>
+      <button mat-button (click)="changePage(1)">Next ></button>
+    </div>
+
   </div>
 </div>
-  <div *ngIf = "this.countRes >= 0 && results.length > 0 "class="rightside">
-    <p>Count found: {{this.countRes}}</p>
-  <table>
-    <tr>
-      <td>Name</td>
-      <td>Last Name</td>
-      <td>Father's Name</td>
-      <td>Origin</td>
 
-    </tr>
-    <tr *ngFor="let result of results" (click)="resultClicked(result.iri)">
-      <td>{{getString(result.names)}}</td>
-      <td>{{getString(result.lastNames)}}</td>
-      <td>{{getString(result.fathersNames)}}</td>
-      <td>{{getString(result.towns)}}</td>
-    </tr>
-  </table>
-    <div class="button-div">
-      <button mat-raised-button color="primary" (click) = "changePage(-1)">Previous</button>
-    </div>
-    <div class="button-div">
-      <button mat-raised-button color="primary" (click) = "changePage(1)">Next</button>
-    </div>
-  </div>
-</div>
 <ng-template #relativeName let-id="id">
   <mat-form-field>
-    <textarea matInput [(ngModel)] = "relativeInput[id]" placeholder="Relative name"></textarea>
+    <input matInput [(ngModel)]="relativeInput[id]" placeholder="Relative name">
   </mat-form-field>
-  <div class="button-div">
-    <button mat-raised-button #removeRelativeButton color="primary" (click) = "removeRelative(id)">Remove this relative</button>
-  </div>
+
+  <button mat-button mat-icon-button #removeRelativeButton (click)="removeRelative(id)">
+    <mat-icon>close</mat-icon>
+  </button>
 </ng-template>
