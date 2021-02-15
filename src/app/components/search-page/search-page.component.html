@@ -1,4 +1,5 @@
 <div class="wrapper">
+  <mat-progress-bar mode="indeterminate" *ngIf="showProgbar"></mat-progress-bar>
   <mat-card>
 
     <mat-card-content>
@@ -6,8 +7,7 @@
 
       <mat-form-field>
         <mat-select [(ngModel)]="selectedResourceType"
-                    (selectionChange)="storage.searchPageSelectedResType = selectedResourceType"
-                    placeholder="Resource type">
+                    placeholder="Resource type" required>
           <mat-option value="PhysicalCopy">Physical Copy</mat-option>
           <mat-option value="CoverLetter">Cover Letter</mat-option>
           <mat-option value="Person">Person</mat-option>
@@ -15,7 +15,7 @@
         </mat-select>
       </mat-form-field>
 
-      <mat-slide-toggle (change)="onlyCount = !onlyCount; storage.searchPageOnlyCount = onlyCount">Return only count
+      <mat-slide-toggle (change)="onlyCount = !onlyCount;" color="primary">Return only count
       </mat-slide-toggle>
 
       <div *ngFor="let no of arr">
@@ -30,7 +30,7 @@
 
         <mat-form-field>
           <mat-select #operatorfield [value]="operatorsChosen[no]"
-                      (selectionChange)="operatorsChosen[no] = operatorfield.value; valuesChosen[no] = ''; storage.searchPageOpsChosen = this.operatorsChosen; createFormQuery()">
+                      (selectionChange)="operatorsChosen[no] = operatorfield.value; valuesChosen[no] = ''; createFormQuery()">
             <mat-option value="exists">Exists</mat-option>
             <mat-option value="equals">Equals</mat-option>
           </mat-select>
@@ -41,13 +41,13 @@
 
             <mat-form-field *ngSwitchCase="'TextValue'">
             <textarea #valuefield matInput [value]="valuesChosen[no]" placeholder="Value {{no}}"
-                      (keyup)="valuesChosen[no] = valuefield.value; storage.searchPageValsChosen = valuesChosen; createFormQuery()"></textarea>
+                      (keyup)="valuesChosen[no] = valuefield.value; createFormQuery()"></textarea>
               <!-- valuesChosen[] is of type valueType, which is fulfilled by string, so no type issues here. -->
             </mat-form-field>
 
             <mat-form-field *ngSwitchCase="'BooleanValue'">
               <mat-select #valuefield [value]="valuesChosen[no]" placeholder="Value {{no}}"
-                          (selectionChange)="valuesChosen[no] = valuefield.value; storage.searchPageValsChosen = valuesChosen; createFormQuery()">
+                          (selectionChange)="valuesChosen[no] = valuefield.value; createFormQuery()">
                 <mat-option [value]="true">True</mat-option>
                 <mat-option [value]="false">False</mat-option>
               </mat-select>
@@ -79,7 +79,7 @@
 
             <mat-form-field *ngSwitchCase="'ListValue'">
               <mat-select #listfield [value]="valuesChosen[no]"
-                          (selectionChange)="valuesChosen[no] = listfield.value; storage.searchPageValsChosen = valuesChosen; createFormQuery()">
+                          (selectionChange)="valuesChosen[no] = listfield.value; createFormQuery()">
                 <mat-option *ngFor="let node of lists[propertiesChosen[no].listiri]"
                             [value]="node">{{node.label}}</mat-option>
               </mat-select>
@@ -113,7 +113,7 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <textarea #gravField (keyup)="storage.searchPageGravField = gravQueryFieldText" cdkTextareaAutosize
+          <textarea #gravField cdkTextareaAutosize
                     cdkAutosizeMinRows="10" cdkAutosizeMaxRows="10" matInput
                     value="{{gravQueryFieldText}}"></textarea>
         </mat-form-field>
@@ -144,8 +144,12 @@
     </table>
 
     <div class="nav-buttons">
-      <button mat-button (click)="changePage(-1)">< Previous</button>
-      <button mat-button (click)="changePage(1)">Next ></button>
+      <mat-paginator *ngIf="countRes > 25" [length]="countRes"
+                     [pageIndex]="resultPage"
+                     [pageSize]="25"
+                     [pageSizeOptions]="[25]"
+                     (page)="pageChanged($event)" showFirstLastButtons>
+      </mat-paginator>
     </div>
 
   </div>

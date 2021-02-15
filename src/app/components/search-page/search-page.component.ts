@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {KnoraService} from '../../services/knora.service';
 import {MatDatepicker, MatDatepickerInputEvent} from '@angular/material/datepicker';
 import {SparqlPrep} from '../../classes/sparql-prep';
@@ -11,19 +11,25 @@ import {StorageService} from '../../services/storage.service';
  * Class to store knora list nodes with their iri and label.
  */
 class PouListNode {
-  constructor(public iri: string, public label: string) {}
+  constructor(public iri: string, public label: string) {
+  }
 }
 
 class Property {
-  constructor(public prop: string, public type: string, public originalName: string, public listiri?: string) {}
+  constructor(public prop: string, public type: string, public originalName: string, public listiri?: string) {
+  }
 }
+
 class SearchResult {
-  constructor(public targetIri: string, public results: Array<Array<string>>) {}
+  constructor(public targetIri: string, public results: Array<Array<string>>) {
+  }
 }
+
 class PropertyValuePair {
   constructor(public prop: Property, public value: valueType) {
   }
 }
+
 class KnoraDate {
   constructor(public dateBefore: string, public dateAfter: string) {
   }
@@ -37,7 +43,8 @@ type valueType = (possibleValues | PropertyValuePair);
   templateUrl: './search-page.component.html',
   styleUrls: ['./search-page.component.scss']
 })
-export class SearchPageComponent implements OnInit {
+export class SearchPageComponent implements OnInit, OnDestroy {
+  showProgbar: boolean = false;
   resultPage: number = 0;
   lastQuery: string;
   arr: number[];
@@ -60,7 +67,7 @@ export class SearchPageComponent implements OnInit {
   countRes: number;
   formQueryString: string;
   gravQueryFieldText = '';
-  lists: {[index: string]: Array<PouListNode>} = {};
+  lists: { [index: string]: Array<PouListNode> } = {};
   minDate: Date;
   maxDate: Date;
 
@@ -77,8 +84,8 @@ export class SearchPageComponent implements OnInit {
     this.propertiesChosen = Array(1).fill(new Property('', '', ''));
     this.valuesChosen = Array(1).fill('');
     this.operatorsChosen = Array(1).fill('exists');
-    this.minDate = new Date(1850, 1 , 1);
-    this.maxDate = new Date(1907, 11 , 31);
+    this.minDate = new Date(1850, 1, 1);
+    this.maxDate = new Date(1907, 11, 31);
   }
 
   ngOnInit() {
@@ -88,6 +95,7 @@ export class SearchPageComponent implements OnInit {
     this.getOnto();
     this.loadFromStorage();
   }
+
   loadFromStorage() {
     console.log(this.storage);
     this.lastQuery = this.storage.searchPageQuery;
@@ -104,9 +112,10 @@ export class SearchPageComponent implements OnInit {
       this.fire(this.lastQuery);
     }
   }
+
   getOnto() {
     const onto = this.knoraService.getOntology(this.knoraService.pouOntology.slice(0, -1));
-    onto.subscribe( ontoValue => {
+    onto.subscribe(ontoValue => {
       for (const key in ontoValue.properties) {
         const prop = ontoValue.properties[key] as ResourcePropertyDefinition;
         const objValue = prop.objectType.substring(prop.objectType.lastIndexOf('#') + 1, prop.objectType.length);
@@ -116,7 +125,7 @@ export class SearchPageComponent implements OnInit {
         }
         let listIri: string;
         if (objValue === 'ListValue') {
-            const tmp = prop.guiAttributes[0].split('=');
+          const tmp = prop.guiAttributes[0].split('=');
           listIri = tmp[1].slice(1, -1);
           if (this.lists[listIri] === undefined) {
             this.lists[listIri] = []; // empty list to prevent double loading! getList is asynchronous!!!
@@ -189,6 +198,7 @@ export class SearchPageComponent implements OnInit {
       }
     }
   }
+
   getPropsOfResclass(resclass: string): Property[] {
     switch (resclass) {
       case 'PhysicalCopy': {
@@ -226,25 +236,22 @@ export class SearchPageComponent implements OnInit {
       }
     }
   }
-  logEverything(){
+
+  logEverything() {
     console.log('Properties Chosen: ', this.propertiesChosen);
     console.log('Values Chosen: ', this.valuesChosen);
   }
+
   changeProp(index: number, value: Property) {
     this.propertiesChosen[index] = value;
-    this.storage.searchPagePropsChosen = this.propertiesChosen;
     this.valuesChosen[index] = '';
-    this.storage.searchPageValsChosen = this.valuesChosen;
   }
 
   addProperty() {
     this.arr = Array(this.arr.length + 1).fill(0).map((x, i) => i);
     this.propertiesChosen.push(new Property('', '', ''));
-    this.storage.searchPagePropsChosen = this.propertiesChosen;
     this.valuesChosen.push('');
-    this.storage.searchPageValsChosen = this.valuesChosen;
     this.operatorsChosen.push('exists');
-    this.storage.searchPageOpsChosen = this.operatorsChosen;
   }
 
   removeProperty(no: number) {
@@ -252,14 +259,12 @@ export class SearchPageComponent implements OnInit {
       return;
     }
     this.propertiesChosen.splice(no, 1);
-    this.storage.searchPagePropsChosen = this.propertiesChosen;
     this.valuesChosen.splice(no, 1);
-    this.storage.searchPageValsChosen = this.valuesChosen;
     this.operatorsChosen.splice(no, 1);
-    this.storage.searchPageOpsChosen = this.operatorsChosen;
     this.arr.pop();
   }
-  deleteAllProps(){
+
+  deleteAllProps() {
     if (this.arr.length === 0) {
       return;
     }
@@ -283,12 +288,14 @@ export class SearchPageComponent implements OnInit {
     const bounds = this.getBoundsForDate(value, depth);
     this.valuesChosen[index] = new KnoraDate(bounds[0], bounds[1]);
   }
+
   dateValueChangeOnLinkedRes(id: number, level: number, dateDepth: string, event: MatDatepickerInputEvent<unknown>) {
     const value: Date = event.value as Date;
     const bounds = this.getBoundsForDate(value, dateDepth);
     const valstr = new KnoraDate(bounds[0], bounds[1]);
     this.changeValueOfLinkedRes(id, level, valstr);
   }
+
   getBoundsForDate(value: Date, depth: string): Array<string> {
     const toReturn: Array<string> = [];
     const dateBeforeAsDate = new Date(value.getTime());
@@ -329,7 +336,7 @@ export class SearchPageComponent implements OnInit {
         if (curr !== '') {
           query += this.getFilterString(curr, currProp.originalName);
         }
-        } else {
+      } else {
         if (value !== '') {
           query += this.getFilterString(value, property.originalName);
         }
@@ -350,6 +357,7 @@ export class SearchPageComponent implements OnInit {
      */
     this.formQueryString = query;
   }
+
   getFilterString(value: possibleValues, propOrigName: string) {
     if (typeof value === 'string') {
       return '?' + propOrigName + ' knora-api:valueAsString ?' + propOrigName + 'Str .\n' + 'FILTER regex(?' + propOrigName + 'Str, "' + value + '", "i") .\n';
@@ -365,6 +373,7 @@ export class SearchPageComponent implements OnInit {
       return '?' + propOrigName + ' knora-api:listValueAsListNode <' + value.iri + '> .';
     }
   }
+
   createGravfieldQuery(enteredString: string) {
     this.resultPage = 0;
     if (this.formQueryString) {
@@ -373,7 +382,7 @@ export class SearchPageComponent implements OnInit {
     const params = {ontology: this.appInitService.getSettings().ontologyPrefix};
     let query = 'PREFIX knora-api: <http://api.knora.org/ontology/knora-api/v2#>\nPREFIX pou: <{{ ontology }}/ontology/0827/pou/v2#>\nPREFIX knora-api-simple: <http://api.knora.org/ontology/knora-api/simple/v2#>\nCONSTRUCT {\n';
     if (enteredString === '') {
-      query +=  '?mainres knora-api:isMainResource true .} WHERE {\n ?mainres a knora-api:Resource .\n?mainres a pou:' + this.selectedResourceType + ' .}';
+      query += '?mainres knora-api:isMainResource true .} WHERE {\n ?mainres a knora-api:Resource .\n?mainres a pou:' + this.selectedResourceType + ' .}';
     } else {
       const mainres = enteredString.substring(0, enteredString.indexOf(' '));
       const lines = enteredString.split('\n');
@@ -413,11 +422,12 @@ export class SearchPageComponent implements OnInit {
     }
     const querystring = this.sparqlPrep.compile(query, params);
     this.lastQuery = querystring;
-    this.storage.searchPageQuery = querystring;
     console.log(querystring);
     this.fire(querystring);
   }
+
   fire(querystring) {
+    this.showProgbar = true;
     this.knoraService.gravsearchQueryByStringCount(querystring).subscribe(
       (no: number) => {
         this.countRes = no;
@@ -480,9 +490,11 @@ export class SearchPageComponent implements OnInit {
         }
         // this.searchResults = new SearchResults('IRI', results);
         console.log('LABELS:', this.searchResults);
+        this.showProgbar = false;
       }
     );
   }
+
   getListNodeByLabel(label: string): PouListNode {
     for (const id in this.lists) {
       for (const node of this.lists[id]) {
@@ -497,24 +509,24 @@ export class SearchPageComponent implements OnInit {
     const url: string = 'details/' + encodeURIComponent(targetIri);
     this.router.navigateByUrl(url).then(e => {
       if (e) {
-        console.log("Navigation is successful!");
+        console.log('Navigation is successful!');
       } else {
-        console.log("Navigation has failed!");
+        console.log('Navigation has failed!');
       }
     });
   }
+
   changePropOfLinkedRes(id: number, level: number, property: Property) {
     if (level === 1) {
       this.valuesChosen[id] = new PropertyValuePair(property, '');
-      this.storage.searchPageValsChosen = this.valuesChosen;
       return;
     }
-    this.changeValueOfLinkedRes(id, level - 1,  new PropertyValuePair(property, ''));
+    this.changeValueOfLinkedRes(id, level - 1, new PropertyValuePair(property, ''));
   }
+
   changeValueOfLinkedRes(id: number, level: number, value: valueType) {
     if (level === 0) {
       this.valuesChosen[id] = value;
-      this.storage.searchPageValsChosen = this.valuesChosen;
       return;
     }
     let i = 1;
@@ -535,32 +547,44 @@ export class SearchPageComponent implements OnInit {
     curr.value = value;
     this.changeValueOfLinkedRes(id, level - 1, curr);
   }
-  changePage(increment: number) {
+
+  pageChanged(event: any) {
     if (!this.lastQuery) {
       return;
     }
-    if (this.resultPage + increment >= 0) {
-      this.resultPage += increment;
-      this.storage.searchPageOffset = this.resultPage;
-    }
+    this.resultPage = event.pageIndex;
     this.fire(this.lastQuery);
   }
+
   createEmptyPropValFromLevelWithValue(levels: number, value: valueType): PropertyValuePair {
     let toReturn: PropertyValuePair = new PropertyValuePair(new Property('', '', ''), value);
     while (levels > 0) {
       toReturn = new PropertyValuePair(new Property('', '', ''), toReturn);
-      levels --;
+      levels--;
     }
     return toReturn;
   }
- yearSelected(elem: MatDatepicker<any>, event: Date) {
+
+  yearSelected(elem: MatDatepicker<any>, event: Date) {
     console.log(event);
     elem.close();
     elem.select(event);
-    }
+  }
+
   monthSelected(elem: MatDatepicker<any>, event: Date) {
     console.log(event);
     elem.close();
     elem.select(event);
+  }
+
+  ngOnDestroy() {
+    this.storage.searchPageQuery = this.lastQuery;
+    this.storage.searchPageOffset = this.resultPage;
+    this.storage.searchPagePropsChosen = this.propertiesChosen;
+    this.storage.searchPageValsChosen = this.valuesChosen;
+    this.storage.searchPageOpsChosen = this.operatorsChosen;
+    this.storage.searchPageSelectedResType = this.selectedResourceType;
+    this.storage.searchPageOnlyCount = this.onlyCount;
+    this.storage.searchPageGravField = this.gravQueryFieldText;
   }
 }

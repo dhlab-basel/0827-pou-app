@@ -94,14 +94,14 @@ export class KnoraService {
     const query = this.queryTemplates[queryname](params);
     return this.knoraApiConnection.v2.search.doExtendedSearch(query).pipe(
       map((res: Array<ReadResource>) => {
-        console.log('gravsearchQuery result:', res);
+
         return res as Array<ReadResource>;
       }));
   }
   gravsearchQueryByString(querystring: string): Observable<Array<ReadResource>> {
     return this.knoraApiConnection.v2.search.doExtendedSearch(querystring).pipe(
       map((res: Array<ReadResource>) => {
-        console.log('gravsearchQuery result:', res);
+
         return res as Array<ReadResource>;
       }));
   }

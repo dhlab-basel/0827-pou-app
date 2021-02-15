@@ -29,6 +29,7 @@ class Result {
 })
 
 export class SimpleSearchComponent implements OnInit, OnDestroy {
+  showProgbar: boolean = false;
   results: Result[] = [];
   nameInput: string;
   lastNameInput: string;
@@ -100,10 +101,8 @@ export class SimpleSearchComponent implements OnInit, OnDestroy {
       Tokad: 'Tokad|Tokat'
     };
     if (townFilter in townStrings) {
-      console.log('reached');
       townFilter = townStrings[townFilter];
     }
-    console.log(townFilter);
     let query = 'PREFIX knora-api: <http://api.knora.org/ontology/knora-api/v2#>\n' +
       'PREFIX pou: <http://api.pou.test.dasch.swiss/ontology/0827/pou/v2#>\n' +
       'PREFIX knora-api-simple: <http://api.knora.org/ontology/knora-api/simple/v2#>\n' +
@@ -228,8 +227,8 @@ export class SimpleSearchComponent implements OnInit, OnDestroy {
     this.fireQuery(query);
   }
   fireQuery(query: string) { //TODO: catch double click on search
-    console.log(query);
-    this.results = [];
+    this.showProgbar = true;
+    console.log('Set progbar to true');
     this.lastQuery = query;
     this.knoraService.gravsearchQueryByStringCount(query).subscribe(
       (no: number) => {
@@ -239,6 +238,7 @@ export class SimpleSearchComponent implements OnInit, OnDestroy {
     query += '\nOFFSET ' + this.resultPage.toString();
     this.knoraService.gravsearchQueryByString(query).subscribe(
       (readResources: ReadResource[]) => {
+        this.results = [];
         const turkishNameProp = this.knoraService.pouOntology + 'turkishName';
         const lastNameProp = this.knoraService.pouOntology + 'lastName';
         const fathersNameProp = this.knoraService.pouOntology + 'fathersName';
@@ -247,7 +247,6 @@ export class SimpleSearchComponent implements OnInit, OnDestroy {
         const textProp = this.knoraService.pouOntology + 'text';
         for (const readResource of readResources) {
           const iri = readResource.id;
-          console.log(iri);
           let names = [];
           let lastNames = [];
           let fathersNames = [];
@@ -262,7 +261,8 @@ export class SimpleSearchComponent implements OnInit, OnDestroy {
           towns = towns.concat(readResource.getValuesAsStringArray(originTownProp));
           this.results.push(new Result(iri, names, lastNames, towns, fathersNames));
         }
-        console.log(this.results);
+        this.showProgbar = false;
+        console.log('Set progbar to false');
       }
     );
   }
@@ -275,12 +275,12 @@ export class SimpleSearchComponent implements OnInit, OnDestroy {
     str = str.slice(0, -2);
     return str;
   }
-  changePage(increment: number) {
-    if (this.resultPage + increment >= 0 && this.resultPage + increment < this.countRes / 25) {
-      this.resultPage += increment;
-      this.fireQuery(this.lastQuery);
+  pageChanged(event: any) {
+    if (!this.lastQuery) {
+      return;
     }
-
+    this.resultPage = event.pageIndex;
+    this.fireQuery(this.lastQuery);
   }
   resultClicked(targetIri: string): void {
     const url: string = 'details/' + encodeURIComponent(targetIri);

@@ -1,4 +1,5 @@
 <div class="wrapper">
+  <mat-progress-bar mode="indeterminate" *ngIf="showProgbar"></mat-progress-bar>
   <mat-card>
 
     <mat-card-content>
@@ -47,7 +48,8 @@
       </div>
 
       <button mat-button (click)="addRelative()">
-        <mat-icon>add</mat-icon>Add Relative
+        <mat-icon>add</mat-icon>
+        Add Relative
       </button>
 
       <div class="search-button">
@@ -79,8 +81,12 @@
     </table>
 
     <div class="nav-buttons">
-      <button mat-button (click)="changePage(-1)">< Previous</button>
-      <button mat-button (click)="changePage(1)">Next ></button>
+      <mat-paginator *ngIf="countRes > 25" [length]="countRes"
+                     [pageIndex]="resultPage"
+                     [pageSize]="25"
+                     [pageSizeOptions]="[25]"
+                     (page)="pageChanged($event)" showFirstLastButtons>
+      </mat-paginator>
     </div>
 
   </div>
