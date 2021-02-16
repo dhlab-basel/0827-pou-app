@@ -104,7 +104,7 @@ export class SimpleSearchComponent implements OnInit, OnDestroy {
       townFilter = townStrings[townFilter];
     }
     let query = 'PREFIX knora-api: <http://api.knora.org/ontology/knora-api/v2#>\n' +
-      'PREFIX pou: <http://api.pou.test.dasch.swiss/ontology/0827/pou/v2#>\n' +
+      'PREFIX pou: <http://api.0827-test-server.dasch.swiss/ontology/0827/pou/v2#>\n' +
       'PREFIX knora-api-simple: <http://api.knora.org/ontology/knora-api/simple/v2#>\n' +
       'CONSTRUCT {\n' +
       '?person knora-api:isMainResource true .\n' +

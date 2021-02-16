@@ -11,7 +11,7 @@ import {Router} from '@angular/router';
 })
 export class LoginPageComponent implements OnInit {
   images: string[] = ['BPwNmMl8WMR-EMNXi7mIxj1.jp2', 'KoFbGwVW4eg-GS2ZxciAt3u.jp2'];
-  baseUrl: string = 'https://iiif.pou.test.dasch.swiss:443/0827';
+  baseUrl: string = 'https://iiif.0827-test-server.dasch.swiss:443/0827';
   constructor(public dialog: MatDialog,
               public knoraService: KnoraService,
               private router: Router) { }

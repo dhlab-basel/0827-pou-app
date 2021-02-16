@@ -1,7 +1,7 @@
 {
   "protocol": "https",
-  "server": "https://api.pou.test.dasch.swiss",
-  "ontologyPrefix": "http://api.pou.test.dasch.swiss",
-  "servername": "api.pou.test.dasch.swiss",
+  "server": "https://api.0827-test-server.swiss",
+  "ontologyPrefix": "http://api.0827-test-server.dasch.swiss",
+  "servername": "api.0827-test-server.dasch.swiss",
   "port": 443
 }

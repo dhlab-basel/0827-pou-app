@@ -98,7 +98,7 @@ class PhotoData {
                   <h3 *ngIf="!x.turkishName">No last name</h3>
                 </mat-card-title>
                 <img class="newimg" mat-card-image src="{{x.imageBaseURL}}/{{x.imageFileName}}/full/{{calcImageBound()}},/0/default.jpg"
-                     alt="Photo with iri {{x.photoIri}}"/>
+                     alt="{{x.imageBaseURL}}/{{x.imageFileName}}/full/{{calcImageBound()}},/0/default.jpg"/>
                 <mat-card-content>
                   <table>
                     <tr *ngIf = "x.getOrigin().length>0">
@@ -413,7 +413,7 @@ export class HomeComponent implements OnInit {
   }
 
   createQuery() {
-    let query = 'PREFIX knora-api: <http://api.knora.org/ontology/knora-api/v2#>\nPREFIX pou: <http://api.pou.test.dasch.swiss/ontology/0827/pou/v2#>\nCONSTRUCT {\n?physcop knora-api:isMainResource true .\n?physcop pou:dateOnPhotograph ?date .\n?photo pou:physicalCopy ?physcop .\n?physcop knora-api:hasStillImageFileValue ?imgfile .\n?physcop pou:photographer ?photographer .\n?photo pou:peopleOnPic ?people .\n?photo pou:dateOfPassport ?dateOfPassport .\n?people pou:originTown ?originTown .\n?people pou:originKaza ?originKaza .\n?people pou:originKarye ?originKarye .\n?people pou:originMahalle ?originMahalle .\n?people pou:house ?originHouse .\n?people pou:turkishName ?tname2 .\n} WHERE {\n?physcop a knora-api:Resource .\n?physcop a pou:PhysicalCopy .\nOPTIONAL{?physcop pou:dateOnPhotograph ?date .}\n?photo pou:physicalCopy ?physcop .\nOPTIONAL{?photo pou:dateOfPassport ?dateOfPassport . }\n?physcop knora-api:hasStillImageFileValue ?imgfile .\n?photo pou:peopleOnPic ?people .\n';
+    let query = 'PREFIX knora-api: <http://api.knora.org/ontology/knora-api/v2#>\nPREFIX pou: <http://api.0827-test-server.dasch.swiss/ontology/0827/pou/v2#>\nCONSTRUCT {\n?physcop knora-api:isMainResource true .\n?physcop pou:dateOnPhotograph ?date .\n?photo pou:physicalCopy ?physcop .\n?physcop knora-api:hasStillImageFileValue ?imgfile .\n?physcop pou:photographer ?photographer .\n?photo pou:peopleOnPic ?people .\n?photo pou:dateOfPassport ?dateOfPassport .\n?people pou:originTown ?originTown .\n?people pou:originKaza ?originKaza .\n?people pou:originKarye ?originKarye .\n?people pou:originMahalle ?originMahalle .\n?people pou:house ?originHouse .\n?people pou:turkishName ?tname2 .\n} WHERE {\n?physcop a knora-api:Resource .\n?physcop a pou:PhysicalCopy .\nOPTIONAL{?physcop pou:dateOnPhotograph ?date .}\n?photo pou:physicalCopy ?physcop .\nOPTIONAL{?photo pou:dateOfPassport ?dateOfPassport . }\n?physcop knora-api:hasStillImageFileValue ?imgfile .\n?photo pou:peopleOnPic ?people .\n';
     if (this.photographerFilters.length === 0) {
         query += 'OPTIONAL{?physcop pou:photographer ?photographer .}\n';
     } else {
