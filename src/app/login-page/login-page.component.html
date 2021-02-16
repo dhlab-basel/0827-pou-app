@@ -1,1 +1,21 @@
-<button mat-icon-button matTooltip="Log out" (click)="openLoginDialog()"><mat-icon >account_box</mat-icon></button>
+<div class="wrapper">
+  <h1 class="title">Welcome to the Portraits of Unbelonging repository!</h1>
+  <img class="img" src="{{baseUrl}}/{{images[0]}}/full/{{calcImageWidth()}},/0/default.jpg"/>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Log In</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-form-field>
+        <input #email matInput required placeholder="User">
+      </mat-form-field>
+      <mat-form-field>
+        <input #password matInput required type="password" placeholder="Password">
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="fire(email.value, password.value);">Log In</button>
+    </mat-card-content>
+  </mat-card>
+  <img class="img" src="{{baseUrl}}/{{images[1]}}/full/{{calcImageWidth()}},/0/default.jpg"/>
+
+</div>
+

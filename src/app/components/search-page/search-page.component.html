@@ -121,9 +121,11 @@
         </mat-form-field>
 
       </div>
-
+      <div class="warning" *ngIf="resWarning && !selectedResourceType">
+        <p>Please choose a resource type first</p>
+      </div>
       <div class="search-buttons">
-        <button mat-raised-button color="primary" (click)="createGravfieldQuery(gravField.value)">Search</button>
+        <button mat-raised-button color="primary" (click)="searchClicked(gravField.value);">Search</button>
         <button mat-button (click)="gravField.value = ''; deleteAllProps(); createFormQuery()">Clear</button>
       </div>
 

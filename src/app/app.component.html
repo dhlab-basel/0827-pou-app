@@ -1,8 +1,16 @@
-<mat-toolbar>
-  <button mat-raised-button color="primary" routerLink="search">Search</button>
-  <button mat-raised-button color="primary" routerLink="home">Photo Wall</button>
-  <button mat-raised-button color="primary" routerLink="simplesearch">Simple Search</button>
-  <a mat-raised-button color="primary" *ngIf="knoraService.loggedin" (click)="logout()">Log out</a>
+<mat-toolbar *ngIf="knoraService.loggedin">
+  <div class="but">
+    <button mat-raised-button routerLink="home">Photo Wall</button>
+  </div>
+  <div class="but">
+    <button mat-raised-button routerLink="search">Search</button>
+  </div>
+  <div class="but">
+    <button mat-raised-button routerLink="simplesearch">Simple Search</button>
+  </div>
+  <div class="but">
+    <button mat-raised-button  (click)="logout()">Log out</button>
+  </div>
 
 </mat-toolbar>
 <router-outlet>

@@ -70,7 +70,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
   lists: { [index: string]: Array<PouListNode> } = {};
   minDate: Date;
   maxDate: Date;
-
+  resWarning = false;
 
   searchResults: Array<SearchResult>;
   columnsToDisplay: Array<string> = ['0', '1', '2'];
@@ -93,7 +93,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
       this.router.navigateByUrl('/login');
     }
     this.getOnto();
-    this.loadFromStorage();
+    // this.loadFromStorage();
   }
 
   loadFromStorage() {
@@ -425,8 +425,15 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     console.log(querystring);
     this.fire(querystring);
   }
-
+  searchClicked(enteredString: string) {
+    if (!this.selectedResourceType) {
+      this.resWarning = true;
+    } else {
+      this.createGravfieldQuery(enteredString);
+    }
+  }
   fire(querystring) {
+    this.resWarning = false;
     this.showProgbar = true;
     this.knoraService.gravsearchQueryByStringCount(querystring).subscribe(
       (no: number) => {

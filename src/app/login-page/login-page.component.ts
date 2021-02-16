@@ -10,12 +10,25 @@ import {Router} from '@angular/router';
   styleUrls: ['./login-page.component.scss']
 })
 export class LoginPageComponent implements OnInit {
-
+  images: string[] = ['BPwNmMl8WMR-EMNXi7mIxj1.jp2', 'KoFbGwVW4eg-GS2ZxciAt3u.jp2'];
+  baseUrl: string = 'https://iiif.pou.test.dasch.swiss:443/0827';
   constructor(public dialog: MatDialog,
               public knoraService: KnoraService,
               private router: Router) { }
 
   ngOnInit() {
+  }
+  calcImageWidth(): number {
+   return Math.floor(window.innerWidth / 4.5);
+  }
+  fire(email: string, password: string){
+    this.knoraService.login(email, password).subscribe(data => {
+      if (!data.success) {
+        return; // TODO
+      } else {
+        this.router.navigateByUrl('/home');
+      }
+    });
   }
   private openLoginDialog(): void {
     const loginConfig = new MatDialogConfig();

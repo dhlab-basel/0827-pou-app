@@ -220,7 +220,6 @@ export class PhotoPageComponent implements OnInit {
             const physcop = this.helpers.getLinkedStillImage(onephoto, prop);
             imageBaseURL = physcop[0].iiifBaseUrl;
             imageFileName = physcop[0].filename;
-
             //
             // get turkish name and firstname of anchor person
             //
@@ -249,7 +248,7 @@ export class PhotoPageComponent implements OnInit {
             let firstName : string = '';
             let index = 0;
             let miny = 99999;
-            let maxy = -99999
+            let maxy = -99999;
             for (let person of peopleOnPicValues) {
               relValue = this.helpers.getStringValue(person, relationshipProp);
               roiValue = this.helpers.getStringValue(person, roiProp);
@@ -273,7 +272,6 @@ export class PhotoPageComponent implements OnInit {
               p.x = xcnt[p.y];
               xcnt[p.y]++;
             }
-            console.log(peopleOnPic);
             /*
             for (const peopleOnPicLinkValue of peopleOnPicLinkValues) {
               const gaga = peopleOnPicLinkValue[0].linkedResource;
@@ -322,7 +320,7 @@ export class PhotoPageComponent implements OnInit {
              fileName = this.helpers.getLinkedTextValueAsString(onephoto, physProp, fileNameProp)[0];
               */
             this.showProgbar = false;
-            return new PhotoPageData(
+            const toReturn = new PhotoPageData(
               photoIri,
               label,
               imageBaseURL,
@@ -332,6 +330,8 @@ export class PhotoPageComponent implements OnInit {
               fileName[0],
               anchorPersons,
               peopleOnPic);
+            console.log(toReturn);
+            return toReturn;
           })[0];
         }
       );
