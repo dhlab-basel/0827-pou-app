@@ -8,6 +8,7 @@ import {Constants} from '@knora/api/src/models/v2/Constants';
 import {Helpers} from '../../classes/helpers';
 import {PageEvent} from '@angular/material';
 import {StorageService} from '../../services/storage.service';
+import {DomSanitizer} from '@angular/platform-browser';
 
 
 /**
@@ -97,7 +98,7 @@ class PhotoData {
                   <h3 *ngIf="x.turkishName">{{ x.turkishName }}</h3>
                   <h3 *ngIf="!x.turkishName">No last name</h3>
                 </mat-card-title>
-                <img class="newimg" mat-card-image src="{{x.imageBaseURL}}/{{x.imageFileName}}/full/{{calcImageBound()}},/0/default.jpg"
+                <img class="newimg" mat-card-image [src]="sanitizer.bypassSecurityTrustUrl(x.imageBaseURL + '/' + x.imageFileName + '/full/' +  calcImageBound() + ',/0/default.jpg')"
                      alt="{{x.imageBaseURL}}/{{x.imageFileName}}/full/{{calcImageBound()}},/0/default.jpg"/>
                 <mat-card-content>
                   <table>
@@ -193,7 +194,9 @@ export class HomeComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               private knoraService: KnoraService,
               private helpers: Helpers,
-              private storage: StorageService) {
+              private storage: StorageService,
+              public sanitizer: DomSanitizer
+              ) {
     this.page = 0;
   }
 

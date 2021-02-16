@@ -12,7 +12,7 @@
       <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: item.links }"></ng-container>
     </ul>
     <ul *ngIf="item.values.length>0 && item.name === 'has image file'">
-      <img *ngFor="let val of item.values" src="{{getImageLink(val)}}">
+      <img *ngFor="let val of item.values" [src]="sanitizer.bypassSecurityTrustUrl(getImageLink(val))">
     </ul>
     <ul *ngIf="item.values.length > 0 && item.name !== 'has image file'">
       <p *ngFor="let val of item.values">

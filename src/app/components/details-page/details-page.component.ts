@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {KnoraService} from '../../services/knora.service';
 import {ReadLinkValue, ReadResource} from '@knora/api';
 import {first} from 'rxjs/operators';
+import {DomSanitizer} from '@angular/platform-browser';
 
 const imageSize = 200;
 class PropStore {
@@ -19,7 +20,8 @@ export class DetailsPageComponent implements OnInit {
   props: PropStore[];
   constructor(public route: ActivatedRoute,
               private knoraService: KnoraService,
-              private router: Router
+              private router: Router,
+              public sanitizer: DomSanitizer
               ) { }
 
   async ngOnInit() {

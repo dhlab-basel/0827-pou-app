@@ -4,6 +4,7 @@ import {ReadDateValue, ReadLinkValue, ReadResource, ReadStillImageFileValue, Rea
 import {Constants} from '@knora/api/src/models/v2/Constants';
 import {KnoraService} from '../../services/knora.service';
 import {Helpers} from '../../classes/helpers';
+import {DomSanitizer} from '@angular/platform-browser';
 // TODO: Family tree with lines AND logic in rows itself
 const relations: {[index: string]: number} = {
   Daughterinlaw: 1,
@@ -132,16 +133,13 @@ class Person {
           </mat-card-title>
           <mat-card-content>
             <p>
-              <img class="newimg" mat-card-image src="{{photo.imageBaseURL}}/{{photo.imageFileName}}/full/200,/0/default.jpg"/>
+              <img class="newimg" mat-card-image [src]="sanitizer.bypassSecurityTrustUrl(photo.imageBaseURL+ '/' + photo.imageFileName + '/full/200,/0/default.jpg')"/>
             </p>
             </mat-card-content>
         </mat-card>
       </mat-grid-tile>
     </mat-grid-list>
-    <!--<p *ngFor = "let x of photo.peopleOnPic">
-      <img class="newimg" mat-card-image src="{{photo.imageBaseURL}}/{{photo.imageFileName}}/{{x.roi.getIIIFroi()}}/200,/0/default.jpg"/>
-      {{x.firstName}} {{x.turkishName}} {{x.relationship}}
-    </p>-->
+
     <svg width="1000" height="1000">
       <g *ngFor="let peopers of photo.peopleOnPic; let index=index">
         <image [attr.x]="peopers.x*300"
@@ -150,7 +148,7 @@ class Person {
 
                width="200" height="200"
 
-               [attr.xlink:href]="photo.imageBaseURL + '/' + photo.imageFileName + '/' + peopers.roi.getIIIFroi() + '/,200/0/default.jpg'"/>
+               [attr.xlink:href]="getLink(peopers, photo)"/>
         <text [attr.x]="peopers.x*300"
 
               [attr.y]="peopers.y*350 + 210"
@@ -182,10 +180,13 @@ export class PhotoPageComponent implements OnInit {
   constructor(public route: ActivatedRoute,
               private knoraService: KnoraService,
               private helpers: Helpers,
-              private router: Router) {
+              private router: Router,
+              public sanitizer: DomSanitizer) {
     this.photo = new PhotoPageData('', '','','','','','',new Person(),[]);
   }
-
+  getLink(peopers: any, photo: any){
+    return this.sanitizer.bypassSecurityTrustUrl(photo.imageBaseURL + '/' + photo.imageFileName + '/' + peopers.roi.getIIIFroi() + '/,200/0/default.jpg');
+  }
   getPhoto() {
     this.route.params.subscribe(urlparams => {
       this.photoIri = urlparams.iri;
