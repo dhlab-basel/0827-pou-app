@@ -64,6 +64,7 @@ class PhotoData {
   template: `
     <div class="container">
       <mat-progress-bar mode="indeterminate" *ngIf="showProgbar"></mat-progress-bar>
+      <div class="filter">
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title>
@@ -87,6 +88,7 @@ class PhotoData {
         </div>
         <button mat-raised-button color="primary" (click)="clearFilters()">Clear all</button>
       </mat-expansion-panel>
+      </div>
       <!-- Creates Grid of all PhotoData objects and prints their properties -->
     <div class="imageBand">
       <div *ngFor="let x of photos | slice:(page%5 *5):(page%5 *5) + 5;">
@@ -145,9 +147,10 @@ class PhotoData {
     '.mat-card img{ object-fit: cover; width: 100%; height: 80%;}',
     '.button {margin: 30px 30px}',
     '.mat-expansion-panel-header {background-color: rgba(103, 58, 183, 0.75);}',
-    '.mat-expansion-panel {width: 30%}',
+    '.mat-expansion-panel {width: 30%;}',
     '.imageBand {display: flex; align-items: center;}',
-    '.mat-paginator {position: fixed; left: 0; bottom: 0; width: 100%; background-color:  rgba(103, 58, 183, 0.75);}'
+    '.mat-paginator {position: fixed; left: 0; bottom: 0; width: 100%; background-color:  rgba(103, 58, 183, 0.75);}',
+    '.filter {padding: 15px 15px;}'
   ]
 })
 

@@ -1,13 +1,9 @@
 <mat-toolbar>
-  <button mat-button routerLink="home">
-    <img src="../assets/PoU.png" style="max-height: 64px;" matTooltip="Portraits of Unbelonging">
-  </button>
-  <a mat-button *ngIf="knoraService.loggedin" (click)="logout()">{{ knoraService.useremail }}</a>
-  <span class="fill-remaining-space"></span>
-  <a mat-button routerLink="search">Search</a>
-  <a mat-button routerLink="home">Photo Wall</a>
-  <a mat-button routerLink="simplesearch">Simple Search</a>
-  <button mat-icon-button matTooltip="Log in or out" (click)="account()"><mat-icon >account_box</mat-icon></button>
+  <button mat-raised-button color="primary" routerLink="search">Search</button>
+  <button mat-raised-button color="primary" routerLink="home">Photo Wall</button>
+  <button mat-raised-button color="primary" routerLink="simplesearch">Simple Search</button>
+  <a mat-raised-button color="primary" *ngIf="knoraService.loggedin" (click)="logout()">Log out</a>
+
 </mat-toolbar>
 <router-outlet>
 
