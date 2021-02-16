@@ -1,9 +1,12 @@
 <div class="wrapper">
   <mat-progress-bar mode="indeterminate" *ngIf="showProgbar"></mat-progress-bar>
+
   <mat-card>
+    <mat-card-header>
+      <mat-card-title>Simple Search</mat-card-title>
+    </mat-card-header>
 
     <mat-card-content>
-      <mat-card-title>Simple Search</mat-card-title>
 
       <div class="input-row">
         <mat-form-field>
@@ -61,18 +64,21 @@
   </mat-card>
 
   <div class="result" *ngIf="results.length > 0">
-    <div *ngIf="countRes !== undefined">
-      <p>Count returned: {{countRes}}</p>
-    </div>
+
+<!--    <div *ngIf="countRes !== undefined">-->
+<!--      <p>Count returned: {{countRes}}</p>-->
+<!--    </div>-->
 
     <table>
       <tr>
-        <td>Name</td>
-        <td>Last Name</td>
-        <td>Father's Name</td>
-        <td>Origin</td>
+        <th>#</th>
+        <th>Name</th>
+        <th>Last Name</th>
+        <th>Father's Name</th>
+        <th>Origin</th>
       </tr>
-      <tr *ngFor="let result of results" (click)="resultClicked(result.iri)">
+      <tr *ngFor="let result of results; let i = index;" (click)="resultClicked(result.iri)">
+        <td>{{i + 1}}</td>
         <td>{{getString(result.names)}}</td>
         <td>{{getString(result.lastNames)}}</td>
         <td>{{getString(result.fathersNames)}}</td>

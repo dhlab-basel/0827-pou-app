@@ -4,15 +4,27 @@
   flex-direction: column;
   align-items: center;
   height: 100%;
+
   mat-card {
+    padding: 0;
     margin: 3rem 0 2rem;
 
-    .input-row {
-      display: flex;
-      flex-wrap: wrap;
+    mat-card-header {
+      padding: 16px 0 0 16px;
+      color: white;
+      background-color: rgb(97, 63, 176);
+    }
 
-      mat-form-field {
-        flex-grow: 1;
+    mat-card-content {
+      padding: 16px;
+
+      .input-row {
+        display: flex;
+        flex-wrap: wrap;
+
+        mat-form-field {
+          flex-grow: 1;
+        }
       }
     }
 
@@ -23,18 +35,30 @@
 
   .result {
     table {
-      border-spacing: 0;
+      border-spacing: 0 5px;
 
       tr {
-        cursor: pointer;
+        th, td {
+          padding: 0.2rem 1.5rem;
+        }
 
         td {
-          border-top: 1px solid lightgray;
-          padding: 0.2rem 1rem;
+          font-size: smaller;
         }
       }
 
-      tr:hover {
+      tr:first-child {
+        text-align: left;
+        background-color: rgba(170, 170, 170, 1);
+        color: white;
+      }
+
+      tr:not(:first-child) {
+        background-color: rgb(255, 255, 255);
+      }
+
+      tr:not(:first-child):hover {
+        cursor: pointer;
         background-color: rgb(241, 231, 256);
       }
     }

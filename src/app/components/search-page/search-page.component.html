@@ -1,10 +1,12 @@
 <div class="wrapper">
   <mat-progress-bar mode="indeterminate" *ngIf="showProgbar"></mat-progress-bar>
+
   <mat-card>
+    <mat-card-header>
+      <mat-card-title>Search</mat-card-title>
+    </mat-card-header>
 
     <mat-card-content>
-      <mat-card-title>Search</mat-card-title>
-
       <mat-form-field>
         <mat-select [(ngModel)]="selectedResourceType"
                     placeholder="Resource type" required>
@@ -108,13 +110,13 @@
 
       <div class="textarea-container">
         <mat-form-field appearance="outline">
-          <textarea readonly cdkTextareaAutosize cdkAutosizeMinRows="10" cdkAutosizeMaxRows="10" matInput
+          <textarea readonly cdkTextareaAutosize cdkAutosizeMinRows="8" cdkAutosizeMaxRows="10" matInput
                     value="{{formQueryString}}"></textarea>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <textarea #gravField cdkTextareaAutosize
-                    cdkAutosizeMinRows="10" cdkAutosizeMaxRows="10" matInput
+                    cdkAutosizeMinRows="8" cdkAutosizeMaxRows="10" matInput
                     value="{{gravQueryFieldText}}"></textarea>
         </mat-form-field>
 
@@ -129,12 +131,18 @@
   </mat-card>
 
   <div class="result" *ngIf="searchResults && searchResults.length > 0">
-    <div *ngIf="countRes !== undefined">
-      <p>Count returned: {{countRes}}</p>
-    </div>
+
+<!--    <div *ngIf="countRes !== undefined">-->
+<!--      <p>Count returned: {{countRes}}</p>-->
+<!--    </div>-->
 
     <table>
-      <tr *ngFor="let searchResult of searchResults" (click)="resultClicked(searchResult.targetIri)">
+      <tr>
+        <th>#</th>
+        <th *ngFor="let values of searchResults[0].results; let i = index;">Property {{i + 1}}</th>
+      </tr>
+      <tr *ngFor="let searchResult of searchResults; let i = index;" (click)="resultClicked(searchResult.targetIri)">
+        <td>{{i + 1}}</td>
         <td *ngFor="let values of searchResult.results">
           <div *ngFor="let value of values">
             {{value}}
